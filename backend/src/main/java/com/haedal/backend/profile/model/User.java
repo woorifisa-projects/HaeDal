@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -15,6 +16,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId; // PK
+
+//    @OneToMany(mappedBy = "user")
+//    private List<Subscribe> subscribes; // 고객이 어떤 상품들에 가입했는지 list - DB완성 후 주석해제할것
 
     @Column(nullable = false,length = 20)
     private String Id; // 회원가입시 필요한 ID
