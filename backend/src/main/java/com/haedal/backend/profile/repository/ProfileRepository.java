@@ -1,4 +1,10 @@
 package com.haedal.backend.profile.repository;
 
-public class ProfileRepository {
+import com.haedal.backend.profile.model.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProfileRepository extends CrudRepository<User, Long> {
+
 }
