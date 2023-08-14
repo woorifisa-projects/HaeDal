@@ -15,7 +15,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public User findById(Long id) {
-        return profileRepository.findById(id).orElse(null);
+    public User findById(Long userId) {
+        return profileRepository.findById(userId).orElse(null);
     }
 }

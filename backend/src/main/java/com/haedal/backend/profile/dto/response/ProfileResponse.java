@@ -10,15 +10,15 @@ import lombok.Getter;
 public class ProfileResponse {
 
     private String name;
-    private String userId;
+    private String id;
     private ServicePurpose servicePurpose;
     private UserAgeGroup userAgeGroup;
     private Long asset;
 
     @Builder
-    public ProfileResponse(String name, String userId, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup, Long asset) {
+    public ProfileResponse(String name, String id, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup, Long asset) {
         this.name = name;
-        this.userId = userId;
+        this.id = id;
         this.servicePurpose = servicePurpose;
         this.userAgeGroup = userAgeGroup;
         this.asset = asset;
@@ -26,6 +26,6 @@ public class ProfileResponse {
 
 
     public static ProfileResponse profileInfoFrom(User user) {
-        return new ProfileResponse(user.getName(), user.getUserId(), user.getServicePurpose(), user.getUserAgeGroup(), user.getAsset());
+        return new ProfileResponse(user.getName(), user.getId(), user.getServicePurpose(), user.getUserAgeGroup(), user.getAsset());
     }
 }

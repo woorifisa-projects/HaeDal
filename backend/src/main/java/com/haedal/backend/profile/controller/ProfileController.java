@@ -20,10 +20,10 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @GetMapping("/{id}/profile")
-    public ResponseEntity<ProfileResponse> showUserProfile(@PathVariable Long id){
-        System.out.println(id + "의 아이디 값을 조회합니다");
-        User user = profileService.findById(id);
+    @GetMapping("/{userId}/profile")
+    public ResponseEntity<ProfileResponse> showUserProfile(@PathVariable Long userId){
+        System.out.println(userId + "의 아이디 값을 조회합니다");
+        User user = profileService.findById(userId);
         return new ResponseEntity<>(ProfileResponse.profileInfoFrom(user), HttpStatus.OK);
     }
 
