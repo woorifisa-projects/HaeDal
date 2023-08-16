@@ -13,19 +13,19 @@ public class ProfileResponse {
     private String id;
     private ServicePurpose servicePurpose;
     private UserAgeGroup userAgeGroup;
-    private Long asset;
+//    private Long asset;
 
     @Builder
-    public ProfileResponse(String name, String id, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup, Long asset) {
+    public ProfileResponse(String name, String id, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup) {
         this.name = name;
         this.id = id;
         this.servicePurpose = servicePurpose;
         this.userAgeGroup = userAgeGroup;
-        this.asset = asset;
+//        this.asset = asset;
     }
 
 
     public static ProfileResponse profileInfoFrom(User user) {
-        return new ProfileResponse(user.getName(), user.getId(), user.getServicePurpose(), user.getUserAgeGroup(), user.getAsset());
+        return new ProfileResponse(user.getName(), user.getId(), user.getServicePurpose(), user.getUserAgeGroup());
     }
 }
