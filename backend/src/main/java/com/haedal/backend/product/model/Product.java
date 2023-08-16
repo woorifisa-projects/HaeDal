@@ -1,11 +1,13 @@
 package com.haedal.backend.product.model;
 
+import com.haedal.backend.profile.model.Account;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Table
 @Entity
 public class Product {
 
@@ -13,8 +15,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId; // 상품 id
 
-    @OneToMany(mappedBy = "product")
-    private List<Subscribe> subscribes; // 한 개의 추천상품에 어떤 고객들이 가입했는지 list
+    @OneToMany
+    @JoinColumn(name = "subcribe_id")
+    private List<Subscribe> subscribers; // 한 개의 추천상품에 어떤 고객들이 가입했는지 list
 
 
     @Column(name = "asset")
@@ -43,11 +46,11 @@ public class Product {
     @Column(name = "start_money")
     private int startMoney; // 시작 금액
 
-
-
     @Column(name = "interest_rate")
     private double interestRate; // 금리
 
+    @OneToMany(mappedBy = "user")
+    private List<Account> accounts;
 
 
 
