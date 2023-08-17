@@ -1,6 +1,6 @@
 package com.haedal.backend.profile.repository;
 
-import com.haedal.backend.profile.model.User;
+import com.haedal.backend.auth.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.haedal.backend.profile.dto.response;
 
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.profile.model.ServicePurpose;
-import com.haedal.backend.profile.model.User;
 import com.haedal.backend.profile.model.UserAgeGroup;
 import lombok.Builder;
 import lombok.Getter;

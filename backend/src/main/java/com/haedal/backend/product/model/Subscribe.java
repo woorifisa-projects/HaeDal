@@ -1,6 +1,6 @@
 package com.haedal.backend.product.model;
 
-import com.haedal.backend.profile.model.User;
+import com.haedal.backend.auth.model.User;
 import lombok.Getter;
 
 import javax.persistence.*;
