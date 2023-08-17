@@ -14,8 +14,7 @@ public interface ProductService extends CrudService<Product, Long> {
 
     List<Product> findByTag(Tag tag);
 
-
-
-
+    //상품 명으로 상품 검색
+    List<Product> findByProductNameLike(String productName);
 
 }

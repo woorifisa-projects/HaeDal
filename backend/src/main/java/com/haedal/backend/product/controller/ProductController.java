@@ -8,27 +8,25 @@ import com.haedal.backend.profile.dto.response.ProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-
     @Autowired
     private ProductService productService;
 
+    //상품 전체 리스트 조회
     @GetMapping
     public List<ProductResponse> getAllproducts() {
         List<Product> products  =  productService.findAll();
         return null;
     }
 
-
+    //상품 태그에 따라 필터링 
     @GetMapping("/filter/{tag}")
     public List<ProductResponse> filterProductsByTag(@PathVariable String tag) {
         if (tag.equals("FINANCE")) {
@@ -40,8 +38,23 @@ public class ProductController {
         }
     }
 
+    // 키워드 검색
+    @PostMapping("/search")
+    public List<ProductResponse> searchProduct(@PathVariable String search){
+        List<Product> products = productService.findByProductNameLike(search);
 
+        List<ProductResponse> productResponse = products.stream()
+                .map(ProductResponse::from)
+                .collect(Collectors.toList());
+        return productResponse;
+    }
 
+    //상품 신청
+    @PostMapping("/subscribe")
+    public ProductResponse subscribeProduct(){
+
+        return null;
     }
 
 }
+
