@@ -16,25 +16,41 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    @Autowired
+
     private ProductService productService;
 
     //상품 전체 리스트 조회
     @GetMapping
     public List<ProductResponse> getAllproducts() {
         List<Product> products  =  productService.findAll();
-        return null;
+        List<ProductResponse> productResponse = products.stream()
+                .map(ProductResponse::from)
+                .collect(Collectors.toList());
+        return productResponse;
     }
 
     //상품 태그에 따라 필터링 
     @GetMapping("/filter/{tag}")
     public List<ProductResponse> filterProductsByTag(@PathVariable String tag) {
         if (tag.equals("FINANCE")) {
-            return productService.findByTag(Tag.FINANCE);
+            List<Product> products = productService.findByTag(Tag.FINANCE);
+            List<ProductResponse> productResponse = products.stream()
+                    .map(ProductResponse::from)
+                    .collect(Collectors.toList());
+            return productResponse;
+
         } else if (tag.equals("THEMA")) {
-            return productService.findByTag(Tag.THEMA);
+            List<Product> products =  productService.findByTag(Tag.THEMA);
+            List<ProductResponse> productResponse = products.stream()
+                    .map(ProductResponse::from)
+                    .collect(Collectors.toList());
+            return productResponse;
         } else {
-            return productService.findAll();
+            List<Product> products =  productService.findAll();
+            List<ProductResponse> productResponse = products.stream()
+                    .map(ProductResponse::from)
+                    .collect(Collectors.toList());
+            return productResponse;
         }
     }
 
@@ -51,10 +67,9 @@ public class ProductController {
 
     //상품 신청
     @PostMapping("/subscribe")
-    public ProductResponse subscribeProduct(){
+    public ProductResponse subscribeProduct(Product product){
 
         return null;
     }
-
 }
 
