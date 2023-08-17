@@ -2,10 +2,12 @@ package com.haedal.backend.product.model;
 
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
 @Table
 @Entity
 public class Product {
