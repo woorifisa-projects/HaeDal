@@ -20,9 +20,6 @@ public class Product {
     @Column(name = "product_asset")
     private Long productAsset; // 추천을 위한 상품 자산
 
-
-
-
     @Enumerated(EnumType.STRING)
     @Column(name = "service_purpose")
     private ServicePurpose servicePurpose; // 서비스 이용 목적
@@ -33,8 +30,6 @@ public class Product {
 
     @Enumerated(EnumType.STRING)
     private Tag tag;// 어떤 태그를 가지고 있는지
-
-
 
     @Column(name = "product_name")
     private String productName; // 상품 이름
@@ -48,15 +43,10 @@ public class Product {
     @Column(name = "required_start_money")
     private int requiredStartMoney; // 시작 금액
 
-
-
     @Column(name = "interest_rate")
     private double interestRate; // 금리
 
     @OneToMany(mappedBy = "product")
     private List<Subscribe> subscribers; // 한 개의 상품에 몇 명의 고객들이 가입했는지 list
-
-
-
 
 }

@@ -1,6 +1,6 @@
 package com.haedal.backend.profile.service;
 
-import com.haedal.backend.profile.model.User;
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.profile.repository.ProfileRepository;
 import org.springframework.stereotype.Service;
 

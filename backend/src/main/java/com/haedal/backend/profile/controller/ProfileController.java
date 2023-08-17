@@ -1,7 +1,7 @@
 package com.haedal.backend.profile.controller;
 
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.profile.dto.response.ProfileResponse;
-import com.haedal.backend.profile.model.User;
 import com.haedal.backend.profile.service.ProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,5 @@ public class ProfileController {
         User user = profileService.findById(userId);
         return new ResponseEntity<>(ProfileResponse.profileInfoFrom(user), HttpStatus.OK);
     }
-
-
 
 }
