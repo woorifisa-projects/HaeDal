@@ -10,4 +10,7 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     List<Product> findByTag(String tag);
+
+    //상품 명으로 상품 검색
+    List<Product> findByProductNameLike(String productName);
 }
