@@ -10,7 +10,9 @@ import java.util.List;
 @Getter
 @Table
 @Entity
-public class Product {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) //
+//@DisCriminatorColumn(name = "DTYPE") // 단일 테이블에서는 Dtype컬럼이 자동생성되므로 생략
+public abstract class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
