@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,9 +60,14 @@ public class ProductController {
     }
 
     // 키워드 검색
-    @PostMapping("/search")
+    @PostMapping("/{search}")
     public List<ProductResponse> searchProduct(@PathVariable String search){
-        List<Product> products = productService.findByProductNameLike(search);
+        List<Product> products = new ArrayList<>();
+        if (search != null && !search.isEmpty()) {
+            products = productService.findByProductNameLike("%" + search + "%");
+        } else {
+            System.out.println("검색어가 없습니다.");
+        }
 
         List<ProductResponse> productResponse = products.stream()
                 .map(ProductResponse::from)
@@ -72,7 +78,6 @@ public class ProductController {
     //상품 신청
     @PostMapping("/subscribe")
     public ProductResponse subscribeProduct(Product product){
-
         return null;
     }
 }
