@@ -31,7 +31,7 @@ public class UserService {
 
     public String login(String id, String password) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("가입되지 않은 사원입니다."));
+                .orElseThrow(() -> new RuntimeException("가입되지 않은 ID입니다."));
 
         if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
