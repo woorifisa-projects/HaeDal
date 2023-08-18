@@ -13,12 +13,15 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
     private ProductRepository productRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     public List<Product> findAll() {
-        return null;
+        return (List<Product>) productRepository.findAll();
     }
 
     @Override

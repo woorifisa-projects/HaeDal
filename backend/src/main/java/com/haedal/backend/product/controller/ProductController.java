@@ -19,6 +19,10 @@ public class ProductController {
 
     private ProductService productService;
 
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     //상품 전체 리스트 조회
     @GetMapping
     public List<ProductResponse> getAllproducts() {
