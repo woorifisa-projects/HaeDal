@@ -1,11 +1,21 @@
 <template>
-  <v-container fluid fill-height> <!-- fluid 속성과 fill-height 속성을 사용하여 화면 전체를 채움 -->
+  <form @submit.prevent="submit">
     <v-row justify="center" align-content="center">
+
+      <v-col cols="12" sm="8" md="6" lg="4">
+      <v-text-field
+      v-model="id.value.value"
+      :counter="10"
+      :error-messages="id.errorMessage.value"
+      label="Id"
+    ></v-text-field>
+    </v-col>
+
       <v-col cols="12" sm="8" md="6" lg="4">
         <v-text-field
-          label="Username"
-          :rules="rules"
-          hide-details="auto"
+          v-model="id.value.value"
+          :error-messages="id.errorMessage.value"
+          label="Id"
         >
           <template v-slot:prepend>
             <svg-icon type="mdi" :path="path"></svg-icon>
@@ -16,7 +26,9 @@
 
     <v-row justify="center" align-content="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <v-text-field label="Password">
+        <v-text-field 
+        v-model="password.value.value"
+        label="Password">
           <template v-slot:prepend>
             <svg-icon type="mdi" :path="path2"></svg-icon>
           </template>
@@ -31,6 +43,7 @@
           block
           rounded="lg"
           size="x-large"
+          type="submit"
         >
           로그인
         </v-btn>
@@ -50,13 +63,17 @@
       </v-col>
     </v-row>
     
-  </v-container>
+  
+</form>
 </template>
 
 <script>
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiAccount } from '@mdi/js';
 import { mdiLock } from '@mdi/js';
+import axios from 'axios'
+import { useField, useForm } from 'vee-validate'
+import { ref } from 'vue'
 
 export default {
   name: "my-cool-component",
@@ -66,15 +83,41 @@ export default {
   },
 
   data: () => ({
-    rules: [
-      value => !!value || '필수입력',
-      value => (value && value.length >= 3) || '아이디는 최소 3글자 이상이어야합니다',
-      value => (value && value.length <= 15) || '아이디는 최대 15글자 이하여야합니다',
-    ],
     path: mdiAccount,
     path2: mdiLock,
-  }),
+  })
 }
+
+const {handleSubmit} = useForm({
+    validationSchema: {
+      id (value) {
+        if (value?.length >= 2) return true
+        return 'Id needs to be at least 2 characters.'
+      },
+      password (value) {
+        if (value?.length >= 2) return true
+        return 'password needs to be at least 2 characters.'
+      }, },
+  })
+
+const id = useField('id')
+const password = useField('password')
+
+const submit = handleSubmit(values => {
+    
+    console.log(values);
+    axios.post("http://localhost:8080/user/login",values)
+    .then(response => {
+      // POST 요청 성공 시 로직
+      console.log(response.data);
+    })
+    // POST 요청 실패 시 로직
+    .catch(error => {
+      console.error(error);
+    });
+  }
+)
+
 </script>
 
 <style>
