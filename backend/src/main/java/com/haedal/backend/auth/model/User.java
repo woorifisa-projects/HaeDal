@@ -1,8 +1,8 @@
 package com.haedal.backend.auth.model;
 
-import com.haedal.backend.product.model.Subscribe;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
+import com.haedal.backend.subscribe.model.Subscribe;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
