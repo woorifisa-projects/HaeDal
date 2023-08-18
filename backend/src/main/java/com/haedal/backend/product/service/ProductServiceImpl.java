@@ -26,7 +26,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findByTag(Tag tag) {
-        return null;
+
+        return productRepository.findByTag(tag);
     }
 
     @Override
