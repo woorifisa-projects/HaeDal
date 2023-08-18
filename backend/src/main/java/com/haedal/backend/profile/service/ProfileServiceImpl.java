@@ -14,6 +14,8 @@ public class ProfileServiceImpl implements ProfileService {
         this.profileRepository = profileRepository;
     }
 
+
+
     @Override
     public User findById(Long userId) {
         return profileRepository.findById(userId).orElse(null);
