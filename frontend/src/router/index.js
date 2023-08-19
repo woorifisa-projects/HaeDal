@@ -34,6 +34,11 @@ const routes = [
       name: "LoginT",
       component: () => import(/* webpackChunkName: "home" */ '@/views/LoginViewTest.vue'),
     },
+    {
+      path: "afterl",
+      name: "AfterLogin",
+      component: () => import(/* webpackChunkName: "home" */ '@/views/AfterLogin.vue'),
+    },
     ],
   }
 ]
