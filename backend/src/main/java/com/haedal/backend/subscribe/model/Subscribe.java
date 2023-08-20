@@ -2,12 +2,15 @@ package com.haedal.backend.subscribe.model;
 
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.product.model.Product;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "Subscribe")
 public class Subscribe {
@@ -35,4 +38,12 @@ public class Subscribe {
 
     @Column(name = "user_subscribe_date")
     private LocalDate subscribeDate;
+
+    public Subscribe(User user, Product product, Long startMoney, Long presentMoney, LocalDate subscribeDate) {
+        this.user = user;
+        this.product = product;
+        this.startMoney = startMoney;
+        this.presentMoney = presentMoney;
+        this.subscribeDate = subscribeDate;
+    }
 }

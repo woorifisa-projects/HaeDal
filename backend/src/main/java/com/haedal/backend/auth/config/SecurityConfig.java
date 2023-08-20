@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .antMatchers("/user/**","/{userId}/profile","/products/**","/products/{search}").permitAll()
+                                .antMatchers("/**").permitAll() //임시로 전체 허용
                                 .anyRequest().authenticated()
                 );
         return http.build();

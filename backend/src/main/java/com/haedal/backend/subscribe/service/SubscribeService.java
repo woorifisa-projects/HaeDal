@@ -6,4 +6,6 @@ import com.haedal.backend.subscribe.repository.SubscribeRepository;
 
 public interface SubscribeService extends CrudService<Subscribe, Long> {
     public Subscribe findById(Long subscribeId);
+
+    public Subscribe save(Subscribe subscribe);
 }
