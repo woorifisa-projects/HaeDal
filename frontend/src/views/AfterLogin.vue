@@ -16,25 +16,26 @@
           ></v-btn>
 
           <v-spacer></v-spacer>
+          
+          
+            <v-btn 
+             class="me-4"
+              type="submit"
+             >
+                고객님 환영합니다.
+            </v-btn>
 
-          <div>
+
+            <div>
     <!-- 로그인 상태에 따라 다른 내용을 표시 -->
     <div v-if="authStore.isLoggedIn">
-      <p>고객님 환영합니다.</p>
+      <p>로그인되었습니다.</p>
+      <p>토큰: {{ authStore.accessToken }}</p>
     </div>
     <div v-else>
       <p>로그인되지 않았습니다.</p>
     </div>
   </div>
-          
-          
-            <v-btn href="http://localhost:3000/logint"
-             class="me-4"
-              type="submit"
-             >
-               Logout
-            </v-btn>
-
           
 
           <v-responsive max-width="160">
@@ -56,33 +57,9 @@
   </template>
   
   <script setup>
-import { onMounted } from 'vue';
-import axios from 'axios';
-import { useAuthStore } from '@/store/app';
+  import { useAuthStore } from '@/store/app';
 
-const authStore = useAuthStore();
-
-const links = [
-  'Home',
-  'Product',
-  'RECOMMEND',
-  'MYPAGE',
-];
-
-onMounted(() => {
-  console.log("새로고췸");
-  // Local Storage에서 토큰을 가져와서 store에 저장
-  const storedToken = localStorage.getItem('accessToken');
-  if (storedToken) {
-    authStore.loginSuccess(storedToken);
-    console.log(localStorage.getItem('accessToken'));
-    // 페이지 로딩 시 사용자 정보 요청 로직 추가 (이전 답변 참고)
-  }
-});
-</script>
-
-
-  <!-- <script setup>
+    const authStore = useAuthStore();
     const links = [
       'Home',
       'Product',
@@ -102,4 +79,6 @@ onMounted(() => {
         ],
       }),
     }
-  </script> -->
+
+    console.log();
+  </script>
