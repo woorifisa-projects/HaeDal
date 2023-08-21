@@ -11,17 +11,14 @@ import java.util.List;
 @Getter
 @Table
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) //
-@DiscriminatorColumn(name = "DTYPE") // 단일 테이블에서는 Dtype컬럼이 자동생성되므로 생략
-public abstract class Product {
-
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long productId; // 상품 id
 
-    @Column(name = "product_asset")
-    private Long productAsset; // 추천을 위한 상품 자산
+    @Column(name = "max_product_money")
+    private Long maxProductMoney; // 추천을 위한 상품 자산
 
     @Enumerated(EnumType.STRING)
     @Column(name = "service_purpose")
