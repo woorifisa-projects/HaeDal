@@ -8,15 +8,21 @@ import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.service.ProductService;
 import com.haedal.backend.profile.service.ProfileService;
 import com.haedal.backend.subscribe.dto.response.SubscribeResponse;
+import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.service.SubscribeService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequestMapping("/subscribe")
 @RestController
+@CrossOrigin
 public class SubscribeController {
     private SubscribeService subscribeService;
     private ProfileService profileService;
@@ -28,40 +34,67 @@ public class SubscribeController {
         this.productService = productService;
     }
 
-    //상품 신청 페이지로 이동 (예, 적금에 따라 다르게 이동해주기 위함)
+
+    //상품 신청 버튼 클릭시 상품 종류 인식, 해당 url로 전달 (예, 적금에 따라 다르게 이동해주기 위함)
     @PostMapping("/{productId}")
-    public ResponseEntity<String> subscribeProduct(@RequestBody Product product,
-                                                   @PathVariable Long productId
-                                                   ) {
-        Product foundProduct = productService.findById(productId);
+    public RedirectView subscribeProduct(@PathVariable Long productId, Model model) {
+
+        Product foundProduct = productService.findByProductId(productId);
 
         if (foundProduct==null) {
-            return ResponseEntity.badRequest().body("상품을 찾을 수 없습니다.");
+            // 상품을 찾을 수 없을 경우, 예를 들어 에러 페이지로 리다이렉트
+            return new RedirectView("/error");
         }
 
+        //TODO : 인증 관련 공부 이후, userId를 인증으로 수정, 처리합니다.
+        User user = profileService.findById(1L);
+        String userAccount = user.getAccountNumber();
+        //리다이렉트 된 값들 프론트에 전달
+        // TODO : 프론트에서 값을 입력받을 각 페이지를 만든다.
         if ("I".equals(foundProduct.getProductType())) {
-            // foudProduct 를 반환하며 "/{productId}/I" 로 이동하도록 동작
-            return ResponseEntity.ok("적금 신청 페이지로 이동합니다.");
-            // foudProduct 를 반환하며 "/{productId}/D" 로 이동하도록 동작
-        } else if ("D".equals(foundProduct.getProductId())) {
-            return ResponseEntity.ok("예금 신청 페이지로 이동합니다.");
+            // 적금 신청 페이지로 리다이렉트
+            model.addAttribute("product", foundProduct);
+            return new RedirectView("/" + productId + "/I");
+            // foundProduct 를 반환하며 "/{productId}/D" 로 이동하도록 동작(redirect)
+        } else if ("D".equals(foundProduct.getProductType())) {
+            // 예금 신청 페이지로 리다이렉트
+            model.addAttribute("product", foundProduct);
+            return new RedirectView("/" + productId + "/D");
         } else {
-            return ResponseEntity.badRequest().body("유효하지 않은 상품 타입입니다.");
+            // 유효하지 않은 상품 타입인 경우, 예를 들어 에러 페이지로 리다이렉트
+            return new RedirectView("/error");
         }
     }
 
-    //예금 신청 페이지
-    @PostMapping("/{productId}/I")
-    public void subscribeIproduct(){
-        //user의 인증번호와 같을 경우 save, 성공 페이지로 이동
-        //아닐 경우 다시 신청페이지로 이동
+    //상품 신청 페이지 '신청'버튼 클릭
+    @PostMapping("/{productId}/*")
+    public ResponseEntity<String> subscribeIproduct(@PathVariable Long productId,  @RequestBody Map<String, String> requestData){
+        //TODO : 인증 관련 공부 이후, userId를 인증으로 수정, 처리합니다.
+        User user = profileService.findById(1L);
+
+        Product foundProduct = productService.findByProductId(productId);
+
+        System.out.println(productId + " 접근 성공했다.");
+
+        long authNumber = Long.parseLong(requestData.get("authenticationNumber"));
+        long startMoney = Long.parseLong(requestData.get("startMoney"));
+        //user가 입력한 인증번호가 DB와 같고, user_start_money(입력값)이 userAsset(본인 소유 자산)이상, productAsset(최대 금액)이하일 때
+        if(authNumber == user.getAuthNumber() && startMoney >= user.getAsset() && foundProduct.getProductAsset() <= startMoney){
+            Subscribe subscribe = new Subscribe(user, foundProduct , startMoney, startMoney, LocalDate.now());
+            Subscribe saveSubscribe = subscribeService.save(subscribe);
+            System.out.println(saveSubscribe);
+            return ResponseEntity.ok("신청이 완료되었습니다.");
+        } else{
+            //아닐 경우 다시 신청페이지로 이동
+            return ResponseEntity.badRequest().body("신청 정보가 올바르지 않습니다.");
+        }
     }
 
-    //적금 신청 페이지
-    @PostMapping("/{productId}/D")
-    public void subscribeDProduct(){
-        //user의 인증번호와 같을 경우 save, 성공 페이지로 이동
-        //아닐 경우 다시 신청페이지로 이동
-    }
+//    //예금 신청 페이지 '신청'버튼 클릭
+//    @PostMapping("/{productId}/D")
+//    public void subscribeDProduct(@PathVariable Long productId,  @RequestBody Map<String, String> requestData){
+//        //user의 인증번호와 같고,
+//        //아닐 경우 다시 신청페이지로 이동
+//    }
 
 }
