@@ -59,8 +59,4 @@ public abstract class Product {
     private int subscription; // 월 납입금액(구독료)
 
 
-    //상품의 예, 적금 구분을 위한 메서드
-    @Transient // 엔티티의 컬럼으로 매핑하지 않음
-    public abstract String getProductType();
-
 }
