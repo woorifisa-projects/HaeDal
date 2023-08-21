@@ -52,6 +52,13 @@ public abstract class Product {
     @OneToMany(mappedBy = "product")
     private List<Subscribe> subscribers; // 한 개의 상품에 몇 명의 고객들이 가입했는지 list
 
+    @Column(name = "is_deposit")
+    private boolean isDeposit; // 예금, 적금 타입 확인용 컬럼(0=예금, 1=적금)
+
+    @Column(name = "subscription", nullable = true)
+    private int subscription; // 월 납입금액(구독료)
+
+
     //상품의 예, 적금 구분을 위한 메서드
     @Transient // 엔티티의 컬럼으로 매핑하지 않음
     public abstract String getProductType();
