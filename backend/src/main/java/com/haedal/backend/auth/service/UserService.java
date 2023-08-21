@@ -16,8 +16,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Value("${jwt.token.secret}")
-    private String secretkey;
-    private final long expireTimeMs = 1000 * 60 * 60 * 24 * 7; // 토큰 7일
+    private String key;
+    private final long expireTimeMs = 1000 * 60 * 60 * 24 * 7L; // 토큰 7일
 
     public UserDto register(UserRegisterRequest request) {
         userRepository.findById(request.getId())
@@ -37,6 +37,7 @@ public class UserService {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
-        return JwtUtil.createToken(id, expireTimeMs, secretkey);
+        return JwtUtil.createToken(id, expireTimeMs, key);
     }
+
 }
