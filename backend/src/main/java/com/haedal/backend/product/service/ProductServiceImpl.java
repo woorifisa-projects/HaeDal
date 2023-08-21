@@ -30,14 +30,20 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByTag(tag);
     }
 
-    @Override
-    public Product findById(Long userId) {
-        return null;
+
+    public Product findByProductId(Long productId)
+    {
+        return productRepository.findByProductId(productId);
     }
 
 
     //상품 명으로 DB 검색하여 product 리스트 검색
     public List<Product> findByProductNameLike(String productName){
         return productRepository.findByProductNameLike(productName);
+    }
+
+    @Override
+    public Product findById(Long userId) {
+        return null;
     }
 }

@@ -2,6 +2,7 @@ package com.haedal.backend.product.model;
 
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
+import com.haedal.backend.subscribe.model.Subscribe;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.List;
 @Table
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) //
-//@DisCriminatorColumn(name = "DTYPE") // 단일 테이블에서는 Dtype컬럼이 자동생성되므로 생략
+@DiscriminatorColumn(name = "DTYPE") // 단일 테이블에서는 Dtype컬럼이 자동생성되므로 생략
 public abstract class Product {
 
     @Id
@@ -50,5 +51,9 @@ public abstract class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Subscribe> subscribers; // 한 개의 상품에 몇 명의 고객들이 가입했는지 list
+
+    //상품의 예, 적금 구분을 위한 메서드
+    @Transient // 엔티티의 컬럼으로 매핑하지 않음
+    public abstract String getProductType();
 
 }
