@@ -20,4 +20,9 @@ public class ProfileServiceImpl implements ProfileService {
     public User findById(Long userId) {
         return profileRepository.findById(userId).orElse(null);
     }
+
+    @Override
+    public User findById(String id) {
+        return profileRepository.findById(id);
+    }
 }

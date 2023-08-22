@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class ProfileResponse {
 
     private String name;
@@ -14,7 +15,9 @@ public class ProfileResponse {
     private ServicePurpose servicePurpose;
     private UserAgeGroup userAgeGroup;
 //    private Long asset;
-
+    public ProfileResponse(String name) {
+        this.name = name;
+    }
     @Builder
     public ProfileResponse(String name, String id, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup) {
         this.name = name;
@@ -24,6 +27,9 @@ public class ProfileResponse {
 //        this.asset = asset;
     }
 
+    public static ProfileResponse userNameInfoFrom(User user){
+        return new ProfileResponse(user.getName());
+    }
 
     public static ProfileResponse profileInfoFrom(User user) {
         return new ProfileResponse(user.getName(), user.getId(), user.getServicePurpose(), user.getUserAgeGroup());

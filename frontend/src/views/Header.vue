@@ -88,7 +88,8 @@ if(storedToken){
   })
     .then (response => {
       console.log(response.data);
-      username.value = response.data.username;
+      console.log(response.data.name);
+      username.value = response.data.name;
     })
 }
 
