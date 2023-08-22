@@ -1,7 +1,7 @@
 <template>
     <div class=submitForm>
         <form @submit.prevent="submitForm">
-            <p>{{ $props.value }}상품 신청</p>
+            <h3>{{ listData.productName }} 상품 신청</h3>
             <div class=datas>
                 <div>
                     <label for="accountNumber">계좌번호</label>
@@ -15,9 +15,6 @@
                     <label for="startMoney">시작금액</label>
                     <input type="number" id="startMoney" v-model="formData.startMoney" required>
 
-                </div>
-                <div>
-                    <!--원간 구독료 : {{ item.subscribtion }}-->
                 </div>
                 <v-btn variant="outlined" type="submit">
                     신청하기
@@ -34,7 +31,25 @@ import { useRouter, useRoute } from 'vue-router';
 import router from '../router'
 import { defineProps } from 'vue';
 
-const productName = router.currentRoute.value.params;
+// Axios 인스턴스 생성
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8080', // 서버의 주소
+    withCredentials: "true" // CORS 요청에 관련된 설정을 포함
+})
+
+const listData = ref({});
+
+const route = useRoute();
+const productId = route.params.id;
+const currentPath = `/subscribe/${productId}`;
+
+watchEffect(() => {
+    axiosInstance.get(`${currentPath}`).then((res) => {
+        console.log(res.data)
+        listData.value = res.data
+    })
+})
+console.log(listData.value)
 
 const formData = {
     accountNumber: '',
@@ -42,13 +57,11 @@ const formData = {
     startMoney: ''
 };
 
-const route = useRoute();
-const productId = route.params.id;
+
 const submitForm = () => {
     const url = `http://localhost:8080/subscribe/${productId}/D`;
     console.log(productId);
 
-    // productId가 유효한 경우에만 요청을 보냅니다.
     axios.post(url, formData)
         .then(response => {
             console.log('신청 성공', response);
