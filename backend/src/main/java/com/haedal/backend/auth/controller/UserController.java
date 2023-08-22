@@ -3,19 +3,30 @@ package com.haedal.backend.auth.controller;
 import com.haedal.backend.auth.dto.UserDto;
 import com.haedal.backend.auth.dto.request.UserLoginRequest;
 import com.haedal.backend.auth.dto.request.UserRegisterRequest;
+import com.haedal.backend.auth.dto.response.UserDataResponse;
 import com.haedal.backend.auth.dto.response.UserLoginResponse;
 import com.haedal.backend.auth.dto.response.UserRegisterResponse;
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.auth.service.UserService;
+import com.haedal.backend.profile.dto.response.ProfileResponse;
+import com.haedal.backend.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("http://localhost:3000/")
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
+    private final ProfileService profileService;
+
+
 
     @PostMapping("/register")
     public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest userRegisterRequest) {
@@ -28,7 +39,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin("http://localhost:3000/")
+
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
         try {
@@ -39,4 +50,14 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/alog")
+    public ResponseEntity<ProfileResponse> getUserId(Authentication authentication){
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+
+        return new ResponseEntity<>(ProfileResponse.profileInfoFrom(user), HttpStatus.OK);
+    }
+
+
 }
