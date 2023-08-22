@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
     private ProductService productService;
@@ -75,10 +76,5 @@ public class ProductController {
         return productResponse;
     }
 
-    //상품 신청
-    @PostMapping("/subscribe")
-    public ProductResponse subscribeProduct(Product product){
-        return null;
-    }
 }
 

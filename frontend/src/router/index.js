@@ -15,35 +15,48 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
       },
 
-    {
-      path: "login",
-      name: "Login",
-      component: () => import(/* webpackChunkName: "home" */ '@/views/LoginView.vue'),
-    },
-    {
-      path: "header",
-      name: "Header",
-      component: () => import(/* webpackChunkName: "home" */ '@/views/Header.vue'),
-    },
-    {
-      path: "signup",
-      name: "Signup",
-      component: () => import(/* webpackChunkName: "home" */ '@/views/SignUpView.vue'),
-    },
-    {
-      path: "logint",
-      name: "LoginT",
-      component: () => import(/* webpackChunkName: "home" */ '@/views/LoginViewTest.vue'),
-    },
-    {
-      path: "afterl",
-      name: "AfterLogin",
-      component: () => import(/* webpackChunkName: "home" */ '@/views/AfterLogin.vue'),
-    },
+      {
+        path: "login",
+        name: "Login",
+        component: () => import(/* webpackChunkName: "home" */ '@/views/LoginView.vue'),
+      },
+      {
+        path: "header",
+        name: "Header",
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Header.vue'),
+      },
+      {
+        path: "signup",
+        name: "Signup",
+        component: () => import(/* webpackChunkName: "home" */ '@/views/SignUpView.vue'),
+      },
+      {
+        path: "logint",
+        name: "LoginT",
+        component: () => import(/* webpackChunkName: "home" */ '@/views/LoginViewTest.vue'),
+      },
+      {
+        path: "afterl",
+        name: "AfterLogin",
+        component: () => import(/* webpackChunkName: "home" */ '@/views/AfterLogin.vue'),
+      },
+      {
+        path: '/products',
+        name: 'product_list',
+        component: () => import('@/views/ProductList.vue'),
+        props: true
+      },
       {
         path: '/subscribe/:id/I',
         name: 'subscribeI',
-        component: () => import('@/views/SubscribeI.vue')
+        component: () => import('@/views/SubscribeI.vue'),
+        props: true
+      },
+      {
+        path: '/subscribe/:id/D',
+        name: 'subscribeD',
+        component: () => import('@/views/SubscribeD.vue'),
+        props: true
       }
 
     ],

@@ -10,7 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 @Configuration
 @EnableWebSecurity // 웹사이트에 인증 필요기능 생성하는 어노테이션
@@ -27,6 +29,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return
         http
+                .cors() // CORS 설정 활성화
+                .and()
                 .httpBasic().disable() //기본인증 사용 x
                 .csrf().disable()
                 .cors().and()
@@ -43,6 +47,7 @@ public class SecurityConfig {
                                //임시로 전체 허용
         .build();
     }
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
