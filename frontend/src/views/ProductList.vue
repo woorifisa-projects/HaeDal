@@ -1,22 +1,24 @@
 <template>
-    <div class="search">
-        <input type="text" class="searchProduct" placeholder="원하시는 상품명을 검색해 주세요">
-        <v-btn type="submit" class="searchButton">
-            검색
-        </v-btn>
-    </div>
+    <form @submit.prevent="searchForm">
+        <div class="search">
+            <input type="text" v-model="searchTerm" class="searchProduct" placeholder="원하시는 상품명을 검색해 주세요">
+            <v-btn class="searchButton">
+                검색
+            </v-btn>
+        </div>
+    </form>
     <div>
         <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
-                <v-btn>
+                <v-btn @click="viewAll">
                     전체 상품
                 </v-btn>
 
-                <v-btn>
+                <v-btn @click="financial">
                     금융 상품
                 </v-btn>
 
-                <v-btn>
+                <v-btn @click="tema">
                     테마 상품
                 </v-btn>
             </v-bottom-navigation>
@@ -50,8 +52,13 @@
 import axios from 'axios'
 import { watchEffect, ref } from 'vue'
 import router from '../router'
+import { mdiConsoleNetwork } from '@mdi/js';
 
+// 서버에서 받아오는 정보
 const listData = ref([]);
+
+//사용자가 검색한 단어
+const searchTerm = ref('');
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
@@ -70,25 +77,81 @@ watchEffect(() => {
     })
 })
 
+//검색 기능
+const searchForm = () => {
+    //listData 초기화
+    listData.value = [];
+
+    const searchKeyword = searchTerm.value;
+    axiosInstance.post(`/products/${searchKeyword}`).then((res) => {
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+        })
+        console.log(listData)
+    })
+}
+
+//구독하기 버튼
 const subscribeProduct = (item) => {
     const productId = item.productId;
     const productName = item.productName
+    console.log(productName);
 
     if (item.isDeposit === 0) {
         router.push(
             {
-                path: `/subscribe/${productId}/I`,
+                name: 'subscribeD',
                 params: {
-                    productId: productId,
-                    productName: productName
+                    id: productId,
                 }
             })
     } else {
         router.push({
-            path: `/subscribe/${productId}/D`,
-            params: { productName: productName }
+            name: 'subscribeD',
+            params: {
+                id: productId,
+            }
         })
     }
+}
+
+//전체 조회 기능
+const viewAll = () => {
+    listData.value = [];
+    axiosInstance.get('/products').then((res) => {
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+        })
+        console.log(listData)
+    })
+}
+// 금융 상품 조회 기능
+const financial = () => {
+    listData.value = [];
+    axiosInstance.get(`products/filter/FINANCE`).then((res) => {
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+        })
+        console.log(listData)
+    })
+}
+// 테마 상품 조회 기능
+const tema = () => {
+    listData.value = [];
+    axiosInstance.get(`products/filter/THEMA`).then((res) => {
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+        })
+        console.log(listData)
+    })
 }
 </script>
 
