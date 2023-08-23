@@ -16,11 +16,6 @@ const routes = [
       },
 
       {
-        path: "login",
-        name: "Login",
-        component: () => import(/* webpackChunkName: "home" */ '@/views/LoginView.vue'),
-      },
-      {
         path: "header",
         name: "Header",
         component: () => import(/* webpackChunkName: "home" */ '@/views/Header.vue'),
@@ -57,7 +52,12 @@ const routes = [
         name: 'subscribeD',
         component: () => import('@/views/SubscribeD.vue'),
         props: true
-      }
+      },
+      {
+        path: '/mypage',
+        name: 'Mypage',
+        component: () => import('@/views/MyPage.vue')
+    }
 
     ],
   }

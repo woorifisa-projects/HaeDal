@@ -33,7 +33,7 @@
       로그인
     </v-btn>
 
-    <v-btn>
+    <v-btn href="http://localhost:3000/signup">
       회원가입
     </v-btn>
   </form>
@@ -94,9 +94,9 @@
         localStorage.setItem('accessToken',receivedToken);
         
          // Pinia store를 이용하여 로그인 상태 업데이트
-        authStore.loginSuccess();
+        authStore.loginSuccess(receivedToken);
 
-        console.log(receivedToken);
+        console.log("전역관리토큰입니다"+authStore.accessToken);
 
         // 로그인 후 페이지 이동
         router.push('/header'); // 예시: 로그인 후 헤더 페이지로 이동

@@ -11,7 +11,7 @@
       <div>아이디</div>
     </template>
     </v-text-field>
-  </v-col>
+  
 
     <v-text-field
       v-model="password.value.value"
@@ -54,15 +54,59 @@
     ></v-text-field> -->
 
     <v-select
-      v-model="select.value.value"
-      :items="items"
-      :error-messages="select.errorMessage.value"
+      v-model="selectAge.value.value"
+      :items="ageitems"
+      :error-messages="selectAge.errorMessage.value"
       label="Age"
     >
     <template v-slot:prepend> 
       <div>연령대</div>
          </template>
     </v-select>
+
+    <v-select
+      v-model="selectPurpose.value.value"
+      :items="purposeitems"
+      :error-messages="selectPurpose.errorMessage.value"
+      label="purpose"
+    >
+    <template v-slot:prepend> 
+      <div>이용목적</div>
+         </template>
+    </v-select>
+
+    <v-text-field
+      v-model="accountNumber.value.value"
+      :counter="7"
+      :error-messages="accountNumber.errorMessage.value"
+      label="Account Number"
+    >
+    <template v-slot:prepend> 
+      <div>계좌번호</div>
+         </template>
+    </v-text-field>
+
+    <v-text-field
+      v-model="asset.value.value"
+      :counter="13"
+      :error-messages="asset.errorMessage.value"
+      label="Asset"
+    >
+    <template v-slot:prepend> 
+      <div>자산</div>
+         </template>
+    </v-text-field>
+
+    <v-text-field
+      v-model="accountPassword.value.value"
+      :counter="4"
+      :error-messages="accountPassword.errorMessage.value"
+      label="Account Number"
+    >
+    <template v-slot:prepend> 
+      <div>계좌 인증번호</div>
+         </template>
+    </v-text-field>
 
     <v-checkbox
       v-model="checkbox.value.value"
@@ -82,6 +126,7 @@
     <v-btn @click="handleReset">
       취소
     </v-btn>
+  </v-col>
   </form>
 </template>
 
@@ -111,9 +156,13 @@
       //   if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
       //   return 'Must be a valid e-mail.'
       // },
-      select (value) {
+      selectAge (value) {
         if (value) return true
-        return 'Select an item.'
+        return 'SelectAge an item.'
+      },
+      selectPurpose (value) {
+        if (value) return true
+        return 'SelectPurpose an item.'
       },
       checkbox (value) {
         if (value === '1') return true
@@ -126,15 +175,26 @@
   const name = useField('name')
   const phone = useField('phone')
   // const email = useField('email')
-  const select = useField('select')
+  const selectAge = useField('selectAge')
+  const selectPurpose = useField('selectPurpose')
   const checkbox = useField('checkbox')
-  const items = ref([
-    '10대',
+  const ageitems = ref([
+    'ONE',
     '20대',
     '30대',
     '40대',
     '50대',
   ])
+  const purposeitems = ref([
+    'FORCAR',
+    'FORHOUSE',
+    'MOKDON',
+    'Guitar',
+  ])
+  const accountNumber = useField('accountNumber')
+  const asset = useField('asset')
+  const accountPassword = useField('accoutPassword')
+
   const changeItems = () =>{
     if(values.value.items === '10대'){
     }
@@ -143,7 +203,7 @@
   const submit = handleSubmit(values => {
     
     console.log(values);
-    axios.post("http://localhost:8080/useradd",values)
+    axios.post("http://localhost:8080/user/register",values)
     .then(response => {
       // POST 요청 성공 시 로직
       console.log(response.data);
