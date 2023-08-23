@@ -49,7 +49,7 @@ watchEffect(() => {
         listData.value = res.data
     })
 })
-console.log(listData.value)
+console.log(listData)
 
 const formData = {
     accountNumber: '',

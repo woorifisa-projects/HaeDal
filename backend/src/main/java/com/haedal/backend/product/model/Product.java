@@ -55,5 +55,4 @@ public class Product {
     @Column(name = "subscription", nullable = true)
     private int subscription; // 월 납입금액(구독료)
 
-
 }
