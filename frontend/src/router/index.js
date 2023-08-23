@@ -57,6 +57,12 @@ const routes = [
         name: 'subscribeD',
         component: () => import('@/views/SubscribeD.vue'),
         props: true
+      },
+      {
+        path: '/recommendedProduct',
+        name: 'recommended_product_list',
+        component: () => import('@/views/RecommendedProduct.vue'),
+        props: true
       }
 
     ],

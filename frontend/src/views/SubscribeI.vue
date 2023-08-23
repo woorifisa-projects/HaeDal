@@ -16,7 +16,7 @@
                     <input type="number" id="startMoney" v-model="formData.startMoney" required>
                 </div>
                 <div>
-                    월 간 구독료 : {{ listData.subscription }}
+                    월 간 구독료 : {{ listData.subscription }} 원
                 </div>
                 <v-btn variant="outlined" type="submit">
                     신청하기
