@@ -7,24 +7,43 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 public class ProfileResponse {
 
-    private String name;
+
     private String id;
+    private String password;
+    private String name;
+    private String phoneNumber;
     private ServicePurpose servicePurpose;
     private UserAgeGroup userAgeGroup;
-//    private Long asset;
+    private String accountNumber;
+    private Long asset;
+    private int authNumber;
+
+    //    private Long asset;
+    @Builder
     public ProfileResponse(String name) {
         this.name = name;
     }
     @Builder
-    public ProfileResponse(String name, String id, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup) {
+    public ProfileResponse(String name, String phoneNumber, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup) {
         this.name = name;
-        this.id = id;
+        this.phoneNumber = phoneNumber;
         this.servicePurpose = servicePurpose;
         this.userAgeGroup = userAgeGroup;
-//        this.asset = asset;
+    }
+
+    @Builder
+    public ProfileResponse(String id, String password, String name, String phoneNumber, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup, String accountNumber, Long asset, int authNumber) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.servicePurpose = servicePurpose;
+        this.userAgeGroup = userAgeGroup;
+        this.accountNumber = accountNumber;
+        this.asset = asset;
+        this.authNumber = authNumber;
     }
 
     public static ProfileResponse userNameInfoFrom(User user){
@@ -32,6 +51,10 @@ public class ProfileResponse {
     }
 
     public static ProfileResponse profileInfoFrom(User user) {
-        return new ProfileResponse(user.getName(), user.getId(), user.getServicePurpose(), user.getUserAgeGroup());
+        return new ProfileResponse(user.getName(), user.getPhoneNumber(), user.getServicePurpose(), user.getUserAgeGroup());
+    }
+
+    public static ProfileResponse allUserInfoFrom(User user){
+        return new ProfileResponse(user.getId(), user.getPassword(),user.getName(),user.getPhoneNumber(),user.getServicePurpose(),user.getUserAgeGroup(),user.getAccountNumber(),user.getAsset(),user.getAuthNumber());
     }
 }

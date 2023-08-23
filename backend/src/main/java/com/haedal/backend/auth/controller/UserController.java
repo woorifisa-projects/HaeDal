@@ -56,7 +56,7 @@ public class UserController {
         String id = authentication.getName();
         User user = profileService.findById(id);
 
-        return new ResponseEntity<>(ProfileResponse.profileInfoFrom(user), HttpStatus.OK);
+        return new ResponseEntity<>(ProfileResponse.userNameInfoFrom(user), HttpStatus.OK);
     }
 
 
