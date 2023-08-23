@@ -17,7 +17,7 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Value("${jwt.token.secret}")
     private String key;
-    private final long expireTimeMs = 1000 * 60 * 60 * 24 * 7L; // 토큰 7일
+    private final long expireTimeMs = 1000 * 60 * 60 * 24L; // 토큰 1일
 
     public UserDto register(UserRegisterRequest request) {
         String id = request.getId();
