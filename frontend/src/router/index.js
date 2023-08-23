@@ -54,10 +54,17 @@ const routes = [
         props: true
       },
       {
+        path: '/recommendedProduct',
+        name: 'recommended_product_list',
+        component: () => import('@/views/RecommendedProduct.vue'),
+        props: true
+      },
+      {
         path: '/mypage',
         name: 'Mypage',
         component: () => import('@/views/MyPage.vue')
     }
+
 
     ],
   }

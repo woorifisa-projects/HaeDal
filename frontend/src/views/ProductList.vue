@@ -26,8 +26,8 @@
     </div>
 
     <div class="container">
-        <v-card class="mx-auto" width="15rem" variant="outlined" v-bind:class="item.productName"
-            v-for="(item, index) in listData" :key="index">
+        <v-card class="mx-auto" width="15rem" v-bind:class="item.productName" v-for="(item, index) in listData"
+            :key="index">
             <v-card-item class="products">
                 <div>
                     <div class="text-h6 mb-1">
@@ -41,7 +41,7 @@
             </v-card-item>
             <v-card-actions>
                 <v-btn variant="outlined" @click=subscribeProduct(item)>
-                    신청하기
+                    가입 하기
                 </v-btn>
             </v-card-actions>
         </v-card>
