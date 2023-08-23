@@ -16,7 +16,7 @@
                     <input type="number" id="startMoney" v-model="formData.startMoney" required>
                 </div>
                 <div>
-                    월 간 구독료 : {{ listData.subscribtion }}
+                    월 간 구독료 : {{ listData.subscription }}
                 </div>
                 <v-btn variant="outlined" type="submit">
                     신청하기
@@ -51,7 +51,8 @@ watchEffect(() => {
         listData.value = res.data
     })
 })
-console.log(listData.value)
+
+console.log(listData);
 
 const formData = {
     accountNumber: '',

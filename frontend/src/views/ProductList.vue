@@ -73,7 +73,7 @@ watchEffect(() => {
             console.log(item)
             listData.value.push(item)
         })
-        console.log(listData)
+        console.log(listData);
     })
 })
 
@@ -93,13 +93,13 @@ const searchForm = () => {
     })
 }
 
-//구독하기 버튼
+//신청하기 버튼
 const subscribeProduct = (item) => {
     const productId = item.productId;
     const productName = item.productName
     console.log(productName);
-
-    if (item.isDeposit === 0) {
+    console.log(item.deposit);
+    if (item.deposit == true) {
         router.push(
             {
                 name: 'subscribeD',
@@ -107,9 +107,9 @@ const subscribeProduct = (item) => {
                     id: productId,
                 }
             })
-    } else {
+    } else if (item.deposit == false) {
         router.push({
-            name: 'subscribeD',
+            name: 'subscribeI',
             params: {
                 id: productId,
             }
@@ -184,11 +184,12 @@ const tema = () => {
     background-color: rgb(238, 238, 238);
     border-radius: 3px;
     margin-right: 1rem;
+    padding: 7px 2rem;
     outline: none;
 }
 
 .search {
-    padding: 0px;
+    padding: 10px;
     text-align: center;
     margin-bottom: 2rem;
 }
