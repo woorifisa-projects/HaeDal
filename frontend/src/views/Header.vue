@@ -1,4 +1,5 @@
 <template>
+  <form @submit.prevent="submit">
   <v-app id="inspire">
     <v-app-bar flat>
       <v-container class="mx-auto d-flex align-center justify-center">
@@ -23,36 +24,29 @@
     <p> {{username}}고객님 환영합니다.</p>
   </div>
   <div v-else>
-    <p>로그인되지 않았습니다.</p>
+    <p></p>
   </div>
 </div>
         
-        
-          <v-btn href="http://localhost:3000/logint"
+          <v-btn 
            class="me-4"
             type="submit"
            >
-             Logout
+           <div v-if="authStore.isLoggedIn">
+            <p>Logout</p>
+          </div>
+            <div v-else>
+              <a href="http://localhost:3000/logint"></a>
+          <p>Login</p>
+          </div>
           </v-btn>
 
-        
-
-        <v-responsive max-width="160">
-          <v-text-field
-            density="compact"
-            flat
-            hide-details
-            label="Search"
-            rounded="lg"
-            single-line
-            variant="solo-filled"
-          ></v-text-field>
-        </v-responsive>
       </v-container>
     </v-app-bar>
 
     
   </v-app>
+  </form>
 </template>
 
 <script setup>
@@ -60,6 +54,7 @@ import { onMounted } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '@/store/app';
 import { ref } from 'vue';
+import router from '@/router';
 
 const username = ref(0);
 const authStore = useAuthStore();
@@ -71,14 +66,30 @@ const links = [
 'MYPAGE',
 ];
 
+const submit = () => {
+  if(authStore.isLoggedIn){
+    console.log("로그아웃되었습니다.");
+        authStore.logout();
+        router.push('/header'); // 예시: 로그인 후 헤더 페이지로 이동
+  }
+  else{
+    console.log(localStorage.getItem('accessToken'));
+    console.log("로그인 페이지로 이동합니다.");
+    router.push('/logint');
+  }
+}
+
+     
+
 onMounted(() => {
 console.log("새로고췸");
+console.log("헤더전역관리토큰입니다"+authStore.accessToken);
 // Local Storage에서 토큰을 가져와서 store에 저장
 const storedToken = localStorage.getItem('accessToken');
 if (storedToken) {
   authStore.loginSuccess(storedToken);
   console.log(localStorage.getItem('accessToken'));
-  // 페이지 로딩 시 사용자 정보 요청 로직 추가 (이전 답변 참고)
+  // 페이지 로딩 시 사용자 정보 요청 로직 추가 
 }
 if(storedToken){
   axios.get("http://localhost:8080/user/alog",{
@@ -89,33 +100,16 @@ if(storedToken){
     .then (response => {
       console.log(response.data);
       console.log(response.data.name);
-      username.value = response.data.name;
+      authStore.setUserName(response.data.name)
+      // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
+      console.log(authStore.username);
+      username.value = authStore.username;
     })
 }
 
-
 });
+
+
 </script>
 
 
-<!-- <script setup>
-  const links = [
-    'Home',
-    'Product',
-    'RECOMMEND',
-    'MYPAGE',
-  ]
-</script>
-
-<script>
-  export default {
-    data: () => ({
-      links: [
-        'Home',
-        'Product',
-        'RECOMMEND',
-        'MYPAGE',
-      ],
-    }),
-  }
-</script> -->
