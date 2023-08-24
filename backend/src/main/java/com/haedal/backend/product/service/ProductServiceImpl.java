@@ -32,7 +32,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findByProductId(Long productId) {
-        return null;
+
+        return productRepository.findByProductId(productId);
+
     }
 
 
@@ -44,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Product findById(Long userId) {
-        return null;
+    public Product findById(Long userId)
+    {
+        return productRepository.findById(userId).orElse(null);
     }
 }

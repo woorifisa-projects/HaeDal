@@ -84,22 +84,6 @@ watchEffect(() => {
     })
 })
 
-// // Axios 인스턴스 생성
-// const axiosInstance = axios.create({
-//     baseURL: 'http://localhost:8080', // 서버의 주소
-//     withCredentials: "true" // CORS 요청에 관련된 설정을 포함
-// })
-
-// watchEffect(() => {
-//     axiosInstance.get('/recommendedProduct').then((res) => {
-//         let tempArr = [...res.data]
-//         tempArr.forEach((item) => {
-//             console.log(item)
-//             listData.value.push(item)
-//         })
-//     })
-// })
-
 //연령대 해당 상품 버튼
 const ageGroup = () => {
     alert("동작 구현하세요");

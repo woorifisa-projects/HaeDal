@@ -69,7 +69,7 @@ public class SubscribeController {
 
 
     @GetMapping("/{productId}")
-    public ProductResponse showSubcribeProduct(@PathVariable Long productId){
+    public ProductResponse showSubcribeProduct(@PathVariable(name = "productId") Long productId){
         Product foundProduct = productService.findByProductId(productId);
         System.out.println(productId + "정보 조회");
         ProductResponse productResponse = ProductResponse.from(foundProduct);
