@@ -65,7 +65,7 @@ public class SubscribeController {
 //            // 유효하지 않은 상품 타입인 경우, 예를 들어 에러 페이지로 리다이렉트
 //            return new RedirectView("/error");
 //        }
-//    }
+//    } ---------------------> 클라이언트에서 해결
 
 
     @GetMapping("/{productId}")

@@ -1,12 +1,7 @@
 package com.haedal.backend.product.repository;
 
-import com.haedal.backend.product.dto.response.ProductResponse;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.model.Tag;
-import com.haedal.backend.profile.model.ServicePurpose;
-import com.haedal.backend.profile.model.UserAgeGroup;
-import com.haedal.backend.subscribe.model.Subscribe;
-import lombok.Getter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -43,22 +38,27 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
     // 사용자 이용목적별로 조회된 추천상품들을, 사용자가 많은 수에 따라 내림차순
-    @Query (value = "select p " +
-            "from Product p " +
-            "join Subscribe s on p.productId = s.product.productId " +
-            "group by p.productId " +
-            "order by COUNT(s.subscribeId) DESC ")
-    List<Product> filterByServicePurpose(List<Product> recommendedServicePurpose);
-
+//    @Query("SELECT p " +
+//            "FROM Product p " +
+//            "JOIN Subscribe s ON p.productId = s.product.productId " +
+//            "WHERE p.productId IN (SELECT r.productId FROM Product r WHERE r IN :recommendedProductIds) " +
+//            "GROUP BY p.productId " +
+//            "ORDER BY COUNT(s) DESC")
+    @Query("SELECT p " +
+            "FROM Product p " +
+            "JOIN Subscribe s ON p.productId = s.product.productId " +
+            "WHERE p.productId IN :recommendedProductIds " + // Removed the subquery
+            "GROUP BY p.productId " +
+            "ORDER BY COUNT(s) DESC")
+    List<Product> filterByServicePurpose(@Param("recommendedProductIds") List<Long> recommendedProductIds);
 
 
     // 사용자 이용목적별로 조회된 추천상품들을, 사용자가 많은 수에 따라 내림차순
-    @Query (value = "select p " +
-            "from Product p " +
-            "join Subscribe s on p.productId = s.product.productId " +
-            "group by p.productId " +
-            "order by COUNT(s.subscribeId) DESC ")
-    List<Product> filterByUserAgeGroup(List<Product> recommendedUserAgeGroup);
+//    @Query("SELECT p " +
+//            "FROM Product p " +
+//            "JOIN Subscribe s ON p.productId = s.product.productId " +
+//            "WHERE p.productId IN (SELECT r.productId FROM Product r WHERE r IN :recommendedServicePurpose) " +
+//            "GROUP BY p.productId " +
+//            "ORDER BY COUNT(s) DESC")
+//    List<Product> filterByUserAgeGroup(@Param("recommendedServicePurpose") List<Long> recommendedUserAgeGroup);
 }
-
-
