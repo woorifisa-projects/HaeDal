@@ -10,6 +10,7 @@ import com.haedal.backend.profile.service.ProfileService;
 import com.haedal.backend.subscribe.dto.response.SubscribeResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.service.SubscribeService;
+import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequestMapping("/subscribe")
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class SubscribeController {
     private SubscribeService subscribeService;
     private ProfileService profileService;
@@ -66,9 +68,18 @@ public class SubscribeController {
 //    }
 
 
+    @GetMapping("/{productId}")
+    public ProductResponse showSubcribeProduct(@PathVariable Long productId){
+        Product foundProduct = productService.findByProductId(productId);
+        System.out.println(productId + "정보 조회");
+        ProductResponse productResponse = ProductResponse.from(foundProduct);
+        return productResponse;
+    }
+
+
     //상품 신청 페이지 '신청'버튼 클릭
     @PostMapping("/{productId}/*")
-    public ResponseEntity<String> subscribeIproduct(@PathVariable Long productId,  @RequestBody Map<String, String> requestData){
+    public ResponseEntity<String> subscribeproduct(@PathVariable Long productId,  @RequestBody Map<String, String> requestData){
         //TODO : 인증 관련 공부 이후, userId를 인증으로 수정, 처리합니다.
         User user = profileService.findById(1L);
 
@@ -86,7 +97,6 @@ public class SubscribeController {
             System.out.println(saveSubscribe);
             return ResponseEntity.ok("신청이 완료되었습니다.");
         } else{
-            //아닐 경우 다시 신청페이지로 이동
             return ResponseEntity.badRequest().body("신청 정보가 올바르지 않습니다.");
         }
     }

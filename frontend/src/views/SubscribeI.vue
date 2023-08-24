@@ -1,23 +1,27 @@
 <template>
     <div class=submitForm>
         <form @submit.prevent="submitForm">
-            <p>ㅇㅇㅇ상품 가입</p>
-            <div>
-                <label for="accountNumber">계좌번호</label>
-                <input type="text" id="accountNumber" v-model="formData.accountNumber" required>
+            <h3>{{ listData.productName }} 상품 신청</h3>
+            <div class=datas>
+                <div>
+                    <label for="accountNumber">계좌번호</label>
+                    <input type="text" id="accountNumber" v-model="formData.accountNumber" required>
+                </div>
+                <div>
+                    <label for="authenticationNumber">인증번호</label>
+                    <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
+                </div>
+                <div>
+                    <label for="startMoney">시작금액</label>
+                    <input type="number" id="startMoney" v-model="formData.startMoney" required>
+                </div>
+                <div>
+                    월 간 구독료 : {{ listData.subscription }} 원
+                </div>
+                <v-btn variant="outlined" type="submit">
+                    신청하기
+                </v-btn>
             </div>
-            <div>
-                <label for="authenticationNumber">인증번호</label>
-                <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
-            </div>
-            <div>
-                <label for="startMoney">시작금액</label>
-                <input type="number" id="startMoney" v-model="formData.startMoney" required>
-
-            </div>
-            <v-btn variant="outlined" type="submit">
-                신청하기
-            </v-btn>
         </form>
     </div>
 </template>
@@ -28,17 +32,34 @@ import { ref, watchEffect } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import router from '../router'
 
-//const currentPath = window.location.pathname
-//const productIdMatch = currentPath.match(/\/subscribe\/(\d+)\/I/);
-//const productId = productIdMatch ? productIdMatch[1] : '';
+
+// Axios 인스턴스 생성
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8080', // 서버의 주소
+    withCredentials: "true" // CORS 요청에 관련된 설정을 포함
+})
+
+const listData = ref({});
+
+const route = useRoute();
+const productId = route.params.id;
+const currentPath = `/subscribe/${productId}`;
+
+watchEffect(() => {
+    axiosInstance.get(`${currentPath}`).then((res) => {
+        console.log(res.data)
+        listData.value = res.data
+    })
+})
+
+console.log(listData);
+
 const formData = {
     accountNumber: '',
     authenticationNumber: '',
     startMoney: ''
 };
 
-const route = useRoute();
-const productId = route.params.id;
 
 const submitForm = () => {
     const url = `http://localhost:8080/subscribe/${productId}/I`;

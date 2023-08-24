@@ -17,12 +17,13 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Value("${jwt.token.secret}")
     private String key;
-    private final long expireTimeMs = 1000 * 60 * 60 * 24 * 7L; // 토큰 7일
+    private final long expireTimeMs = 1000 * 60 * 60 * 24L; // 토큰 1일
 
     public UserDto register(UserRegisterRequest request) {
+        String id = request.getId();
         userRepository.findById(request.getId())
                 .ifPresent(user -> {
-                    throw new RuntimeException();
+                    throw new RuntimeException(id + "는 이미 있습니다.");
                 });
 
         User saveUser = userRepository.save(request.toEntity(bCryptPasswordEncoder.encode(request.getPassword())));

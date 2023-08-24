@@ -3,10 +3,7 @@ package com.haedal.backend.auth.dto.request;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor

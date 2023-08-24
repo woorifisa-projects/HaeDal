@@ -12,7 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity // 웹사이트에 인증 필요기능 생성하는 어노테이션
@@ -47,6 +52,18 @@ public class SecurityConfig {
                                //임시로 전체 허용
         .build();
     }
+
+    //TODO : CORS 에러 때문에 생성, 공부 후 리팩토링
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // 허용할 출처
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE")); // 허용할 HTTP 메서드
+//        configuration.setAllowCredentials(true); // credentials 허용
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
 
     @Bean
