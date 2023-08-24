@@ -67,6 +67,7 @@ public class SubscribeController {
 //        }
 //    }
 
+
     @GetMapping("/{productId}")
     public ProductResponse showSubcribeProduct(@PathVariable Long productId){
         Product foundProduct = productService.findByProductId(productId);

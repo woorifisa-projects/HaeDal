@@ -50,9 +50,11 @@ public class Product {
     private List<Subscribe> subscribers; // 한 개의 상품에 몇 명의 고객들이 가입했는지 list
 
     @Column(name = "is_deposit")
-    private boolean isDeposit; // 예금, 적금 타입 확인용 컬럼(0=예금, 1=적금)
+    private boolean isDeposit; // 예금, 적금 타입 확인용 컬럼(0:적금 1:예금)
 
-    @Column(name = "subscription", nullable = true)
-    private int subscription; // 월 납입금액(구독료)
+
+    @Column(name = "subscription")
+    private int subscription; // 월 납입금액
+
 
 }
