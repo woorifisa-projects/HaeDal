@@ -1,11 +1,10 @@
 package com.haedal.backend.product.service;
 
 
-import com.haedal.backend.product.dto.response.ProductResponse;
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.model.Tag;
 import com.haedal.backend.product.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -31,9 +30,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public Product findByProductId(Long productId)
-    {
-        return productRepository.findByProductId(productId);
+    @Override
+    public Product findByProductId(Long productId) {
+        return null;
     }
 
 
@@ -41,6 +40,8 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findByProductNameLike(String productName){
         return productRepository.findByProductNameLike(productName);
     }
+
+
 
     @Override
     public Product findById(Long userId) {

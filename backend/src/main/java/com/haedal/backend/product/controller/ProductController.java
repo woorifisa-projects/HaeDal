@@ -4,6 +4,7 @@ import com.haedal.backend.product.dto.response.ProductResponse;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.model.Tag;
 import com.haedal.backend.product.service.ProductService;
+import com.haedal.backend.product.service.ProductServiceImpl;
 import com.haedal.backend.profile.dto.response.ProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;

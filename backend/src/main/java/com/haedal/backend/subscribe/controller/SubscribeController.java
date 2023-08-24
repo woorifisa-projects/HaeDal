@@ -65,6 +65,7 @@ public class SubscribeController {
 //        }
 //    }
 
+
     //상품 신청 페이지 '신청'버튼 클릭
     @PostMapping("/{productId}/*")
     public ResponseEntity<String> subscribeIproduct(@PathVariable Long productId,  @RequestBody Map<String, String> requestData){
