@@ -1,7 +1,6 @@
 package com.haedal.backend.product.service;
 
 import com.haedal.backend.auth.model.User;
-import com.haedal.backend.product.dto.response.ProductResponse;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.repository.ProductRepository;
 import com.haedal.backend.profile.model.ServicePurpose;
@@ -12,7 +11,6 @@ import com.haedal.backend.subscribe.service.SubscribeService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,6 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
     // 사용자의 자산에 따라, 상품을 추천(상위 랭킹 반영 전)
     public List<Product> filterProductsByAsset(Long userId) {
         // TODO: 충분한 공부 후, 로그인 로직 구현하기
-
         // 로그인한 사용자의 자산정보 가져오기
         User user = profileService.findById(userId);
         Long userAsset = user.getAsset();
@@ -69,10 +66,8 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
     }
 
 
-
-
     // 사용자의 이용목적에 따라, 상품을 추천(상위 랭킹 반영 전)
-    public List<Product> filterProductsByServicePurpose(Long userId) {
+    public List<Long> filterProductsByServicePurpose(Long userId) {
 
         // 로그인한 사용자의 이용목적 가져오기
         User user = profileService.findById(userId);
@@ -80,90 +75,69 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
 
         // 상품 전체정보 가져오기
         List<Product> products = productRepository.findAll();
-        List<Product> recommendedProducts = new ArrayList<>();
-
+        List<Long> recommendedProductIds = new ArrayList<>();
 
         // 이용목적별 전체 추천상품 가져오기
-        //   MOKDON,
-        //    FORCAR,
-        //    FORHOUSE,
-        //    OTHERS
         for (Product product : products) {
             ServicePurpose productServicePurpose = product.getServicePurpose();
 
-            System.out.println(userServicePurpose);
-            System.out.println(productServicePurpose);
-
             // 사용자 이용목적과 상품의 이용목적이 같다면, 추천상품 조회
             if (userServicePurpose == productServicePurpose) {
-                recommendedProducts.add(product);
+                recommendedProductIds.add(product.getProductId());
             }
         }
-
-        for(Product product : recommendedProducts){
-            System.out.println("저장된값 : " + product);
-        }
-        return recommendedProducts;
+        return recommendedProductIds;
     }
 
 
 
     // 사용자의 연령대에 따라, 상품을 추천(상위 랭킹 반영 전)
-    public List<Product> filterProductsByUserAgeGroup(Long userId) {
-
-
-        // 로그인한 사용자의 연령대 정보 가져오기
-        User user = profileService.findById(userId);
-        UserAgeGroup userServiceUserAgeGroup = user.getUserAgeGroup();
-
-        // 상품 전체정보 가져오기
-        List<Product> products = productRepository.findAll();
-        List<Product> recommendedProducts = new ArrayList<>();
-
-
-        // 연령대별 전체 추천상품 가져오기
-        // ONE,
-        // TWO,
-        // THREE,
-        // FOUR,
-        // FIVE;
-        for (Product product : products) {
-            UserAgeGroup productUserAgeGroup = product.getUserAgeGroup();
-
-            // 사용자 연령대와 상품의 추천연령대가 같다면, 추천상품 조회
-            if (userServiceUserAgeGroup == productUserAgeGroup) {
-                recommendedProducts.add(product);
-            } else {
-                return null;
-            }
-        }
-
-        return recommendedProducts;
-    }
-
-
-
-//    @Override
-//    public List<Product> filterByAsset(List<Product> products) {
+//    public List<Product> filterProductsByUserAgeGroup(Long userId) {
 //
-////        return productRepository.filterByAsset(products);
-//        return null;
+//
+//        // 로그인한 사용자의 연령대 정보 가져오기
+//        User user = profileService.findById(userId);
+//        UserAgeGroup userServiceUserAgeGroup = user.getUserAgeGroup();
+//
+//        // 상품 전체정보 가져오기
+//        List<Product> products = productRepository.findAll();
+//        List<Product> recommendedProducts = new ArrayList<>();
+//
+//
+//        // 연령대별 전체 추천상품 가져오기
+//        // ONE,
+//        // TWO,
+//        // THREE,
+//        // FOUR,
+//        // FIVE;
+//        for (Product product : products) {
+//            UserAgeGroup productUserAgeGroup = product.getUserAgeGroup();
+//
+//            // 사용자 연령대와 상품의 추천연령대가 같다면, 추천상품 조회
+//            if (userServiceUserAgeGroup == productUserAgeGroup) {
+//                recommendedProducts.add(product);
+//            } else {
+//                return null;
+//            }
+//        }
+//
+//        return recommendedProducts;
 //    }
+
 
 //------------- 상위 랭킹 반영 쿼리 -------
     public List<Product> filterByAsset(List<Product> recommendedByAsset) {
         return productRepository.filterByAsset(recommendedByAsset);
     }
 
-    @Override
-    public List<Product> filterByServicePurpose(List<Product> recommendedByServicePurpose) {
-        return productRepository.filterByServicePurpose(recommendedByServicePurpose);
+    public List<Product> filterByServicePurpose(List<Long>recommendedProductIds) {
+        return productRepository.filterByServicePurpose(recommendedProductIds);
     }
 
-    @Override
-    public List<Product> filterByUserAgeGroup(List<Product> recommendedByUserAgeGroup) {
-        return productRepository.filterByUserAgeGroup(recommendedByUserAgeGroup);
-    }
+//    @Override
+//    public List<Product> filterByUserAgeGroup(List<Product> recommendedByUserAgeGroup) {
+//        return productRepository.filterByUserAgeGroup(recommendedByUserAgeGroup);
+//    }
 
 
     // TODO: Subscribe 테이블에서 productId에 해당하는 구독자 수를 조회하여 반환
