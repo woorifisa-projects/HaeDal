@@ -45,7 +45,7 @@
             <div class="d-flex justify-end align-center">
                 <v-card-actions>
                     <v-btn variant="outlined" @click=subscribeProduct(item)>
-                        가입 하기
+                        가입 하기!
                     </v-btn>
                 </v-card-actions>
             </div>
