@@ -28,7 +28,7 @@ public class ProductController {
 
     //상품 전체 리스트 조회
     @GetMapping
-    public List<ProductResponse> getAllproducts() {
+    public List<ProductResponse> getAllproducts( ) {
         List<Product> products  =  productService.findAll();
         List<ProductResponse> productResponse = products.stream()
                 .map(ProductResponse::from)
