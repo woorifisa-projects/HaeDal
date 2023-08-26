@@ -1,5 +1,6 @@
 package com.haedal.backend.auth.model;
 
+import com.haedal.backend.auth.dto.request.UserUpdateRequest;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
 import com.haedal.backend.subscribe.model.Subscribe;
@@ -53,4 +54,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Subscribe> subscribes;
 
+    public void updateProfile(UserUpdateRequest userUpdateRequest)
+    {
+        this.name = userUpdateRequest.getName();
+        this.phoneNumber = userUpdateRequest.getPhoneNumber();
+        this.userAgeGroup = userUpdateRequest.getUserAgeGroup();
+        this.servicePurpose = userUpdateRequest.getServicePurpose();
+        this.accountNumber = userUpdateRequest.getAccountNumber();
+        this.asset = userUpdateRequest.getAsset();
+    }
 }

@@ -63,7 +63,13 @@ const routes = [
         path: '/mypage',
         name: 'Mypage',
         component: () => import('@/views/MyPage.vue')
-    }
+    },
+    {
+      path: '/profile/edit',
+      name: 'profile',
+      component: () => import('@/views/UserProfileEdit.vue')
+  }
+
 
 
     ],

@@ -1,8 +1,11 @@
 package com.haedal.backend.profile.service;
 
+import com.haedal.backend.auth.dto.UserDto;
+import com.haedal.backend.auth.dto.request.UserUpdateRequest;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.profile.repository.ProfileRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -24,4 +27,7 @@ public class ProfileServiceImpl implements ProfileService {
     public User findById(String id) {
         return profileRepository.findById(id);
     }
+
+    @Override
+    public User save(User user) { return profileRepository.save(user); }
 }
