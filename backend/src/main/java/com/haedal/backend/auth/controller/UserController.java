@@ -1,8 +1,10 @@
 package com.haedal.backend.auth.controller;
 
 import com.haedal.backend.auth.dto.UserDto;
+import com.haedal.backend.auth.dto.request.UserIdCheckRequest;
 import com.haedal.backend.auth.dto.request.UserLoginRequest;
 import com.haedal.backend.auth.dto.request.UserRegisterRequest;
+import com.haedal.backend.auth.dto.response.UserIdCheckResponse;
 import com.haedal.backend.auth.dto.response.UserLoginResponse;
 import com.haedal.backend.auth.dto.response.UserRegisterResponse;
 import com.haedal.backend.auth.model.User;
@@ -15,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("http://localhost:3000/")
 @RequestMapping("/user")
@@ -24,6 +28,17 @@ public class UserController {
     private final UserService userService;
     private final ProfileService profileService;
 
+    @GetMapping("/idcheck")
+    public ResponseEntity<String> idCheckExists(@RequestParam("id")String id){
+        Optional<User> user = profileService.findById(id);
+
+        if(user.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("ID already exists");
+        }
+        else{
+            return ResponseEntity.ok("ID available")
+        }
+    }
 
 
     @PostMapping("/register")

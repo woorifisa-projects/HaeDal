@@ -10,5 +10,10 @@
         <module name="backend.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="backend" target="11" />
+      <module name="backend.test" target="11" />
+      <module name="com.haedal.backend.main" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -26,11 +26,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/SignUpView.vue'),
       },
       {
-        path: "logint",
-        name: "LoginT",
-        component: () => import(/* webpackChunkName: "home" */ '@/views/LoginViewTest.vue'),
-      },
-      {
         path: "afterl",
         name: "AfterLogin",
         component: () => import(/* webpackChunkName: "home" */ '@/views/AfterLogin.vue'),
@@ -68,7 +63,17 @@ const routes = [
       path: '/profile/edit',
       name: 'profile',
       component: () => import('@/views/UserProfileEdit.vue')
-  }
+  },
+  {
+    path: '/security',
+    name: 'security',
+    component: () => import('@/views/SecuritySetting.vue')
+},
+{
+  path: '/login',
+  name: 'login',
+  component: () => import('@/views/LoginView.vue')
+},
 
 
 

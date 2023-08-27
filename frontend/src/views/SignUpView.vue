@@ -1,62 +1,77 @@
 <template>
   
   <form @submit.prevent="submit">
-  
-    <v-text-field class="center-text-field"
-      v-model="id.value.value"
-      :counter="10"
-      :error-messages="id.errorMessage.value"
-      label="Id"
+  <v-container class = "register">
+      <v-card
+      class="mx"
+      min-width="450"
+      max-width="900"
+      title="User Registration"
     >
-        <template v-slot:prepend> 
-          <div>아이디</div>
-        </template>
-        <template v-slot:append> 
-        <v-btn>
-          중복체크
-        </v-btn>
-        </template>
+    <v-container>
+      <v-text-field class="center-text-field"
+        v-model="id.value.value"
+        :counter="10"
+        :error-messages="id.errorMessage.value"
+        label="Id"
+      >
+          <template v-slot:prepend> 
+            <div>아이디</div>
+          </template>
+          <template v-slot:append> 
+          <v-btn
+          type="checkId">
+            중복체크
+          </v-btn>
+          </template>
+      </v-text-field>
+
+      <v-text-field
+        v-model="password.value.value"
+        :counter="10"
+        :error-messages="password.errorMessage.value"
+        label="Password"
+      >
+      <template v-slot:prepend> 
+        <div>비밀번호</div>
+      </template>
     </v-text-field>
 
-    <v-text-field
-      v-model="password.value.value"
-      :counter="10"
-      :error-messages="password.errorMessage.value"
-      label="Password"
-    >
-    <template v-slot:prepend> 
-      <div>비밀번호</div>
-    </template>
-  </v-text-field>
 
-
-     <v-text-field
-      v-model="name.value.value"
-      :counter="10"
-      :error-messages="name.errorMessage.value"
-      label="Name"
-    >
-    <template v-slot:prepend> 
-      <div>이름</div>
-         </template>
-  </v-text-field>
-
-    <v-text-field
-      v-model="phoneNumber.value.value"
-      :counter="7"
-      :error-messages="phoneNumber.errorMessage.value"
-      label="Phone Number"
-    >
-    <template v-slot:prepend> 
-      <div>전화번호</div>
-         </template>
+      <v-text-field
+        v-model="name.value.value"
+        :counter="10"
+        :error-messages="name.errorMessage.value"
+        label="Name"
+      >
+      <template v-slot:prepend> 
+        <div>이름</div>
+          </template>
     </v-text-field>
 
-    <!-- <v-text-field
-      v-model="email.value.value"
-      :error-messages="email.errorMessage.value"
-      label="E-mail"
-    ></v-text-field> -->
+      <v-text-field
+        v-model="phoneNumber.value.value"
+        :counter="7"
+        :error-messages="phoneNumber.errorMessage.value"
+        label="Phone Number"
+      >
+      <template v-slot:prepend> 
+        <div>전화번호</div>
+          </template>
+      </v-text-field>
+
+    </v-container>
+    </v-card>
+
+
+    <v-card
+    class="mx"
+    min-width="450"
+    max-width="900"
+    title="account Registration"
+  >
+  <v-container>
+
 
     <v-select
       v-model="userAgeGroup.value.value"
@@ -64,6 +79,7 @@
       :error-messages="userAgeGroup.errorMessage.value"
       label="Age"
     >
+
     <template v-slot:prepend> 
       <div>연령대</div>
          </template>
@@ -131,7 +147,21 @@
     <v-btn @click="handleReset">
       취소
     </v-btn>
+  </v-container>
 
+<v-divider></v-divider>
+
+<v-card-actions>
+  <v-spacer></v-spacer>
+
+  <v-btn color="success">
+    Complete Registration
+
+    <v-icon icon="mdi-chevron-right" end></v-icon>
+  </v-btn>
+</v-card-actions>
+</v-card>
+</v-container>
     
   <div class="text-center">
     <v-btn
@@ -173,7 +203,7 @@
   },
   closeDialog() {
     dialog.isOpen.value = false; // 다이얼로그 닫기
-    location.href = "http://localhost:3000/logint"
+    location.href = "http://localhost:3000/login"
   }
 };
 
@@ -264,6 +294,20 @@
     
   }
 
+  const checkId = () => {
+    const idcheck = values.id;
+    axios.get("http://localhost:8080/user/idcheck",idcheck)
+    .then(response => {
+      console.log(response.data);
+      dialog.openDialog();
+      console.log("모달창띄웟다");
+    })
+    
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
   const submit = handleSubmit(values => {
     
     const ageEnum = mapToAgeEnum(values.userAgeGroup);
@@ -291,8 +335,8 @@
 </script>
 
 <style lang="scss" scoped>
-.center-text-field {
+.register{
   display: flex;
-  flex-direction: column; 
+  flex-direction: row;
 }
 </style>

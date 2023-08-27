@@ -4,7 +4,7 @@
     <div class = "title">
         개인정보 수정
     </div>
-       <v-text-field
+       <v-text-field class = "name"
         v-model="name.value.value"
         :counter="10"
         :error-messages="name.errorMessage.value"
@@ -81,15 +81,8 @@
            </template>
       </v-text-field>
   
-      <v-checkbox
-        v-model="checkbox.value.value"
-        :error-messages="checkbox.errorMessage.value"
-        value="1"
-        label="개인정보 처리에 동의합니다."
-        type="checkbox"
-      ></v-checkbox>
   
-      <v-btn
+      <v-btn 
         class="me-4"
         type="submit"
       >
@@ -161,10 +154,6 @@
         servicePurpose (value) {
           if (value) return true
           return 'servicePurpose an item.'
-        },
-        checkbox (value) {
-          if (value === '1') return true
-          return 'Must be checked.'
         },
       },
     })
@@ -284,6 +273,7 @@ if(storedToken){
     flex-direction: column;
     align-items: center;
   }
+
   .center-text-field {
     display: flex;
     flex-direction: column; 
