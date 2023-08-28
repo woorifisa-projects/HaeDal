@@ -70,7 +70,7 @@ const searchTerm = ref('');
 
 
 watchEffect(() => {
-    axios.get('/products').then((res) => {
+    axios.get('http://15.164.189.153:8080/products').then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
