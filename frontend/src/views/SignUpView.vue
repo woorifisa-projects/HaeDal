@@ -1,5 +1,5 @@
 <template>
-  
+
   <form @submit.prevent="submit">
   <v-container class = "register">
       <v-card
@@ -15,12 +15,12 @@
         :error-messages="id.errorMessage.value"
         label="Id"
       >
-          <template v-slot:prepend> 
+          <template v-slot:prepend>
             <div>아이디</div>
           </template>
-          <template v-slot:append> 
+          <template v-slot:append>
           <v-btn
-          type="checkId">
+          @click="checkId">
             중복체크
           </v-btn>
           </template>
@@ -32,7 +32,7 @@
         :error-messages="password.errorMessage.value"
         label="Password"
       >
-      <template v-slot:prepend> 
+      <template v-slot:prepend>
         <div>비밀번호</div>
       </template>
     </v-text-field>
@@ -44,7 +44,7 @@
         :error-messages="name.errorMessage.value"
         label="Name"
       >
-      <template v-slot:prepend> 
+      <template v-slot:prepend>
         <div>이름</div>
           </template>
     </v-text-field>
@@ -55,7 +55,7 @@
         :error-messages="phoneNumber.errorMessage.value"
         label="Phone Number"
       >
-      <template v-slot:prepend> 
+      <template v-slot:prepend>
         <div>전화번호</div>
           </template>
       </v-text-field>
@@ -80,7 +80,7 @@
       label="Age"
     >
 
-    <template v-slot:prepend> 
+    <template v-slot:prepend>
       <div>연령대</div>
          </template>
     </v-select>
@@ -91,7 +91,7 @@
       :error-messages="servicePurpose.errorMessage.value"
       label="purpose"
     >
-    <template v-slot:prepend> 
+    <template v-slot:prepend>
       <div>이용목적</div>
          </template>
     </v-select>
@@ -102,7 +102,7 @@
       :error-messages="accountNumber.errorMessage.value"
       label="Account Number"
     >
-    <template v-slot:prepend> 
+    <template v-slot:prepend>
       <div>계좌번호</div>
          </template>
     </v-text-field>
@@ -113,7 +113,7 @@
       :error-messages="asset.errorMessage.value"
       label="Asset"
     >
-    <template v-slot:prepend> 
+    <template v-slot:prepend>
       <div>자산</div>
          </template>
     </v-text-field>
@@ -124,7 +124,7 @@
       :error-messages="authNumber.errorMessage.value"
       label="Account Number"
     >
-    <template v-slot:prepend> 
+    <template v-slot:prepend>
       <div>계좌 인증번호</div>
          </template>
     </v-text-field>
@@ -162,7 +162,7 @@
 </v-card-actions>
 </v-card>
 </v-container>
-    
+
   <div class="text-center">
     <v-btn
       color="primary"
@@ -172,7 +172,7 @@
     </v-btn>
 
     <v-dialog
-      v-model="dialog.isOpen.value" 
+      v-model="dialog.isOpen.value"
       width="auto"
     >
       <v-card>
@@ -194,6 +194,7 @@
 <script setup>
   import { ref } from 'vue'
   import axios from 'axios'
+  import { defineRule } from 'vee-validate';
   import { useField, useForm } from 'vee-validate'
 
   const dialog = {
@@ -207,12 +208,28 @@
   }
 };
 
+defineRule('customIdRule', async () => {
+  if (id(value)?.length >= 2) {
+    console.log(id.value.value);
+    // 서버에 아이디 중복 체크 요청 보내기
+    const response = await axios.get(`http://localhost:8080/user/idcheck?id=${value}`);
+
+    if (response.data.exists) {
+      return 'Id already exists'; // 아이디가 이미 존재하는 경우 오류 메시지 반환
+    } else {
+      return true; // 아이디가 존재하지 않는 경우 유효성 통과
+    }
+  }
+
+  return 'Id needs to be at least 2 characters.';
+});
+
+
   const { handleSubmit, handleReset } = useForm({
     validationSchema: {
-      id (value) {
-        if (value?.length >= 2) return true
-        return 'Id needs to be at least 2 characters.'
-      },
+      id:[ {
+        customIdRule: true
+      }],
       password (value) {
         if (value?.length >= 2) return true
         return 'password needs to be at least 2 characters.'
@@ -291,25 +308,28 @@
   const changeItems = () =>{
     if(values.value.items === '10대'){
     }
-    
+
   }
 
   const checkId = () => {
-    const idcheck = values.id;
-    axios.get("http://localhost:8080/user/idcheck",idcheck)
+    const idcheck = id.value.value;
+    console.log(idcheck);
+    axios.get(`http://localhost:8080/user/idcheck?id=${idcheck}`)
     .then(response => {
       console.log(response.data);
-      dialog.openDialog();
-      console.log("모달창띄웟다");
     })
-    
+
     .catch(error => {
-      console.error(error);
+      console.log("아이디이미있단");
+      //  console.error(error);
+      const serverErrorMessage = '아이디가 이미 존재합니다.'; // 서버 오류 메시지 설정
+      id.setErrors({ id: serverErrorMessage });
+
     });
   }
 
   const submit = handleSubmit(values => {
-    
+
     const ageEnum = mapToAgeEnum(values.userAgeGroup);
     const purposeEnum = mapToPurposeEnum(values.servicePurpose);
 
@@ -322,7 +342,7 @@
       console.log(response.data);
       dialog.openDialog();
       console.log("모달창띄웟다");
-      
+
     })
     // POST 요청 실패 시 로직
     .catch(error => {

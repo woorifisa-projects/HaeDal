@@ -11,7 +11,7 @@
         <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
                 <v-btn @click="viewAll">
-                    전체 상품 수정되었다.
+                    전체 상품
                 </v-btn>
 
                 <v-btn @click="financial">
@@ -61,16 +61,16 @@ const listData = ref([]);
 const searchTerm = ref('');
 
 // Axios 인스턴스 생성
-// const axiosInstance = axios.create({
-//     // baseURL: 'http://localhost:8080', // 서버의 주소
-//     // baseURL: 'http://15.164.189.153:8080',
-//     withCredentials: "true" // CORS 요청에 관련된 설정을 포함
-// })
+const axiosInstance = axios.create({
+    // baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'http://15.164.189.153:8080',
+    // withCredentials: true // CORS 요청에 관련된 설정을 포함
+})
 
 
 
 watchEffect(() => {
-    axios.get('http://15.164.189.153:8080/products').then((res) => {
+    axiosInstance.get('/products').then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
@@ -96,7 +96,7 @@ const searchForm = () => {
     })
 }
 
-//신청하기 버튼
+//가입하기 버튼
 const subscribeProduct = (item) => {
     const productId = item.productId;
     const productName = item.productName

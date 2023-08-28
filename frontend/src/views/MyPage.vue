@@ -1,5 +1,5 @@
 <template class = "mypage">
-  <navigation-bar></navigation-bar>
+  <navigation-bar>  </navigation-bar>
     <v-card
       class="mx-auto"
       max-width="400"

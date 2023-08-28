@@ -58,7 +58,7 @@ const routes = [
         props: true
       },
       {
-        path: '/recommendedProduct',
+        path: '/recommend',
         name: 'recommended_product_list',
         component: () => import('@/views/RecommendedProduct.vue'),
         props: true

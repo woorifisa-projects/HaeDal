@@ -12,6 +12,8 @@ import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.service.SubscribeService;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -79,10 +81,11 @@ public class SubscribeController {
 
     //상품 신청 페이지 '신청'버튼 클릭
     @PostMapping("/{productId}/*")
-    public ResponseEntity<String> subscribeproduct(@PathVariable Long productId,  @RequestBody Map<String, String> requestData){
+    public ResponseEntity<String> subscribeproduct(Authentication authentication , @PathVariable Long productId, @RequestBody Map<String, String> requestData){
         //TODO : 인증 관련 공부 이후, userId를 인증으로 수정, 처리합니다.
-        User user = profileService.findById(1L);
-
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+        System.out.println(requestData);
         Product foundProduct = productService.findByProductId(productId);
 
         System.out.println(productId + " 접근 성공했다.");

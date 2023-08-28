@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-layout class = "navigation">
+    <v-layout class = "navigation" >
       <v-navigation-drawer
         class="bg-deep-purple"
         theme="dark"
@@ -21,7 +21,7 @@
         </template>
         
       </v-navigation-drawer>
-      <v-main style="height: 45rem;"></v-main>
+      <v-main style="height: 45rem"></v-main>
     </v-layout>
   </v-card>
 </template>
