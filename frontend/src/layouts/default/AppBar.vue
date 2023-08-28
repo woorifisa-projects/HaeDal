@@ -2,11 +2,11 @@
   <form @submit.prevent="submit">
     <v-app-bar flat>
       <v-container class="mx-auto d-flex align-center justify-center">
-        <v-avatar
+        <v-btn icon
           class="me-4 "
           color="grey-darken-1"
           size="32"
-        ></v-avatar>
+        ><v-img src='../../assets/img/Logo.png' alt="Logo Image" /></v-btn>
 
         <v-btn
           v-for="link in links"

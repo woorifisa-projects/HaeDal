@@ -27,13 +27,13 @@
         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
           Password
   
-          <a
+          <!-- <a
             class="text-caption text-decoration-none text-blue"
             href="#"
             rel="noopener noreferrer"
             target="_blank"
           >
-            Forgot login password?</a>
+            Forgot login password?</a> -->
         </div>
   
         <v-text-field

@@ -7,6 +7,8 @@ import com.haedal.backend.profile.repository.ProfileRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
+
 @Service
 public class ProfileServiceImpl implements ProfileService {
 

@@ -5,6 +5,8 @@ import com.haedal.backend.auth.dto.UserDto;
 import com.haedal.backend.auth.dto.request.UserUpdateRequest;
 import com.haedal.backend.auth.model.User;
 
+import java.util.Optional;
+
 
 public interface ProfileService extends CrudService<User,Long>{
 

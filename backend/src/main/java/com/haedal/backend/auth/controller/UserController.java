@@ -30,13 +30,14 @@ public class UserController {
 
     @GetMapping("/idcheck")
     public ResponseEntity<String> idCheckExists(@RequestParam("id")String id){
-        Optional<User> user = profileService.findById(id);
+        User user = profileService.findById(id);
 
-        if(user.isPresent()){
+        if (user != null) {
+            // ID가 이미 존재하는 경우
             return ResponseEntity.status(HttpStatus.CONFLICT).body("ID already exists");
-        }
-        else{
-            return ResponseEntity.ok("ID available")
+        } else {
+            // ID가 존재하지 않는 경우
+            return ResponseEntity.ok("ID available");
         }
     }
 
