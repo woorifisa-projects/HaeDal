@@ -11,7 +11,7 @@
         <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
                 <v-btn @click="viewAll">
-                    전체 상품
+                    전체 상품 수정되었다.
                 </v-btn>
 
                 <v-btn @click="financial">
