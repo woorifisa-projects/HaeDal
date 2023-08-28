@@ -61,7 +61,6 @@ public class ProductController {
             return productResponse;
         }
     }
-
     // 키워드 검색
     @PostMapping("/{search}")
     public List<ProductResponse> searchProduct(@PathVariable String search){
@@ -70,6 +69,7 @@ public class ProductController {
             products = productService.findByProductNameLike("%" + search + "%");
         } else {
             System.out.println("검색어가 없습니다.");
+            System.out.println("테스트용");
         }
 
         List<ProductResponse> productResponse = products.stream()
