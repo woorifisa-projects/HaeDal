@@ -36,7 +36,7 @@
             <p>Logout</p>
           </div>
             <div v-else>
-              <a href="http://localhost:3000/logint"></a>
+              <a href="http://localhost:3000/login"></a>
           <p>Login</p>
           </div>
           </v-btn>
@@ -75,7 +75,7 @@ const submit = () => {
   else{
     console.log(localStorage.getItem('accessToken'));
     console.log("로그인 페이지로 이동합니다.");
-    router.push('/logint');
+    router.push('/login');
   }
 }
 

@@ -1,9 +1,10 @@
 package com.haedal.backend.auth.controller;
 
 import com.haedal.backend.auth.dto.UserDto;
+import com.haedal.backend.auth.dto.request.UserIdCheckRequest;
 import com.haedal.backend.auth.dto.request.UserLoginRequest;
 import com.haedal.backend.auth.dto.request.UserRegisterRequest;
-import com.haedal.backend.auth.dto.response.UserDataResponse;
+import com.haedal.backend.auth.dto.response.UserIdCheckResponse;
 import com.haedal.backend.auth.dto.response.UserLoginResponse;
 import com.haedal.backend.auth.dto.response.UserRegisterResponse;
 import com.haedal.backend.auth.model.User;
@@ -11,11 +12,12 @@ import com.haedal.backend.auth.service.UserService;
 import com.haedal.backend.profile.dto.response.ProfileResponse;
 import com.haedal.backend.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:3000/")
@@ -26,6 +28,18 @@ public class UserController {
     private final UserService userService;
     private final ProfileService profileService;
 
+    @GetMapping("/idcheck")
+    public ResponseEntity<String> idCheckExists(@RequestParam("id")String id){
+        User user = profileService.findById(id);
+
+        if (user != null) {
+            // ID가 이미 존재하는 경우
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("ID already exists");
+        } else {
+            // ID가 존재하지 않는 경우
+            return ResponseEntity.ok("ID available");
+        }
+    }
 
 
     @PostMapping("/register")

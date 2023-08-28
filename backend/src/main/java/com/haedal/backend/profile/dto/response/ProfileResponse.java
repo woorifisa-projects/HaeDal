@@ -1,5 +1,6 @@
 package com.haedal.backend.profile.dto.response;
 
+import com.haedal.backend.auth.dto.UserDto;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
@@ -34,6 +35,17 @@ public class ProfileResponse {
     }
 
     @Builder
+    public ProfileResponse(String name, String phoneNumber, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup, String accountNumber, Long asset, int authNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.servicePurpose = servicePurpose;
+        this.userAgeGroup = userAgeGroup;
+        this.accountNumber = accountNumber;
+        this.asset = asset;
+        this.authNumber = authNumber;
+    }
+
+    @Builder
     public ProfileResponse(String id, String password, String name, String phoneNumber, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup, String accountNumber, Long asset, int authNumber) {
         this.id = id;
         this.password = password;
@@ -56,5 +68,9 @@ public class ProfileResponse {
 
     public static ProfileResponse allUserInfoFrom(User user){
         return new ProfileResponse(user.getId(), user.getPassword(),user.getName(),user.getPhoneNumber(),user.getServicePurpose(),user.getUserAgeGroup(),user.getAccountNumber(),user.getAsset(),user.getAuthNumber());
+    }
+
+    public static ProfileResponse userProfileUpdateFrom(User user){
+        return new ProfileResponse(user.getName(),user.getPhoneNumber(),user.getServicePurpose(),user.getUserAgeGroup(),user.getAccountNumber(),user.getAsset(),user.getAuthNumber());
     }
 }

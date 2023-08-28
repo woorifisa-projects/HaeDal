@@ -14,6 +14,15 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
       },
+      {
+        path: 'home',
+        name: 'Home',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/MainPage.vue'),
+      },
+
 
       {
         path: "header",
@@ -24,11 +33,6 @@ const routes = [
         path: "signup",
         name: "Signup",
         component: () => import(/* webpackChunkName: "home" */ '@/views/SignUpView.vue'),
-      },
-      {
-        path: "logint",
-        name: "LoginT",
-        component: () => import(/* webpackChunkName: "home" */ '@/views/LoginViewTest.vue'),
       },
       {
         path: "afterl",
@@ -63,7 +67,23 @@ const routes = [
         path: '/mypage',
         name: 'Mypage',
         component: () => import('@/views/MyPage.vue')
-    }
+    },
+    {
+      path: '/profile/edit',
+      name: 'profile',
+      component: () => import('@/views/UserProfileEdit.vue')
+  },
+  {
+    path: '/security',
+    name: 'security',
+    component: () => import('@/views/SecuritySetting.vue')
+},
+{
+  path: '/login',
+  name: 'login',
+  component: () => import('@/views/LoginView.vue')
+},
+
 
 
     ],

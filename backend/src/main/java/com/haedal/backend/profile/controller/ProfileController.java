@@ -1,16 +1,21 @@
 package com.haedal.backend.profile.controller;
 
+import com.haedal.backend.auth.dto.UserDto;
+import com.haedal.backend.auth.dto.request.UserUpdateRequest;
+import com.haedal.backend.auth.dto.response.UserUpdateResponse;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.profile.dto.response.ProfileResponse;
 import com.haedal.backend.profile.service.ProfileService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
+
+@Slf4j
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 public class ProfileController {
@@ -36,10 +41,23 @@ public class ProfileController {
     }
 
     @GetMapping("/profile/edit")
-    public ResponseEntity<ProfileResponse> editUserProfile(Authentication authentication){
+    public ResponseEntity<ProfileResponse> showUserProfile(Authentication authentication){
         String id = authentication.getName();
         User user = profileService.findById(id);
         return new ResponseEntity<>(ProfileResponse.allUserInfoFrom(user), HttpStatus.OK);
     }
+
+    @Transactional
+    @PatchMapping("/profile/edit/save")
+    public ResponseEntity<ProfileResponse> UpdateUserProfile(Authentication authentication, @RequestBody UserUpdateRequest userUpdateRequest){
+        log.info("요청들어왔다");
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+        user.updateProfile(userUpdateRequest);
+        profileService.save(user);
+        return new ResponseEntity<>(ProfileResponse.userProfileUpdateFrom(user),HttpStatus.OK);
+    }
+
+
 
 }

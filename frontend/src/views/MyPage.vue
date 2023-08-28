@@ -1,4 +1,5 @@
-<template>
+<template class = "mypage">
+  <navigation-bar></navigation-bar>
     <v-card
       class="mx-auto"
       max-width="400"
@@ -42,6 +43,7 @@ import axios from 'axios';
 import { useAuthStore } from '@/store/app';
 import { ref } from 'vue';
 import router from '@/router';
+import NavigationBar from '@/components/ProfileNavigationBar.vue'
 
 const username = ref(0);
 const phonenumber = ref(0);
@@ -78,5 +80,8 @@ if(storedToken){
 
 
 </script>
+
+<style lang="scss" scoped>
+</style>
 
 
