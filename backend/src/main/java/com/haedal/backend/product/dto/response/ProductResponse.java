@@ -66,7 +66,7 @@ public class ProductResponse {
                 .userAgeGroup(product.getUserAgeGroup())
                 .tag(product.getTag())
                 .productName(product.getProductName())
-                .shortInfo(product.getShortInfo())
+                .longInfo(product.getLongInfo())
                 .interestRate(product.getInterestRate())
                 .isDeposit(product.isDeposit())
                 .subscription(product.getSubscription())
