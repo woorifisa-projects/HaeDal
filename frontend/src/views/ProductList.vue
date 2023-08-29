@@ -26,21 +26,26 @@
     </div>
 
     <div class="container">
-        <v-card class="mx-auto" width="15rem" v-bind:class="item.productName" v-for="(item, index) in listData"
+        <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="(item, index) in listData"
             :key="index">
             <v-card-item class="products">
-                <div>
-                    <div class="text-h6 mb-1">
+                <div style="display: flex;flex-direction: column;align-items: center; ">
+                    <div style="font-size: 20px; font-weight: bold; margin: 1rem 0rem 1.3rem 0rem;">
                         {{ item.productName }}
                     </div>
-                    <div class="text-overline mb-1">
+                    <div style="font-size: 12px; margin-bottom: 1rem; text-align: left;">
                         {{ item.shortInfo }}
                     </div>
-                    <div class="text-caption">{{ item.tag }}</div>
+                    <div class="text-caption"
+                        style="background-color: rgba(0, 162, 255, 0.225); width:4rem; padding:2px; border-radius: 15px; color:rgb(0, 111, 186); font-size:6px; margin-top: 0.3rem;">
+                        {{ item.tag }}
+                    </div>
                 </div>
             </v-card-item>
             <v-card-actions>
-                <v-btn variant="outlined" @click=subscribeProduct(item)>
+                <v-btn
+                    style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem; margin-bottom: 1rem;"
+                    @click=subscribeProduct(item)>
                     가입 하기
                 </v-btn>
             </v-card-actions>
@@ -164,6 +169,7 @@ const tema = () => {
     margin-bottom: 4rem;
 }
 
+
 .mx-auto {
     text-align: center;
     justify-content: center;
@@ -177,23 +183,46 @@ const tema = () => {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(3, minmax(100px, auto));
-    grid-gap: 20px;
-    margin: 10px 20rem 10rem 20rem;
+    grid-gap: 40px;
+    margin: -30px 20rem 10rem 20rem;
+    padding: 1rem;
+    justify-content: center;
 }
 
 .searchProduct {
-    width: 30%;
+    width: 40%;
     height: 100%;
-    background-color: rgb(238, 238, 238);
-    border-radius: 3px;
-    margin-right: 1rem;
-    padding: 7px 2rem;
+    border: 1px solid rgba(128, 128, 128, 0.095);
+    box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.033) inset;
+    background-color: rgba(236, 236, 236, 0.337);
+    border-radius: 10px;
+    margin-top: 2rem;
+    margin-right: 0.6rem;
+    padding: 6px 1rem;
     outline: none;
 }
+
+
+.searchButton {
+    width: 5rem;
+    border-radius: 16px;
+    box-shadow: none;
+    background: rgba(0, 179, 255, 0.826);
+    color: white;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
 
 .search {
     padding: 10px;
     text-align: center;
     margin-bottom: 2rem;
+}
+
+.v-bottom-navigation {
+    background: rgba(0, 179, 255, 0.362);
+    color: black;
+    box-shadow: none;
 }
 </style>
