@@ -4,7 +4,6 @@ import com.haedal.backend.auth.dto.UserDto;
 import com.haedal.backend.auth.dto.request.UserIdCheckRequest;
 import com.haedal.backend.auth.dto.request.UserLoginRequest;
 import com.haedal.backend.auth.dto.request.UserRegisterRequest;
-import com.haedal.backend.auth.dto.response.UserIdCheckResponse;
 import com.haedal.backend.auth.dto.response.UserLoginResponse;
 import com.haedal.backend.auth.dto.response.UserRegisterResponse;
 import com.haedal.backend.auth.model.User;

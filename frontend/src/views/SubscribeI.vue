@@ -31,14 +31,16 @@ import axios from 'axios'
 import { ref, watchEffect } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import router from '../router'
-
+import { useAuthStore } from '@/store/app';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
-    withCredentials: "true" // CORS 요청에 관련된 설정을 포함
+    // baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'http://15.164.189.153:8080',
+    // withCredentials: true // CORS 요청에 관련된 설정을 포함
 })
 
+const authStore = useAuthStore();
 const listData = ref({});
 
 const route = useRoute();
@@ -62,11 +64,16 @@ const formData = {
 
 
 const submitForm = () => {
-    const url = `http://localhost:8080/subscribe/${productId}/I`;
+    const url = `http://15.164.189.153:8080/subscribe/${productId}/I`;
 
     // productId가 유효한 경우에만 요청을 보냅니다.
-    axios.post(url, formData)
+    axios.post(url,formData,
+     {
+      headers: {
+        Authorization: `Bearer ${authStore.accessToken}`
+    }})
         .then(response => {
+            console.log(authStore.accessToken);
             console.log('신청 성공', response);
             router.push(/*TODO : 성공 화면 라우터 연결 */); // 성공한 경우, 리다이렉트 또는 다른 처리를 수행합니다.
         })

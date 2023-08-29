@@ -26,14 +26,6 @@
   
         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
           Password
-  
-          <!-- <a
-            class="text-caption text-decoration-none text-blue"
-            href="#"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Forgot login password?</a> -->
         </div>
   
         <v-text-field
@@ -73,8 +65,6 @@
           <a
             class="text-blue text-decoration-none"
             href="http://localhost:3000/signup"
-            rel="noopener noreferrer"
-            target="_blank"
           >
             Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
           </a>
@@ -129,8 +119,10 @@ const onSubmit = handleSubmit(values => {
 
         console.log("전역관리토큰입니다"+authStore.accessToken);
 
+
+
         // 로그인 후 페이지 이동
-        router.push('/home'); // 예시: 로그인 후 헤더 페이지로 이동
+        router.push('/home'); 
 
       })
       // POST 요청 실패 시 로직
