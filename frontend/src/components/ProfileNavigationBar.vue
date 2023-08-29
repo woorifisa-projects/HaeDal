@@ -21,7 +21,6 @@
         </template>
         
       </v-navigation-drawer>
-  
 
 </template>
 
