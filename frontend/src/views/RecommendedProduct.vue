@@ -39,7 +39,7 @@
                             최소 가입 금액 : {{ item.requiredStartMoney }}
                         </span>
                     </div>
-                    <div class="text-caption">{{ item.shortInfo }}설명설명 얄라얄라 긴 설명</div>
+                    <div class="text-caption">{{ item.longInfo }}</div>
                 </div>
             </v-card-item>
             <div class="d-flex justify-end align-center">
