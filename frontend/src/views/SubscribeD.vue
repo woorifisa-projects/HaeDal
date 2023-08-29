@@ -30,11 +30,15 @@ import { ref, watchEffect } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import router from '../router'
 import { defineProps } from 'vue';
+import { useAuthStore } from '@/store/app';
+
+const authStore = useAuthStore();
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
-    withCredentials: "true" // CORS 요청에 관련된 설정을 포함
+    // baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'http://15.164.189.153:8080',
+    // withCredentials: true // CORS 요청에 관련된 설정을 포함
 })
 
 const listData = ref({});
@@ -60,9 +64,14 @@ const formData = {
 
 const submitForm = () => {
     const url = `http://localhost:8080/subscribe/${productId}/D`;
-    console.log(productId);
 
-    axios.post(url, formData)
+
+// productId가 유효한 경우에만 요청을 보냅니다.
+axios.post(url,formData,
+ {
+  headers: {
+    Authorization: `Bearer ${authStore.accessToken}`
+}}, )
         .then(response => {
             console.log('신청 성공', response);
             alert("신청이 완료 되었습니다.");
@@ -70,6 +79,7 @@ const submitForm = () => {
         })
         .catch(error => {
             console.error('에러 발생', error);
+
             alert("정보가 올바르지 않습니다.");
         });
 };
