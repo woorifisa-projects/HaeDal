@@ -11,6 +11,7 @@ import com.haedal.backend.auth.service.UserService;
 import com.haedal.backend.profile.dto.response.ProfileResponse;
 import com.haedal.backend.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

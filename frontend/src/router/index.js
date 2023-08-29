@@ -88,6 +88,12 @@ const routes = [
   name: 'securitySetting',
   component: () => import('@/views/ForSecuritySetting.vue')
 },
+{
+  path: '/changePW',
+  name: 'changepassword',
+  component: () => import('@/views/ChangePassword.vue')
+},
+
 
 
 

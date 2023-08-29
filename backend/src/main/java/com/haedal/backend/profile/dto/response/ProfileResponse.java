@@ -26,6 +26,12 @@ public class ProfileResponse {
     public ProfileResponse(String name) {
         this.name = name;
     }
+
+    public ProfileResponse(String password, String name) {
+        this.password = password;
+        this.name = name;
+    }
+
     @Builder
     public ProfileResponse(String name, String phoneNumber, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup) {
         this.name = name;
@@ -58,6 +64,7 @@ public class ProfileResponse {
         this.authNumber = authNumber;
     }
 
+
     public static ProfileResponse userNameInfoFrom(User user){
         return new ProfileResponse(user.getName());
     }
@@ -72,5 +79,9 @@ public class ProfileResponse {
 
     public static ProfileResponse userProfileUpdateFrom(User user){
         return new ProfileResponse(user.getName(),user.getPhoneNumber(),user.getServicePurpose(),user.getUserAgeGroup(),user.getAccountNumber(),user.getAsset(),user.getAuthNumber());
+    }
+
+    public static ProfileResponse userCheckPwFrom(User user){
+        return new ProfileResponse(user.getPassword(),user.getName());
     }
 }

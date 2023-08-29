@@ -118,7 +118,19 @@ const onSubmit = handleSubmit(values => {
         authStore.loginSuccess(receivedToken);
 
         console.log("전역관리토큰입니다"+authStore.accessToken);
-
+      
+        axios.get("http://15.164.189.153:8080/user/alog", { // 사용자 이름 pinia에 저장하기위해
+      headers: {
+        Authorization: `Bearer ${receivedToken}`, // 토큰 포함
+      },
+    })
+      .then(response => {
+        console.log(response.data);
+        console.log(response.data.name);
+        authStore.setUserName(response.data.name)
+        // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
+        console.log("오이오이"+authStore.username);
+      })
 
 
         // 로그인 후 페이지 이동

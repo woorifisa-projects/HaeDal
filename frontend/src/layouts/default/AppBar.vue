@@ -71,9 +71,10 @@ const submit = () => {
 
 
 
-onMounted(() => {
+onMounted(() => { //이거쓰면안될듯?
   console.log("새로고췸");
-  console.log("헤더전역관리토큰입니다" + authStore.accessToken);
+  console.log("헤더전역관리토큰입니다" + authStore.accessToken); //이거왜안뜸
+  console.log(authStore.isLoggedIn); //이건뜨는데
   // Local Storage에서 토큰을 가져와서 store에 저장
   const storedToken = localStorage.getItem('accessToken');
   if (storedToken) {
@@ -81,22 +82,8 @@ onMounted(() => {
     console.log(localStorage.getItem('accessToken'));
     // 페이지 로딩 시 사용자 정보 요청 로직 추가 
   }
-  if (storedToken) {
-    // "http://localhost:8080/user/alog"
-    axios.get("http://15.164.189.153:8080/user/alog", {
-      headers: {
-        Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
-      },
-    })
-      .then(response => {
-        console.log(response.data);
-        console.log(response.data.name);
-        authStore.setUserName(response.data.name)
-        // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
-        console.log("오이오이"+authStore.username);
-        username.value = authStore.username;
-      })
-  }
+  console.log(authStore.username+'이게 유저네임 프롬피니아'); //이것도왜안뜸
+  username.value = authStore.username;
 
 });
 
