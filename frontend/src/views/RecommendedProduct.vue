@@ -69,12 +69,12 @@ const listData = ref([]);
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
-    withCredentials: "true" // CORS 요청에 관련된 설정을 포함
+    baseURL: 'http://15.164.189.153:8080', // 서버의 주소
+    // withCredentials: "true" // CORS 요청에 관련된 설정을 포함
 })
 
 watchEffect(() => {
-    axiosInstance.get('/products').then((res) => {
+    axiosInstance.get('/recommendedProduct').then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
@@ -86,16 +86,40 @@ watchEffect(() => {
 
 //연령대 해당 상품 버튼
 const ageGroup = () => {
-    alert("동작 구현하세요");
+    listData.value = [];
+    axiosInstance.get('/recommendedProduct/filter/userAgeGroup').then((res) => {
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+        })
+        console.log(listData);
+    })
 }
 
 // 이용목적 해당 상품 버튼
 const purpose = () => {
-    alert("동작 구현하세요");
+    listData.value = [];
+    axiosInstance.get('/recommendedProduct/filter/servicePurpose').then((res) => {
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+        })
+        console.log(listData);
+    })
 }
 //자산별 해당 상품 버튼
 const asset = () => {
-    alert("동작 구현하세요");
+    listData.value = [];
+    axiosInstance.get('/recommendedProduct').then((res) => {
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+        })
+        console.log(listData)
+    })
 }
 
 
