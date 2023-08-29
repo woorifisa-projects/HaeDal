@@ -130,7 +130,7 @@ const onSubmit = handleSubmit(values => {
         console.log("전역관리토큰입니다"+authStore.accessToken);
 
         // 로그인 후 페이지 이동
-        router.push('/header'); // 예시: 로그인 후 헤더 페이지로 이동
+        router.push('/home'); // 예시: 로그인 후 헤더 페이지로 이동
 
       })
       // POST 요청 실패 시 로직
