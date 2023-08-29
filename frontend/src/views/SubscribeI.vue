@@ -125,7 +125,7 @@ const submitForm = () => {
         .then(response => {
             console.log(authStore.accessToken);
             console.log('신청 성공', response);
-            router.push(/*TODO : 성공 화면 라우터 연결 */); // 성공한 경우, 리다이렉트 또는 다른 처리를 수행합니다.
+            router.push('/success');
         })
         .catch(error => {
             console.error('에러 발생', error);

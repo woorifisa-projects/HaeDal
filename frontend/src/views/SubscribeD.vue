@@ -120,7 +120,7 @@ const submitForm = () => {
         .then(response => {
             console.log('신청 성공', response);
             alert("신청이 완료 되었습니다.");
-            router.push(/*TODO : 성공 화면 라우터 연결 */'/products'); // 성공한 경우, 리다이렉트 또는 다른 처리를 수행합니다.
+            router.push(/*TODO : 성공 화면 라우터 연결 */'/success'); // 성공한 경우, 리다이렉트 또는 다른 처리를 수행합니다.
         })
         .catch(error => {
             console.error('에러 발생', error);
