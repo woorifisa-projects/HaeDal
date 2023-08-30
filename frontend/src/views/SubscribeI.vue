@@ -8,7 +8,7 @@
                 <div>
                     <b>상품 설명</b><br>
                     {{ listData.shortInfo }} <br>
-                    {{ listData.logInfo }}
+                    {{ listData.longInfo }}
                 </div><br class=".mb-6">
                 <div>
                     <b>상품 가입 최소 구독료</b>
@@ -68,9 +68,8 @@ import { useAuthStore } from '@/store/app';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    // baseURL: 'http://localhost:8080', // 서버의 주소
-    baseURL: 'http://15.164.189.153:8080',
-    // withCredentials: true // CORS 요청에 관련된 설정을 포함
+    baseURL: 'http://localhost:8080', // 서버의 주소
+    // baseURL: 'http://15.164.189.153:8080',
 })
 
 const authStore = useAuthStore();
@@ -83,7 +82,11 @@ const productId = route.params.id;
 const currentPath = `/subscribe/${productId}`;
 
 watchEffect(() => {
-    axiosInstance.get(`${currentPath}`).then((res) => {
+    axiosInstance.get(`${currentPath}`, {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
         console.log(res.data)
         listData.value = res.data
     })

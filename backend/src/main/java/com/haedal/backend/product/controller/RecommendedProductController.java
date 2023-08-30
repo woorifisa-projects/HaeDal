@@ -9,6 +9,7 @@ import com.haedal.backend.profile.service.ProfileService;
 import com.haedal.backend.subscribe.service.SubscribeService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Getter
 @RestController
 @RequestMapping("/recommendedProduct")
+@CrossOrigin(origins = {"http://localhost:3000", "http://13.209.167.190"})
 public class RecommendedProductController {
 
     private final RecommendedProductService recommendedProductService;
