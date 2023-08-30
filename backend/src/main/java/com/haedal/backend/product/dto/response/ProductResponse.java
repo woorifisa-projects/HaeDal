@@ -39,7 +39,9 @@ public class ProductResponse {
     private List<Subscribe> subscribers; // 한 개의 상품에 몇 명의 고객들이 가입했는지 list
     private boolean isDeposit; // 예금, 적금 타입 확인용 컬럼(0=예금, 1=적금)
     private int subscription; // 월 납입금액(구독료)
+    private Long maxProductMoney;
 
+    private String accountNumber; //유저 계좌번호를 넘겨주기 위함
 
 
     public static ProductResponse from(Product product)  {
@@ -73,7 +75,6 @@ public class ProductResponse {
                 .build();
         return productResponse;
     }
-
 
 
 }

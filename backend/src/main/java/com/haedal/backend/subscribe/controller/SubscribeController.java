@@ -38,43 +38,32 @@ public class SubscribeController {
         this.productService = productService;
     }
 
-    //상품 신청 버튼 클릭시 상품 종류 인식, 해당 url로 전달 (예, 적금에 따라 다르게 이동해주기 위함)
-    // TODO : url 변경의 경우 클라이언트에서 처리
-//    @PostMapping("/{productId}")
-//    public RedirectView subscribeProduct(@PathVariable Long productId) {
-//
-//        Product foundProduct = productService.findByProductId(productId);
-//
-//        if (foundProduct==null) {
-//            // 상품을 찾을 수 없을 경우, 예를 들어 에러 페이지로 리다이렉트
-//            return new RedirectView("/error");
-//        }
-//
-//        //TODO : 인증 관련 공부 이후, userId를 인증으로 수정, 처리합니다.
-//        User user = profileService.findById(1L);
-//        String userAccount = user.getAccountNumber();
-//        //리다이렉트 된 값들 프론트에 전달
-//        if ("I".equals(foundProduct.getProductType())) {
-//            // 적금 신청 페이지로 리다이렉트
-//            model.addAttribute("product", foundProduct);
-//            return new RedirectView("/" + productId + "/I");
-//            // foundProduct 를 반환하며 "/{productId}/D" 로 이동하도록 동작(redirect)
-//        } else if ("D".equals(foundProduct.getProductType())) {
-//            // 예금 신청 페이지로 리다이렉트
-//            model.addAttribute("product", foundProduct);
-//            return new RedirectView("/" + productId + "/D");
-//        } else {
-//            // 유효하지 않은 상품 타입인 경우, 예를 들어 에러 페이지로 리다이렉트
-//            return new RedirectView("/error");
-//        }
-//    } ---------------------> 클라이언트에서 해결
 
-
+    //신청 상품 정보 표출
     @GetMapping("/{productId}")
-    public ProductResponse showSubcribeProduct(@PathVariable(name = "productId") Long productId){
+    public ProductResponse showSubcribeProduct(Authentication authentication, @PathVariable(name = "productId") Long productId){
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+
         Product foundProduct = productService.findByProductId(productId);
         System.out.println(productId + "정보 조회");
-        ProductResponse productResponse = ProductResponse.from(foundProduct);
+
+        ProductResponse productResponse = ProductResponse.builder().productId(foundProduct.getProductId())
+                .productAsset(foundProduct.getMaxProductMoney())
+                .tag(foundProduct.getTag())
+                .productName(foundProduct.getProductName())
+                .shortInfo(foundProduct.getShortInfo())
+                .longInfo(foundProduct.getLongInfo())
+                .period(foundProduct.getPeriod())
+                .interestRate(foundProduct.getInterestRate())
+                .requiredStartMoney(foundProduct.getRequiredStartMoney())
+                .maxProductMoney(foundProduct.getMaxProductMoney())
+                .isDeposit(foundProduct.isDeposit())
+                .subscription(foundProduct.getSubscription())
+                .accountNumber(user.getAccountNumber())
+                .build();
+
+        System.out.println(productResponse);
         return productResponse;
     }
 
@@ -82,9 +71,10 @@ public class SubscribeController {
     //상품 신청 페이지 '신청'버튼 클릭
     @PostMapping("/{productId}/*")
     public ResponseEntity<String> subscribeproduct(Authentication authentication , @PathVariable Long productId, @RequestBody Map<String, String> requestData){
-        //TODO : 인증 관련 공부 이후, userId를 인증으로 수정, 처리합니다.
+        //인증에 맞춰 정보 수정
         String id = authentication.getName();
         User user = profileService.findById(id);
+
         System.out.println(requestData);
         Product foundProduct = productService.findByProductId(productId);
 
@@ -103,12 +93,5 @@ public class SubscribeController {
             return ResponseEntity.badRequest().body("신청 정보가 올바르지 않습니다.");
         }
     }
-
-//    //예금 신청 페이지 '신청'버튼 클릭
-//    @PostMapping("/{productId}/D")
-//    public void subscribeDProduct(@PathVariable Long productId,  @RequestBody Map<String, String> requestData){
-//        //user의 인증번호와 같고,
-//        //아닐 경우 다시 신청페이지로 이동
-//    }
 
 }

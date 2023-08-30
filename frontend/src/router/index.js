@@ -56,6 +56,11 @@ const routes = [
         name: 'subscribeD',
         component: () => import('@/views/SubscribeD.vue'),
         props: true
+      }, {
+        path: '/success',
+        name: 'success',
+        component: () => import('@/views/SubscribeSuccess'),
+        props: true
       },
       {
         path: '/recommend',
@@ -67,27 +72,27 @@ const routes = [
         path: '/mypage',
         name: 'Mypage',
         component: () => import('@/views/MyPage.vue')
-    },
-    {
-      path: '/profile/edit',
-      name: 'profile',
-      component: () => import('@/views/UserProfileEdit.vue')
-  },
-  {
-    path: '/security',
-    name: 'security',
-    component: () => import('@/views/SecuritySetting.vue')
-},
-{
-  path: '/login',
-  name: 'login',
-  component: () => import('@/views/LoginView.vue')
-},
-{
-  path: '/securitysetting',
-  name: 'securitySetting',
-  component: () => import('@/views/ForSecuritySetting.vue')
-},
+      },
+      {
+        path: '/profile/edit',
+        name: 'profile',
+        component: () => import('@/views/UserProfileEdit.vue')
+      },
+      {
+        path: '/security',
+        name: 'security',
+        component: () => import('@/views/SecuritySetting.vue')
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/LoginView.vue')
+      },
+      {
+        path: '/securitysetting',
+        name: 'securitySetting',
+        component: () => import('@/views/ForSecuritySetting.vue')
+      },
 
 
 
