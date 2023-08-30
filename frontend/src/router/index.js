@@ -72,33 +72,31 @@ const routes = [
         path: '/mypage',
         name: 'Mypage',
         component: () => import('@/views/MyPage.vue')
-    },
-    {
-      path: '/profile/edit',
-      name: 'profile',
-      component: () => import('@/views/UserProfileEdit.vue')
-  },
-  {
-    path: '/security',
-    name: 'security',
-    component: () => import('@/views/SecuritySetting.vue')
-},
-{
-  path: '/login',
-  name: 'login',
-  component: () => import('@/views/LoginView.vue')
-},
-{
-  path: '/securitysetting',
-  name: 'securitySetting',
-  component: () => import('@/views/ForSecuritySetting.vue')
-},
-{
-  path: '/changePW',
-  name: 'changepassword',
-  component: () => import('@/views/ChangePassword.vue')
-},
-
+      },
+      {
+        path: '/profile/edit',
+        name: 'profile',
+        component: () => import('@/views/UserProfileEdit.vue')
+      },
+      {
+        path: '/security',
+        name: 'security',
+        component: () => import('@/views/SecuritySetting.vue')
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/LoginView.vue')
+      },
+      {
+        path: '/securitysetting',
+        name: 'securitySetting',
+        component: () => import('@/views/ForSecuritySetting.vue')
+      },
+      {
+        path: '/changePW',
+        name: 'changepassword',
+        component: () => import('@/views/ChangePassword.vue')
       },
       {
         path: '/profile/edit',

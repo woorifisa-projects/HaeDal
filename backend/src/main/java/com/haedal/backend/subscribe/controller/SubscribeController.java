@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @RequestMapping("/subscribe")
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://13.209.167.190"})
 public class SubscribeController {
     private SubscribeService subscribeService;
     private ProfileService profileService;
