@@ -79,7 +79,7 @@ onMounted(() => {
   if (storedToken) {
     authStore.loginSuccess(storedToken);
     console.log(localStorage.getItem('accessToken'));
-    // 페이지 로딩 시 사용자 정보 요청 로직 추가 
+    // 페이지 로딩 시 사용자 정보 요청 로직 추가
   }
   if (storedToken) {
     // "http://localhost:8080/user/alog"

@@ -54,6 +54,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Subscribe> subscribes;
 
+    public void updatePassword(String password){
+        this.password = password;
+    }
     public void updateProfile(UserUpdateRequest userUpdateRequest)
     {
         this.name = userUpdateRequest.getName();
