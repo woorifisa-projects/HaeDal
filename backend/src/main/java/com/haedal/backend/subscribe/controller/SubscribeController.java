@@ -1,29 +1,23 @@
 package com.haedal.backend.subscribe.controller;
 
 import com.haedal.backend.auth.model.User;
-import com.haedal.backend.auth.repository.UserRepository;
-import com.haedal.backend.auth.service.UserService;
 import com.haedal.backend.product.dto.response.ProductResponse;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.service.ProductService;
 import com.haedal.backend.profile.service.ProfileService;
-import com.haedal.backend.subscribe.dto.response.SubscribeResponse;
+import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.service.SubscribeService;
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
+@Slf4j
 @RequestMapping("/subscribe")
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000", "http://13.209.167.190"})
@@ -92,6 +86,18 @@ public class SubscribeController {
         } else{
             return ResponseEntity.badRequest().body("신청 정보가 올바르지 않습니다.");
         }
+    }
+
+    @GetMapping("/portfolio")
+    public  List<PortfolioResponse>  getUserSubscribeList(Authentication authentication){
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+        Long userId = user.getUserId();
+        log.info("유저아이디 조회전"+userId);
+        List<PortfolioResponse> subscribeList = subscribeService.findSubscriptionsAndProductsByUser(userId);
+        log.info("실행은됨"+userId);
+        System.out.println(subscribeList);
+        return subscribeList;
     }
 
 }
