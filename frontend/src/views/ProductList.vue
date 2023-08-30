@@ -8,7 +8,7 @@
         </div>
     </form>
     <div>
-        <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
+        <v-layout class="overflow-visible" style="height: 56px; box-shadow: none; margin-bottom:30px;">
             <v-bottom-navigation v-model="value" color="teal" grow>
                 <v-btn @click="viewAll">
                     전체 상품
@@ -23,11 +23,18 @@
                 </v-btn>
             </v-bottom-navigation>
         </v-layout>
+        <v-divider :thickness="3" color="info" style="width:60%;     border-style: double;
+    margin: auto;"></v-divider>
     </div>
-
+    <div v-if="listData.length === 0"
+        style="font-size:20px; width:500px; font-weight: bold; color:rgba(0, 179, 255, 0.826); text-align: center; margin:auto; margin-top:80px">
+        😭 관련 상품이 존재하지 않습니다.😭
+    </div>
     <div class="container">
-        <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="(item, index) in listData"
+
+        <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="( item, index ) in  listData "
             :key="index">
+
             <v-card-item class="products">
                 <div style="display: flex;flex-direction: column;align-items: center; ">
                     <div style="font-size: 20px; font-weight: bold; margin: 1rem 0rem 1.3rem 0rem;">
@@ -67,8 +74,8 @@ const searchTerm = ref('');
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
-    // baseURL: 'http://15.164.189.153:8080',
+    // baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'http://15.164.189.153:8080',
     // withCredentials: true // CORS 요청에 관련된 설정을 포함
 })
 
@@ -173,6 +180,9 @@ const tema = () => {
 .mx-auto {
     text-align: center;
     justify-content: center;
+    box-shadow:
+        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+        12px -12px 16px rgba(255, 255, 255, 0.25);
 }
 
 .mx-auto button {
@@ -184,7 +194,7 @@ const tema = () => {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(3, minmax(100px, auto));
     grid-gap: 40px;
-    margin: -30px 20rem 10rem 20rem;
+    margin: 10px 20rem 10rem 20rem;
     padding: 1rem;
     justify-content: center;
 }
@@ -192,11 +202,10 @@ const tema = () => {
 .searchProduct {
     width: 40%;
     height: 100%;
-    border: 1px solid rgba(128, 128, 128, 0.095);
     box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.033) inset;
     background-color: rgba(236, 236, 236, 0.337);
     border-radius: 10px;
-    margin-top: 2rem;
+    margin-top: 1.4rem;
     margin-right: 0.6rem;
     padding: 6px 1rem;
     outline: none;
@@ -221,8 +230,23 @@ const tema = () => {
 }
 
 .v-bottom-navigation {
-    background: rgba(0, 179, 255, 0.362);
-    color: black;
+    background: none;
+    color: rgb(0, 75, 121);
     box-shadow: none;
+}
+
+.v-bottom-navigation .v-bottom-navigation__content>.v-btn {
+    font-size: 15px;
+    font-weight: bolder;
+    transition: inherit;
+    background-color: rgba(0, 179, 255, 0.062);
+    box-shadow:
+        1px 3px 2px 0 rgba(51, 96, 133, 0.252),
+        12px -12px 16px rgba(255, 255, 255, 0.25);
+    width: 100px;
+    border-radius: 0px;
+    margin: -2px 4px;
+    border-radius: 4px;
+
 }
 </style>

@@ -1,55 +1,61 @@
 
 <template>
-    <h2>고객님 맞춤형 상품 추천</h2>
-    <p>고객님께서 제공해주신 정보를 바탕으로 추천해드리는 TOP 3 상품들입니다.</p>
-    <div class="chooseButton">
-        <v-layout class="overflow-visible" style="height: 56px;">
-            <v-bottom-navigation v-model="value">
-                <v-btn @click="ageGroup">
-                    # 연령대
-                    <v-tooltip activator="parent" location="bottom">고객님의 연령대 맞춤 상품을 추천해드립니다!</v-tooltip>
-                </v-btn>
-
-                <v-btn @click="purpose">
-                    # 이용 목적
-                    <v-tooltip activator="parent" location="bottom">고객님의 상품 이용 목적 맞춤 상품을 추천해드립니다!</v-tooltip>
-                </v-btn>
-
-                <v-btn @click="asset">
-                    # 자산별
-                    <v-tooltip activator="parent" location="bottom">고객님의 자산 맞춤 상품을 추천해드립니다!</v-tooltip>
-                </v-btn>
-            </v-bottom-navigation>
-        </v-layout>
-    </div>
-
-    <!--v-for 활용하여 api에서 받아온 정보들 반복해서 보여주면 됩니다!-->
-    <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
-        <p>TOP {{ index + 1 }} </p>
-        <v-card class="mx-auto" max-width="70%">
-            <v-card-item>
-                <div>
-                    <div class="text-h6 mb-1">
-                        {{ item.productName }}
-                    </div>
-                    <div class="text-overline mb-1">
-                        <span>
-                            상품 기간 : {{ item.period }}
-                            금리 : {{ item.interestRate }}
-                            최소 가입 금액 : {{ item.requiredStartMoney }}
-                        </span>
-                    </div>
-                    <div class="text-caption">{{ item.longInfo }}</div>
-                </div>
-            </v-card-item>
-            <div class="d-flex justify-end align-center">
-                <v-card-actions>
-                    <v-btn variant="outlined" @click=subscribeProduct(item)>
-                        가입 하기
+    <div class="top">
+        <h2 style="  font-size: 35px;">고객님 맞춤형 상품 추천</h2>
+        <p style="font-size: 13px; margin-bottom: 30px;">고객님께서 제공해주신 정보를 바탕으로 추천해드리는 TOP 3 상품들입니다.</p>
+        <div class="chooseButton">
+            <v-layout class="overflow-visible" style="height: 56px; margin-bottom: 40px;">
+                <v-bottom-navigation v-model="value">
+                    <v-btn @click="ageGroup">
+                        # 연령대
+                        <v-tooltip activator="parent" location="bottom">고객님의 연령대 맞춤 상품을 추천해드립니다!</v-tooltip>
                     </v-btn>
-                </v-card-actions>
-            </div>
-        </v-card>
+
+                    <v-btn @click="purpose">
+                        # 이용 목적
+                        <v-tooltip activator="parent" location="bottom">고객님의 상품 이용 목적 맞춤 상품을 추천해드립니다!</v-tooltip>
+                    </v-btn>
+
+                    <v-btn @click="asset">
+                        # 자산별
+                        <v-tooltip activator="parent" location="bottom">고객님의 자산 맞춤 상품을 추천해드립니다!</v-tooltip>
+                    </v-btn>
+                </v-bottom-navigation>
+            </v-layout>
+        </div>
+    </div>
+    <div style="margin-bottom: 200px;">
+        <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
+
+            <p
+                style="background-color: rgba(0, 179, 255, 0.362); width: 80px; font-weight: bolder; border-radius: 10px; color:rgb(0, 75, 121);; text-align: center;">
+                TOP {{ index + 1 }} </p>
+
+            <v-card class="mx-auto" max-width="70%" min-width="300px">
+                <v-card-item style="padding: 20px;">
+                    <div>
+                        <div class="text-h5 mb-3" style="font-weight: bolder;">
+                            {{ item.productName }}
+                        </div>
+                        <div class="text-overline mb-3">
+                            <span>
+                                <b>상품 기간 :</b> {{ item.period }}개월,
+                                <b>금리 :</b> {{ item.interestRate }}%,
+                                <b>최소 가입 금액 :</b> {{ item.requiredStartMoney }}원
+                            </span>
+                        </div>
+                        <div class="text-caption">{{ item.longInfo }}</div>
+                    </div>
+                </v-card-item>
+                <div class="d-flex justify-end align-center">
+                    <v-card-actions>
+                        <v-btn class="button-style" @click=subscribeProduct(item)>
+                            가입 하기
+                        </v-btn>
+                    </v-card-actions>
+                </div>
+            </v-card>
+        </div>
     </div>
 </template>
 
@@ -149,17 +155,69 @@ const subscribeProduct = (item) => {
 </script>
 
 <style lang="scss" scoped>
-h2,
+h2 {
+    text-align: center;
+    padding: 100px 0px 4px 0px;
+}
+
 p {
+    margin: auto;
     text-align: center;
 }
 
 #products {
-    margin: 2rem 0rem 1rem 0rem;
+    margin: 4rem 10rem;
+
+}
+
+.top {
+    background: linear-gradient(to bottom, rgba(0, 162, 255, 0.354), rgba(255, 255, 255, 0));
 }
 
 .mx-auto {
     padding: 1rem;
-    margin: 2rem;
+    margin: 1rem 0rem 4rem 0rem;
+    box-shadow:
+        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+        12px -12px 16px rgba(255, 255, 255, 0.25);
+}
+
+.v-bottom-navigation {
+    background: none;
+    color: rgb(0, 149, 255);
+    box-shadow: none;
+}
+
+.v-bottom-navigation button {
+    background: rgba(255, 255, 255, 0.264);
+    box-shadow:
+        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+        12px -12px 16px rgba(255, 255, 255, 0.25);
+    margin-left: 16px;
+    border-radius: 10px;
+    height: 2px;
+}
+
+.v-bottom-navigation .v-bottom-navigation__content>.v-btn {
+    font-size: inherit;
+    font-weight: bolder;
+    height: 3rem;
+    max-width: 168px;
+    min-width: 80px;
+    text-transform: none;
+    transition: inherit;
+    width: 118px;
+    border-radius: 24px;
+}
+
+.button-style {
+    width: 10rem;
+    border-radius: 10px;
+    box-shadow: none;
+    background: rgba(0, 179, 255, 0.826);
+    color: white;
+    margin-top: 14px;
+    font-weight: bolder;
+    font-size: 18px;
 }
 </style>
