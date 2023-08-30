@@ -46,34 +46,33 @@ const authStore = useAuthStore();
 
 
 onMounted(() => {
-console.log("새로고췸");
-// Local Storage에서 토큰을 가져와서 store에 저장
-const storedToken = localStorage.getItem('accessToken');
-console.log("저장된 토큰값 " + authStore.accessToken);
+  console.log("새로고췸");
+  // Local Storage에서 토큰을 가져와서 store에 저장
+  const storedToken = localStorage.getItem('accessToken');
+  console.log("저장된 토큰값 " + authStore.accessToken);
 
-if(storedToken){
+  if (storedToken) {
     console.log("요청전송");
-  axios.get("http://localhost:8080/profile",{
-    headers: {
-    //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
-    Authorization: `Bearer ${storedToken}`
-    },
-  })
-    .then (response => {
-      console.log(response.data);
-      username.value = response.data.name;
-      phonenumber.value = response.data.phoneNumber;
-      userAgeGroup.value = response.data.userAgeGroup;
-      servicePurpose.value = response.data.servicePurpose;
+    axios.get("http://localhost:8080/profile", {
+      headers: {
+        //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
+        Authorization: `Bearer ${storedToken}`
+      },
     })
-}
+      .then(response => {
+        console.log(response.data);
+        username.value = response.data.name;
+        phonenumber.value = response.data.phoneNumber;
+        userAgeGroup.value = response.data.userAgeGroup;
+        servicePurpose.value = response.data.servicePurpose;
+      })
+  }
 
 });
 
 
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 
 
