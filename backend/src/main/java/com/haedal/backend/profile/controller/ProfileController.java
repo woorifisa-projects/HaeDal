@@ -45,6 +45,16 @@ public class ProfileController {
         return new ResponseEntity<>(ProfileResponse.userCheckPwFrom(user),HttpStatus.OK);
     }
 
+    @PatchMapping("/changePW")
+    public ResponseEntity<ProfileResponse> changePassword(Authentication authentication, @RequestBody UserPasswordCheckRequest userPasswordCheckRequest){
+        String password = bCryptPasswordEncoder.encode(userPasswordCheckRequest.getPassword());
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+        user.updatePassword(password);
+        profileService.save(user);
+        return new ResponseEntity<>(ProfileResponse.userCheckPwFrom(user),HttpStatus.OK);
+    }
+
     @GetMapping("/profile")
     public ResponseEntity<ProfileResponse> getUserProfile(Authentication authentication){
         String id = authentication.getName();

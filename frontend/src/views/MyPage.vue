@@ -1,41 +1,33 @@
 <template class = "mypage">
-  <navigation-bar>  </navigation-bar>
-    <v-card
-      class="mx-auto"
-      max-width="400"
-    >
-      <v-img
-        class="align-end text-white"
-        height="200"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        cover
-      >
-        <v-card-title>{{username}}님 환영합니다</v-card-title>
-      </v-img>
-  
-      <v-card-text>
-        <div> 전화번호 : {{phonenumber}} </div>
-      </v-card-text>
-  
-      <v-card-text>
-        <div>연령대 : {{userAgeGroup}}</div>
-      </v-card-text>
+  <navigation-bar> </navigation-bar>
+  <v-card class="mx-auto" max-width="400">
+    <v-img class="align-end text-white" height="200" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
+      <v-card-title>{{ username }}님 환영합니다</v-card-title>
+    </v-img>
 
-      <v-card-text>
-        <div>이용 목적 : {{ servicePurpose }}</div>
-      </v-card-text>
-  
-      <v-card-actions>
-        <v-btn color="orange">
-          Share
-        </v-btn>
-  
-        <v-btn color="orange" href="http://localhost:3000/profile/edit">
-          프로필 수정하기
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </template>
+    <v-card-text>
+      <div> 전화번호 : {{ phonenumber }} </div>
+    </v-card-text>
+
+    <v-card-text>
+      <div>연령대 : {{ userAgeGroup }}</div>
+    </v-card-text>
+
+    <v-card-text>
+      <div>이용 목적 : {{ servicePurpose }}</div>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn color="orange">
+        Share
+      </v-btn>
+
+      <v-btn color="orange" href="http://localhost:3000/profile/edit">
+        프로필 수정하기
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</template>
 
 <script setup>
 import { onMounted } from 'vue';

@@ -6,7 +6,7 @@
         max-width="228"
         src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
       ></v-img>
-  
+
       <v-card
         class="mx-auto pa-12 pb-8"
         elevation="8"
@@ -14,7 +14,7 @@
         rounded="lg"
       >
         <div class="text-subtitle-1 text-medium-emphasis">Account</div>
-  
+
         <v-text-field
           v-model="id.value.value"
           density="compact"
@@ -23,11 +23,11 @@
           variant="outlined"
           :error-messages="id.errorMessage.value"
         ></v-text-field>
-  
+
         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
           Password
         </div>
-  
+
         <v-text-field
           v-model="password.value.value"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -38,7 +38,7 @@
           variant="outlined"
           @click:append-inner="visible = !visible"
         ></v-text-field>
-  
+
         <v-card
           class="mb-12"
           color="surface-variant"
@@ -48,7 +48,7 @@
             Warning: 안내문구다
           </v-card-text>
         </v-card>
-  
+
         <v-btn
          :loading="loading"
           block
@@ -60,7 +60,7 @@
         >
           Log In
         </v-btn>
-  
+
         <v-card-text class="text-center">
           <a
             class="text-blue text-decoration-none"
@@ -113,12 +113,12 @@ const onSubmit = handleSubmit(values => {
         const receivedToken = response.data.token;
 
         localStorage.setItem('accessToken',receivedToken);
-        
+
          // Pinia store를 이용하여 로그인 상태 업데이트
         authStore.loginSuccess(receivedToken);
 
         console.log("전역관리토큰입니다"+authStore.accessToken);
-      
+
         axios.get("http://15.164.189.153:8080/user/alog", { // 사용자 이름 pinia에 저장하기위해
       headers: {
         Authorization: `Bearer ${receivedToken}`, // 토큰 포함
@@ -135,7 +135,7 @@ const onSubmit = handleSubmit(values => {
 
         // 로그인 후 페이지 이동
 
-        router.push('/home'); 
+        router.push('/home');
 
 
       })

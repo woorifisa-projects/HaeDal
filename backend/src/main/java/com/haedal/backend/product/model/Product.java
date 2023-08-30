@@ -18,7 +18,7 @@ public class Product {
     private Long productId; // 상품 id
 
     @Column(name = "max_product_money")
-    private Long maxProductMoney; // 추천을 위한 상품 자산
+    private Long maxProductMoney; // 상품 신청 최대 금액
 
     @Enumerated(EnumType.STRING)
     @Column(name = "service_purpose")
@@ -55,6 +55,5 @@ public class Product {
 
     @Column(name = "subscription")
     private int subscription; // 월 납입금액
-
 
 }

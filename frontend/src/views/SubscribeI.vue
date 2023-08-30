@@ -1,24 +1,57 @@
 <template>
+    <div style="background: linear-gradient(to bottom, rgba(0, 162, 255, 0.354), rgba(255, 255, 255, 0)); height: 160px;">
+    </div>
     <div class=submitForm>
         <form @submit.prevent="submitForm">
-            <h3>{{ listData.productName }} 상품 신청</h3>
+            <h2>{{ listData.productName }} 상품 신청</h2><br class=".mb-8">
             <div class=datas>
                 <div>
-                    <label for="accountNumber">계좌번호</label>
-                    <input type="text" id="accountNumber" v-model="formData.accountNumber" required>
+                    <b>상품 설명</b><br>
+                    {{ listData.shortInfo }} <br>
+                    {{ listData.logInfo }}
+                </div><br class=".mb-6">
+                <div>
+                    <b>상품 가입 최소 구독료</b>
+                    {{ listData.requiredStartMoney }} 원
+                    <br>
+                    <b>상품 가입 최대 구독료</b>
+                    {{ listData.maxProductMoney }} 원
                 </div>
                 <div>
-                    <label for="authenticationNumber">인증번호</label>
+                    <b>금리</b>
+                    {{ listData.interestRate }} %
+                </div>
+                <div>
+                    <b>가입기간</b>
+                    {{ listData.period }} 개월
+                </div>
+                <br>
+                <div>
+                    <b>출금 계좌번호</b>
+                    {{ listData.accountNumber }}
+                </div>
+                <div>
+                    <b><label for="authenticationNumber">인증 번호</label></b>
                     <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
                 </div>
                 <div>
-                    <label for="startMoney">시작금액</label>
+                    <b><label for="startMoney">시작 구독료</label></b>
                     <input type="number" id="startMoney" v-model="formData.startMoney" required>
                 </div>
-                <div>
+                <!-- <div>
                     월 간 구독료 : {{ listData.subscription }} 원
+                </div> -->
+                <div style="margin: 2rem;">
+                    <p style="font-size: 12px;font-weight: 300; margin-bottom: 0;">입력한 시작금액을 바탕으로</p>
+                    <v-btn
+                        style=" font-size: 18px; font-weight: 600; color: rgb(0, 162, 255); padding: 0.4rem 2rem; margin-bottom: 1rem; box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.066) ;"
+                        @click="calculate(formData.startMoney)" type="button">만기시 금액 예상하기
+                    </v-btn>
+                    <p v-show="calculatedAmount !== null && calculatedAmount !== 0"> 만기시 예상 금액은 {{ calculatedAmount }}원
+                        입니다!
+                    </p>
                 </div>
-                <v-btn variant="outlined" type="submit">
+                <v-btn class="button-style" variant="outlined" type="submit">
                     신청하기
                 </v-btn>
             </div>
