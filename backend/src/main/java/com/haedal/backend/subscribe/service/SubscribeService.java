@@ -1,9 +1,8 @@
 package com.haedal.backend.subscribe.service;
 
 
-import com.haedal.backend.product.model.Product;
+import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
-import com.haedal.backend.subscribe.repository.SubscribeRepository;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface SubscribeService extends CrudService<Subscribe, Long> {
 //    List<Product> findByProductId(Product productId);
 
 
-    public Subscribe findById(Long subscribeId);
+    List<PortfolioResponse> findSubscriptionsAndProductsByUser(Long userId);
 
     public Subscribe save(Subscribe subscribe);
 }

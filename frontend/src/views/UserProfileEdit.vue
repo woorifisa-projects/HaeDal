@@ -78,16 +78,19 @@
 
   </form>
 </template>
-  
-<script setup>
-import { onMounted } from 'vue';
-import { ref } from 'vue'
-import axios from 'axios'
-import { useField, useForm } from 'vee-validate'
-import { useAuthStore } from '@/store/app';
 
-const authStore = useAuthStore();
-const username = ref(0);
+  <script setup>
+    import { onMounted } from 'vue';
+    import { ref } from 'vue'
+    import axios from 'axios'
+    import { useField, useForm } from 'vee-validate'
+    import { useAuthStore } from '@/store/app';
+
+    const authStore = useAuthStore();
+    const username = ref(0);
+    let useragegroupchange='';
+    let servicepurposechange='';
+
 
 const dialog = {
   isOpen: ref(false),
@@ -196,40 +199,72 @@ const submit = handleSubmit(values => {
 )
 
 
-onMounted(() => {
-  console.log("새로고췸");
-  console.log("헤더전역관리토큰입니다" + authStore.accessToken);
-  // Local Storage에서 토큰을 가져와서 store에 저장
-  const storedToken = localStorage.getItem('accessToken');
-  if (storedToken) {
-    authStore.loginSuccess(storedToken);
-    console.log(localStorage.getItem('accessToken'));
-    // 페이지 로딩 시 사용자 정보 요청 로직 추가 
-  }
-  if (storedToken) {
-    axios.get("http://localhost:8080/profile/edit", {
-      headers: {
-        Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
-      },
-    })
-      .then(response => {
-        console.log(response.data);
-        name.value.value = response.data.name
-        phoneNumber.value.value = response.data.phoneNumber
-        userAgeGroup.value.value = response.data.userAgeGroup
-        servicePurpose.value.value = response.data.servicePurpose
-        accountNumber.value.value = response.data.accountNumber
-        asset.value.value = response.data.asset
-        authNumber.value.value = response.data.authNumber
+  onMounted(() => {
+console.log("새로고췸");
+console.log("헤더전역관리토큰입니다"+authStore.accessToken);
+// Local Storage에서 토큰을 가져와서 store에 저장
+const storedToken = localStorage.getItem('accessToken');
+if (storedToken) {
+  authStore.loginSuccess(storedToken);
+  console.log(localStorage.getItem('accessToken'));
+  // 페이지 로딩 시 사용자 정보 요청 로직 추가
+}
+if(storedToken){
+  axios.get("http://localhost:8080/profile/edit",{
+    headers: {
+      Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
+    },
+  })
+    .then (response => {
+       switch(response.data.userAgeGroup){
+          case 'ONE':
+          useragegroupchange = '10대'
+          break;
+          case 'TWO':
+          useragegroupchange = '20대'
+          break;
+          case 'THREE':
+          useragegroupchange = '30대'
+          break;
+          case 'FOUR':
+          useragegroupchange = '40대'
+          break;
+          case 'FIVE':
+          useragegroupchange = '50대'
+          break;
 
-      })
-  }
+        }
+        switch(response.data.servicePurpose){
+          case 'MOKDON':
+          servicepurposechange = '목돈 마련'
+          break;
+          case 'FORCAR':
+          servicepurposechange = '자동차 구매'
+          break;
+          case 'FORHOUSE':
+          servicepurposechange = '주택 구매'
+          break;
+          case 'OTHERS':
+          servicepurposechange = '기타'
+          break;
+        }
+      console.log(response.data);
+     name.value.value = response.data.name
+     phoneNumber.value.value =response.data.phoneNumber
+     userAgeGroup.value.value = useragegroupchange
+     servicePurpose.value.value = servicepurposechange
+     accountNumber.value.value = response.data .accountNumber
+     asset.value.value = response.data.asset
+     authNumber.value.value = response.data.authNumber
+
+    })
+}
 
 });
 
 
 </script>
-  
+
 <style lang="scss" scoped>
 .title {
   display: flex;

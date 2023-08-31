@@ -1,12 +1,14 @@
 package com.haedal.backend.subscribe.service;
 
-import com.haedal.backend.product.model.Product;
+import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.repository.SubscribeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
+@Slf4j
 @Service
 public class SubscribeServiceImp implements SubscribeService{
     private SubscribeRepository subscribeRepository;
@@ -15,13 +17,15 @@ public class SubscribeServiceImp implements SubscribeService{
         this.subscribeRepository = subscribeRepository;
     }
 
-
     @Override
-    public Subscribe findById(Long subscribeId) {
-        return subscribeRepository.findById(subscribeId).orElse(null);
+    public List<PortfolioResponse> findSubscriptionsAndProductsByUser(Long userId) {
+        List<Subscribe> result = subscribeRepository.findSubscriptionsAndProductsByUser(userId);
+        return result.stream()
+                .map(PortfolioResponse::from)
+                .collect(Collectors.toList());
     }
 
-//    @Override
+    //    @Override
 //    public List<Product> filterProductsByAsset(Long userId) {
 //        return null;
 //    }
@@ -45,6 +49,5 @@ public class SubscribeServiceImp implements SubscribeService{
     public Subscribe save(Subscribe subscribe){
         return subscribeRepository.save(subscribe);
     }
-
 
 }

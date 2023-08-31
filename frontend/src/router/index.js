@@ -58,6 +58,24 @@ const routes = [
         props: true
       },
       {
+        path: '/subscribe/:id/IforShow',
+        name: 'subscribeIforShow',
+        component: () => import('@/views/SubscribeIforShow.vue'),
+        props: true
+      },
+      {
+        path: '/subscribe/:id/DforShow',
+        name: 'subscribeDforShow',
+        component: () => import('@/views/SubscribeDforShow.vue'),
+        props: true
+      },
+       {
+        path: '/success',
+        name: 'success',
+        component: () => import('@/views/SubscribeSuccess'),
+        props: true
+      },
+      {
         path: '/recommend',
         name: 'recommended_product_list',
         component: () => import('@/views/RecommendedProduct.vue'),
@@ -94,30 +112,17 @@ const routes = [
         component: () => import('@/views/ChangePassword.vue')
       },
       {
-        path: '/profile/edit',
-        name: 'profile',
-        component: () => import('@/views/UserProfileEdit.vue')
+        path: '/portfolio',
+        name: 'portfolio',
+        component: () => import('@/views/Portfolio.vue')
       },
+
       {
-        path: '/security',
-        name: 'security',
-        component: () => import('@/views/SecuritySetting.vue')
-      },
-      {
-        path: '/login',
-        name: 'login',
-        component: () => import('@/views/LoginView.vue')
-      },
-      {
-        path: '/securitysetting',
-        name: 'securitySetting',
-        component: () => import('@/views/ForSecuritySetting.vue')
-      },
-    ],
-  }, {
     path: '/success',
     name: 'success',
     component: () => import('@/views/SubscribeSuccess'),
+       }
+    ]
   }
 ]
 

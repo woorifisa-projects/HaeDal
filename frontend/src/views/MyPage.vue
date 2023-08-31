@@ -42,10 +42,11 @@ const phonenumber = ref(0);
 const userAgeGroup = ref(0);
 const servicePurpose = ref(0);
 const authStore = useAuthStore();
-
-
+let useragegroupchange='';
+let servicepurposechange='';
 
 onMounted(() => {
+  
   console.log("새로고췸");
   // Local Storage에서 토큰을 가져와서 store에 저장
   const storedToken = localStorage.getItem('accessToken');
@@ -60,11 +61,44 @@ onMounted(() => {
       },
     })
       .then(response => {
+        switch(response.data.userAgeGroup){
+          case 'ONE':
+          useragegroupchange = '10대'
+          break;
+          case 'TWO':
+          useragegroupchange = '20대'
+          break;
+          case 'THREE':
+          useragegroupchange = '30대'
+          break;
+          case 'FOUR':
+          useragegroupchange = '40대'
+          break;
+          case 'FIVE':
+          useragegroupchange = '50대'
+          break;
+
+        }
+        switch(response.data.servicePurpose){
+          case 'MOKDON':
+          servicepurposechange = '목돈 마련'
+          break;
+          case 'FORCAR':
+          servicepurposechange = '자동차 구매'
+          break;
+          case 'FORHOUSE':
+          servicepurposechange = '주택 구매'
+          break;  
+          case 'OTHERS':
+          servicepurposechange = '기타'
+          break;
+        }
+
         console.log(response.data);
         username.value = response.data.name;
         phonenumber.value = response.data.phoneNumber;
-        userAgeGroup.value = response.data.userAgeGroup;
-        servicePurpose.value = response.data.servicePurpose;
+        userAgeGroup.value = useragegroupchange;
+        servicePurpose.value = servicepurposechange;
       })
   }
 
