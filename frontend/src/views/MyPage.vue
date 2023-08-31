@@ -107,6 +107,14 @@ onMounted(() => {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.mx-auto {
+  box-shadow:
+    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+    12px -12px 16px rgba(255, 255, 255, 0.25);
+  ;
+  margin: 5rem
+}
+</style>
 
 

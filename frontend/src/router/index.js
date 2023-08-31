@@ -116,8 +116,13 @@ const routes = [
         name: 'portfolio',
         component: () => import('@/views/Portfolio.vue')
       },
-      
-    ],
+
+      {
+    path: '/success',
+    name: 'success',
+    component: () => import('@/views/SubscribeSuccess'),
+       }
+    ]
   }
 ]
 
