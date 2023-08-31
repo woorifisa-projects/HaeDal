@@ -1,6 +1,7 @@
 package com.haedal.backend.product.dto.response;
 
 
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.product.model.Tag;
@@ -76,6 +77,24 @@ public class ProductResponse {
         return productResponse;
     }
 
+    public static ProductResponse mapProductToResponse(Product foundProduct, User user) {
+        ProductResponse productResponse = ProductResponse.builder()
+        .productId(foundProduct.getProductId())
+            .productAsset(foundProduct.getMaxProductMoney())
+            .tag(foundProduct.getTag())
+            .productName(foundProduct.getProductName())
+            .shortInfo(foundProduct.getShortInfo())
+            .longInfo(foundProduct.getLongInfo())
+            .period(foundProduct.getPeriod())
+            .interestRate(foundProduct.getInterestRate())
+            .requiredStartMoney(foundProduct.getRequiredStartMoney())
+            .maxProductMoney(foundProduct.getMaxProductMoney())
+            .isDeposit(foundProduct.isDeposit())
+            .subscription(foundProduct.getSubscription())
+            .accountNumber(user.getAccountNumber())
+            .build();
+        return productResponse;
+    }
 
 }
 

@@ -42,20 +42,7 @@ public class SubscribeController {
         Product foundProduct = productService.findByProductId(productId);
         System.out.println(productId + "정보 조회");
 
-        ProductResponse productResponse = ProductResponse.builder().productId(foundProduct.getProductId())
-                .productAsset(foundProduct.getMaxProductMoney())
-                .tag(foundProduct.getTag())
-                .productName(foundProduct.getProductName())
-                .shortInfo(foundProduct.getShortInfo())
-                .longInfo(foundProduct.getLongInfo())
-                .period(foundProduct.getPeriod())
-                .interestRate(foundProduct.getInterestRate())
-                .requiredStartMoney(foundProduct.getRequiredStartMoney())
-                .maxProductMoney(foundProduct.getMaxProductMoney())
-                .isDeposit(foundProduct.isDeposit())
-                .subscription(foundProduct.getSubscription())
-                .accountNumber(user.getAccountNumber())
-                .build();
+        ProductResponse productResponse = ProductResponse.mapProductToResponse(foundProduct,user);
 
         System.out.println(productResponse);
         return productResponse;

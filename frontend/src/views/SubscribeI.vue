@@ -69,8 +69,8 @@ import { useAuthStore } from '@/store/app';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    // baseURL: 'http://localhost:8080', // 서버의 주소
-    baseURL: 'http://15.164.189.153:8080',
+    baseURL: 'http://localhost:8080', // 서버의 주소
+    // baseURL: 'http://15.164.189.153:8080',
 })
 
 const authStore = useAuthStore();
