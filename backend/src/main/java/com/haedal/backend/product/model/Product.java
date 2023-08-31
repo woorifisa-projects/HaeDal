@@ -7,7 +7,6 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
-
 @Getter
 @Table
 @Entity
@@ -56,4 +55,11 @@ public class Product {
     @Column(name = "subscription")
     private int subscription; // 월 납입금액
 
+    //구매 가능 상품인지 여부
+    @Column(name="product_status",columnDefinition = "BOOLEAN DEFAULT true")
+    private boolean productStatus;
+
+    public boolean getProductStatus() {
+        return this.productStatus;
+    }
 }

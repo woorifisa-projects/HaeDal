@@ -1,5 +1,6 @@
 package com.haedal.backend.product.controller;
 
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.auth.service.UserService;
 import com.haedal.backend.product.dto.response.ProductResponse;
 import com.haedal.backend.product.model.Product;
@@ -9,6 +10,7 @@ import com.haedal.backend.profile.service.ProfileService;
 import com.haedal.backend.subscribe.service.SubscribeService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,47 +43,48 @@ public class RecommendedProductController {
     }
 
 
-
-
     /*
     1. '추천상품탭'에 접속시,
     2. 로그인한 사용에 한해
     3. '자산별'추천상품이 1,2,3 순위별로 나타나도록 조회
      */
-
-
+    
     // 자산정보에 따라 상품을 추천해주는 서비스 구현
     //TODO : 인증 기능 구현 후 @RequestParam("userId") Long userId 추가
     @GetMapping
-    public List<ProductResponse> getRecommendedByAsset() {
-
+    public List<ProductResponse> getRecommendedByAsset(Authentication authentication ) {
         // TODO: 접속한 사용자가 로그인했는지, 안했는지 구분하는 로직
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+        Long userId = user.getUserId();
 
-
-        // userId를 기준으로, 기준을 충족하는 상품들만 저장
-        Long userId = 1L;
         List<Long> productsIdsInAsset = recommendedProductService.filterProductsByAsset(userId);
         System.out.println(productsIdsInAsset);
 
-
-        // 상위의 3개만 선택해서 1,2,3위 순위 보여주기
         // filterByAsset() : ProductRepository에서 선언한 JPQL 쿼리가 담겨있음
         List<Product> sortedAssets = recommendedProductService.orderByAsset(productsIdsInAsset);
+
+        //status가 true인 것들만 저장
+        List<Product> sellProducts = new ArrayList<>();
+        for(int i =0;i<sortedAssets.size();i++){
+            if(sortedAssets.get(i).getProductStatus()== true){
+                sellProducts.add(sortedAssets.get(i));
+            }
+        }
+
         List<Product> rankingAssets = new ArrayList<>();
         List<ProductResponse> productResponses = new ArrayList<>();
 
         // 상위 3개의 상품을 선택
 //        int maxRankingCount = Math.max(sortedAssets.size(), 3);
         for (int i = 0; i < 3; i++) {
-            if (sortedAssets.isEmpty() == false) {
-                Product product = sortedAssets.get(i);
+            if (sellProducts.isEmpty() == false) {
+                Product product = sellProducts.get(i);
                 rankingAssets.add(product);
-
                 // 예외처리1 : 추천상품이 없는 경우
             } else {
                 System.out.println("추천상품이 없습니다");
             }
-
 
             productResponses = rankingAssets.stream()
                     .map(ProductResponse::recommendedFrom)
@@ -94,8 +97,10 @@ public class RecommendedProductController {
 
     // 사용자의 이용목적에 따라, 추천상품을 조회
     @GetMapping("/filter/servicePurpose")
-    public List<ProductResponse> getRecommendedByServicePurpose() {
-        Long userId = 3L;
+    public List<ProductResponse> getRecommendedByServicePurpose(Authentication authentication ) {
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+        Long userId = user.getUserId();
 
         // userId를 기준으로 같은 이용 목적을 가진 상품들의 productId 목록을 가져옴
         List<Long> productIdsByServicePurpose = recommendedProductService.filterProductsByServicePurpose(userId);
@@ -105,21 +110,29 @@ public class RecommendedProductController {
         List<Product> sortedServicePurpose = recommendedProductService.orderByServicePurpose(productIdsByServicePurpose);
         System.out.println("목록들 정렬 : " + sortedServicePurpose);
 
+        //status가 true인 것들만 저장
+        List<Product> sellProducts = new ArrayList<>();
+        for(int i =0;i<sortedServicePurpose.size();i++){
+            if(sortedServicePurpose.get(i).getProductStatus()== true){
+                sellProducts.add(sortedServicePurpose.get(i));
+            }
+        }
+
         // 인기 순위 상위 3개의 상품 저장
         List<Product> rankingServicePurpose = new ArrayList<>();
 
-        if (sortedServicePurpose.size()>=3) {
+        if (sellProducts.size()>=3) {
             for (int i = 0; i < 3 ; i++) {
-                Product product = sortedServicePurpose.get(i);
+                Product product = sellProducts.get(i);
                 rankingServicePurpose.add(product);
             }
-        } else if(sortedServicePurpose.size()<3) {
-            for (int i = 0;  i < sortedServicePurpose.size(); i++) {
-                Product product = sortedServicePurpose.get(i);
+        } else if(sellProducts.size()<3) {
+            for (int i = 0;  i < sellProducts.size(); i++) {
+                Product product = sellProducts.get(i);
                 rankingServicePurpose.add(product);
             }
         }
-        else if(sortedServicePurpose.size()==0) {
+        else if(sellProducts.size()==0) {
             System.out.println("추천상품이 없습니다");
         }
 
@@ -130,6 +143,7 @@ public class RecommendedProductController {
                 .collect(Collectors.toList());
 
         return productResponses;
+
     }
     
 //    @GetMapping("/filter/servicePurpose")
@@ -170,33 +184,42 @@ public class RecommendedProductController {
 
     // 사용자의 연령대에 따라, 추천상품을 조회
     @GetMapping("/filter/userAgeGroup")
-    public List<ProductResponse> getRecommendedByUserAgeGroup() {
-        Long userId = 1L;
+    public List<ProductResponse> getRecommendedByUserAgeGroup(Authentication authentication) {
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+        Long userId = user.getUserId();
 
         // userId를 기준으로 같은 연령대를 가진 상품들의 productId 목록을 가져옴
         List<Long> productIdsInUserAgeGroup = recommendedProductService.filterProductsByUserAgeGroup(userId);
         System.out.println("찾은 목록 아이디들 : " + productIdsInUserAgeGroup);
-        System.out.println("찾은 목록 아이디들 : " + recommendedProductService.filterProductsByUserAgeGroup(userId));
 
         // 기준 충족 상품을 정렬
         List<Product> sortedServicePurpose = recommendedProductService.orderByUserAgeGroup(productIdsInUserAgeGroup);
         System.out.println("목록들 정렬 : " + sortedServicePurpose);
 
+        //status가 true인 것들만 저장
+        List<Product> sellProducts = new ArrayList<>();
+        for(int i =0;i<sortedServicePurpose.size();i++){
+            if(sortedServicePurpose.get(i).getProductStatus()== true){
+                sellProducts.add(sortedServicePurpose.get(i));
+            }
+        }
+
         // 인기 순위 상위 3개의 상품 저장
         List<Product> rankingServicePurpose = new ArrayList<>();
 
-        if (sortedServicePurpose.size()>=3) {
+        if (sellProducts.size()>=3) {
             for (int i = 0; i < 3 ; i++) {
-                Product product = sortedServicePurpose.get(i);
+                Product product = sellProducts.get(i);
                 rankingServicePurpose.add(product);
             }
-        } else if(sortedServicePurpose.size()<3) {
-            for (int i = 0;  i < sortedServicePurpose.size(); i++) {
-                Product product = sortedServicePurpose.get(i);
+        } else if(sellProducts.size()<3) {
+            for (int i = 0;  i < sellProducts.size(); i++) {
+                Product product = sellProducts.get(i);
                 rankingServicePurpose.add(product);
             }
         }
-        else if(sortedServicePurpose.size()==0) {
+        else if(sellProducts.size()==0) {
             System.out.println("추천상품이 없습니다");
         }
 
