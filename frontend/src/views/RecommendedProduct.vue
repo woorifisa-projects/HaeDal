@@ -68,19 +68,25 @@ import axios from 'axios'
 import { watchEffect, ref } from 'vue'
 import router from '../router'
 import { mdiConsoleNetwork } from '@mdi/js';
+import { useAuthStore } from '@/store/app';
 
 // 서버에서 받아오는 정보
 const listData = ref([]);
-
+const authStore = useAuthStore();
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://15.164.189.153:8080', // 서버의 주소
-    // withCredentials: "true" // CORS 요청에 관련된 설정을 포함
+    baseURL: 'http://localhost:8080',
+    // baseURL: 'http://15.164.189.153:8080', // 서버의 주소
+
 })
 
 watchEffect(() => {
-    axiosInstance.get('/recommendedProduct').then((res) => {
+    axiosInstance.get('/recommendedProduct', {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
@@ -93,7 +99,11 @@ watchEffect(() => {
 //연령대 해당 상품 버튼
 const ageGroup = () => {
     listData.value = [];
-    axiosInstance.get('/recommendedProduct/filter/userAgeGroup').then((res) => {
+    axiosInstance.get('/recommendedProduct/filter/userAgeGroup', {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
@@ -106,7 +116,11 @@ const ageGroup = () => {
 // 이용목적 해당 상품 버튼
 const purpose = () => {
     listData.value = [];
-    axiosInstance.get('/recommendedProduct/filter/servicePurpose').then((res) => {
+    axiosInstance.get('/recommendedProduct/filter/servicePurpose', {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
@@ -115,10 +129,15 @@ const purpose = () => {
         console.log(listData);
     })
 }
+
 //자산별 해당 상품 버튼
 const asset = () => {
     listData.value = [];
-    axiosInstance.get('/recommendedProduct').then((res) => {
+    axiosInstance.get('/recommendedProduct', {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
@@ -141,6 +160,9 @@ const subscribeProduct = (item) => {
                 name: 'subscribeD',
                 params: {
                     id: productId,
+                },
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
                 }
             })
     } else if (item.deposit == false) {
@@ -148,6 +170,9 @@ const subscribeProduct = (item) => {
             name: 'subscribeI',
             params: {
                 id: productId,
+            },
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`
             }
         })
     }

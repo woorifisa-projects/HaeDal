@@ -53,6 +53,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Subscribe> subscribes;
+    
+    //활동 가능 고객인지 여부
+    @Column(name = "user_status", columnDefinition = "BOOLEAN DEFAULT true")
+    private boolean userStatus;
 
     public void updatePassword(String password){
         this.password = password;

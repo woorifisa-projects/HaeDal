@@ -31,7 +31,13 @@ public class ProductController {
     @GetMapping
     public List<ProductResponse> getAllproducts( ) {
         List<Product> products  =  productService.findAll();
-        List<ProductResponse> productResponse = products.stream()
+        List<Product> sellProducts = new ArrayList<>();
+        for(int i =0;i<products.size();i++){
+            if(products.get(i).getProductStatus()== true){
+                sellProducts.add(products.get(i));
+            }
+        }
+        List<ProductResponse> productResponse = sellProducts.stream()
                 .map(ProductResponse::from)
                 .collect(Collectors.toList());
         return productResponse;
@@ -42,20 +48,39 @@ public class ProductController {
     public List<ProductResponse> filterProductsByTag(@PathVariable String tag) {
         if (tag.equals("FINANCE")) {
             List<Product> products = productService.findByTag(Tag.FINANCE);
-            List<ProductResponse> productResponse = products.stream()
+
+            List<Product> sellProducts = new ArrayList<>();
+            for(int i =0;i<products.size();i++){
+                if(products.get(i).getProductStatus()== true){
+                    sellProducts.add(products.get(i));
+                }
+            }
+            List<ProductResponse> productResponse = sellProducts.stream()
                     .map(ProductResponse::from)
                     .collect(Collectors.toList());
             return productResponse;
 
         } else if (tag.equals("THEMA")) {
             List<Product> products =  productService.findByTag(Tag.THEMA);
-            List<ProductResponse> productResponse = products.stream()
+            List<Product> sellProducts = new ArrayList<>();
+            for(int i =0;i<products.size();i++){
+                if(products.get(i).getProductStatus()== true){
+                    sellProducts.add(products.get(i));
+                }
+            }
+            List<ProductResponse> productResponse = sellProducts.stream()
                     .map(ProductResponse::from)
                     .collect(Collectors.toList());
             return productResponse;
         } else {
             List<Product> products =  productService.findAll();
-            List<ProductResponse> productResponse = products.stream()
+            List<Product> sellProducts = new ArrayList<>();
+            for(int i =0;i<products.size();i++){
+                if(products.get(i).getProductStatus()== true){
+                    sellProducts.add(products.get(i));
+                }
+            }
+            List<ProductResponse> productResponse = sellProducts.stream()
                     .map(ProductResponse::from)
                     .collect(Collectors.toList());
             return productResponse;
@@ -65,18 +90,24 @@ public class ProductController {
     @PostMapping("/{search}")
     public List<ProductResponse> searchProduct(@PathVariable String search){
         List<Product> products = new ArrayList<>();
+        List<Product> sellProducts = new ArrayList<>();
         if (search != null && !search.isEmpty()) {
             products = productService.findByProductNameLike("%" + search + "%");
+
+            for(int i =0;i<products.size();i++){
+                if(products.get(i).getProductStatus()== true){
+                    sellProducts.add(products.get(i));
+                }
+            }
         } else {
             System.out.println("검색어가 없습니다.");
             System.out.println("테스트용");
         }
 
-        List<ProductResponse> productResponse = products.stream()
+        List<ProductResponse> productResponse = sellProducts.stream()
                 .map(ProductResponse::from)
                 .collect(Collectors.toList());
         return productResponse;
     }
-
 }
 
