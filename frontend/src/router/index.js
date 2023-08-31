@@ -56,11 +56,6 @@ const routes = [
         name: 'subscribeD',
         component: () => import('@/views/SubscribeD.vue'),
         props: true
-      }, {
-        path: '/success',
-        name: 'success',
-        component: () => import('@/views/SubscribeSuccess'),
-        props: true
       },
       {
         path: '/recommend',
@@ -119,6 +114,10 @@ const routes = [
         component: () => import('@/views/ForSecuritySetting.vue')
       },
     ],
+  }, {
+    path: '/success',
+    name: 'success',
+    component: () => import('@/views/SubscribeSuccess'),
   }
 ]
 

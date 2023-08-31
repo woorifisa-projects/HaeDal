@@ -5,23 +5,24 @@
         <form @submit.prevent="submitForm">
             <h2>{{ listData.productName }} 상품 신청</h2><br class=".mb-8">
             <div class=datas>
-                <div>
+                <div style="margin-bottom:4rem">
                     <b>상품 설명</b><br>
-                    {{ listData.shortInfo }} <br>
+                    <p
+                        style="font-size: 20px; color:rgb(0, 162, 255); margin-top: 1.6rem; margin-bottom :0.3rem; font-weight: 700; font-family: 'Noto Serif KR', serif;">
+                        "{{ listData.shortInfo }}"</p>
+                    <br>
                     {{ listData.longInfo }}
-                </div><br class=".mb-6">
-                <div>
+                </div>
+                <div style="margin-bottom:1rem">
                     <b>상품 가입 최소 구독료</b>
                     {{ listData.requiredStartMoney }} 원
                     <br>
                     <b>상품 가입 최대 구독료</b>
                     {{ listData.maxProductMoney }} 원
-                </div>
-                <div>
+                    <br>
                     <b>금리</b>
                     {{ listData.interestRate }} %
-                </div>
-                <div>
+                    <br>
                     <b>가입기간</b>
                     {{ listData.period }} 개월
                 </div>
@@ -68,8 +69,8 @@ import { useAuthStore } from '@/store/app';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
-    // baseURL: 'http://15.164.189.153:8080',
+    // baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'http://15.164.189.153:8080',
 })
 
 const authStore = useAuthStore();
@@ -100,18 +101,17 @@ const formData = {
 };
 
 const calculate = (money) => {
-    //     money+{(money*listData.value.interestRate)*((n-1)(n-2)….(n-(n-1))/n)}
-    // (여기서 n=listData.value.period)
     if (money) {
+        let totalAmount = 0;
         const n = listData.value.period;
-        // n 팩토리얼 계산
-        let factorial = 1;
-        for (let i = 1; i <= n; i++) {
-            factorial *= i;
+
+        for (let i = 0; i < n; i++) {
+            totalAmount += money + (money * (listData.value.interestRate / 100)) * (i / n);
         }
-        calculatedAmount.value = money + (money * listData.value.interestRate) * (factorial / n);
+
+        calculatedAmount.value = parseFloat(totalAmount).toFixed(2);
     } else {
-        calculatedAmount.value = null;
+        calculatedAmount.value = 오류;
     }
 };
 
@@ -140,6 +140,8 @@ const submitForm = () => {
   
  
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500&display=swap');
+
 input {
     width: 300px;
     height: 32px;
@@ -186,7 +188,7 @@ div {
 }
 
 h2 {
-    font-size: 38px;
+    font-size: 45px;
     margin: 2rem 0rem 2rem 0rem;
 }
 

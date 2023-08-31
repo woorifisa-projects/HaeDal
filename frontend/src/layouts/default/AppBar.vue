@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <v-app-bar flat>
+    <v-app-bar flat :color="scrolling ? 'rgba(255,255,255,0.9)' : 'rgba(0, 162, 255, 0.354)'">
       <v-container class="mx-auto d-flex align-center justify-center ">
         <!-- <v-btn icon
           class="me-4"
@@ -100,7 +100,11 @@ onMounted(() => {
 
 });
 
+const scrolling = ref(false);
 
+window.addEventListener('scroll', () => {
+  scrolling.value = window.scrollY > 0;
+});
 </script>
 
 

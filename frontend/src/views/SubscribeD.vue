@@ -6,41 +6,39 @@
         <form @submit.prevent="submitForm">
             <h2>{{ listData.productName }} 상품 신청</h2><br class=".mb-8">
             <div class=datas>
-                <div>
-                    <b>상품 설명</b><br>
-                    {{ listData.shortInfo }} <br>
+                <div style="margin-bottom:4rem">
+                    <b>상품 설명</b>
+                    <p
+                        style="font-size: 20px; color:rgb(0, 162, 255); margin-top: 1.6rem; margin-bottom :0.3rem; font-weight: 700; font-family: 'Noto Serif KR', serif;">
+                        "{{ listData.shortInfo }}"</p>
+                    <br>
                     {{ listData.longInfo }}
-                </div><br class=".mb-6">
-                <div>
+                </div>
+                <div style="margin-bottom:1rem">
                     <b>상품 가입 최소 금액</b>
                     {{ listData.requiredStartMoney }} 원
                     <br>
                     <b>상품 가입 최대 금액</b>
                     {{ listData.maxProductMoney }} 원
-                </div>
-                <div>
+                    <br>
                     <b>금리</b>
                     {{ listData.interestRate }} %
-                </div>
-                <div>
+                    <br>
                     <b>가입기간</b>
                     {{ listData.period }} 개월
                 </div>
                 <br>
                 <div>
-                    <b><label for="accountNumber">출금 계좌번호</label></b>
+                    <b>출금 계좌번호</b>
                     {{ listData.accountNumber }}
                 </div>
-                <div style="margin : 2rem 0rem">
-                    <div>
-                        <b><label for=" authenticationNumber">인증번호</label></b>
-                        <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
-                    </div>
-                    <div>
-                        <b><label for="startMoney">시작금액</label></b>
-                        <input type="number" id="startMoney" v-model="formData.startMoney" required>
-
-                    </div>
+                <div>
+                    <b><label for="authenticationNumber">인증 번호</label></b>
+                    <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
+                </div>
+                <div>
+                    <b><label for="startMoney">시작 구독료</label></b>
+                    <input type="number" id="startMoney" v-model="formData.startMoney" required>
                 </div>
                 <div style="margin: 2rem;">
                     <p style="font-size: 12px;font-weight: 300; margin-bottom: 0;">입력한 시작금액을 바탕으로</p>
@@ -73,8 +71,8 @@ const authStore = useAuthStore();
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
-    // baseURL: 'http://15.164.189.153:8080',
+    // baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'http://15.164.189.153:8080',
     // withCredentials: true // CORS 요청에 관련된 설정을 포함
 })
 
@@ -104,7 +102,7 @@ const formData = {
 
 const calculate = (money) => {
     if (money) {
-        calculatedAmount.value = money + (money * (listData.value.interestRate) / 100);
+        calculatedAmount.value = parseFloat(money + (money * (listData.value.interestRate) / 100)).toFixed(2);
     } else {
         calculatedAmount.value = null;
     }
@@ -136,6 +134,8 @@ const submitForm = () => {
 </script>
   
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500&display=swap');
+
 input {
     width: 300px;
     height: 32px;
@@ -166,7 +166,6 @@ div {
 }
 
 
-
 .datas b {
     color: rgba(0, 0, 0, 0.712);
     background-color: rgba(0, 162, 255, 0.225);
@@ -183,7 +182,7 @@ div {
 }
 
 h2 {
-    font-size: 38px;
+    font-size: 45px;
     margin: 2rem 0rem 2rem 0rem;
 }
 
