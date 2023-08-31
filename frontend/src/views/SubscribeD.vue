@@ -112,7 +112,8 @@ const calculate = (money) => {
 };
 
 const submitForm = () => {
-    const url = `http://15.164.189.153:8080/subscribe/${productId}/D`;
+    const url = `http://localhost:8080/subscribe/${productId}/D`;
+    // `http://15.164.189.153:8080/subscribe/${productId}/D`;
 
 
     // productId가 유효한 경우에만 요청을 보냅니다.

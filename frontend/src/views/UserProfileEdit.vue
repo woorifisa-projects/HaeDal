@@ -56,7 +56,7 @@
       수정
     </v-btn>
 
-    <v-btn @click="handleReset">
+    <v-btn href="/mypage">
       취소
     </v-btn>
 
@@ -103,7 +103,7 @@ const dialog = {
   }
 };
 
-const { handleSubmit, handleReset } = useForm({
+const { handleSubmit } = useForm({
   validationSchema: {
     name(value) {
       if (value?.length >= 2) return true
@@ -166,7 +166,6 @@ const mapToPurposeEnum = (value) => purposeEnumMapping[value];
 const accountNumber = useField('accountNumber')
 const asset = useField('asset')
 const authNumber = useField('authNumber')
-
 // console.log("보낼헤더: " + authStore.accessToken);
 
 const submit = handleSubmit(values => {
@@ -248,6 +247,7 @@ if(storedToken){
           servicepurposechange = '기타'
           break;
         }
+
       console.log(response.data);
      name.value.value = response.data.name
      phoneNumber.value.value =response.data.phoneNumber
