@@ -26,7 +26,7 @@
         <v-divider :thickness="3" color="info" style="width:60%;     border-style: double;
     margin: auto;"></v-divider>
     </div>
-    <div v-if="listData.length === 0"
+    <div v-if="showNoDataMessage"
         style="font-size:20px; width:500px; font-weight: bold; color:rgba(0, 179, 255, 0.826); text-align: center; margin:auto; margin-top:80px">
         😭 관련 상품이 존재하지 않습니다.😭
     </div>
@@ -72,6 +72,9 @@ const listData = ref([]);
 //사용자가 검색한 단어
 const searchTerm = ref('');
 
+// 상품이 없을 때 띄워주는 메세지
+const showNoDataMessage = ref(false);
+
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
     // baseURL: 'http://localhost:8080', // 서버의 주소
@@ -79,10 +82,10 @@ const axiosInstance = axios.create({
     // withCredentials: true // CORS 요청에 관련된 설정을 포함
 })
 
-
-
 watchEffect(() => {
     axiosInstance.get('/products').then((res) => {
+        showNoDataMessage.value = false;
+
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
             console.log(item)
@@ -97,6 +100,8 @@ const searchForm = () => {
     //listData 초기화
     listData.value = [];
 
+    showNoDataMessage.value = false;
+
     const searchKeyword = searchTerm.value;
     axiosInstance.post(`/products/${searchKeyword}`).then((res) => {
         let tempArr = [...res.data]
@@ -105,6 +110,12 @@ const searchForm = () => {
             listData.value.push(item)
         })
         console.log(listData)
+        // 검색 결과가 비어있을 때만 showNoDataMessage를 true로 설정
+        if (listData.value.length === 0) {
+            setTimeout(() => {
+                showNoDataMessage.value = true;
+            }, 200)
+        }
     })
 }
 
@@ -135,6 +146,7 @@ const subscribeProduct = (item) => {
 //전체 조회 기능
 const viewAll = () => {
     listData.value = [];
+    showNoDataMessage.value = false;
     axiosInstance.get('/products').then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
@@ -147,6 +159,7 @@ const viewAll = () => {
 // 금융 상품 조회 기능
 const financial = () => {
     listData.value = [];
+    showNoDataMessage.value = false;
     axiosInstance.get(`products/filter/FINANCE`).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
@@ -159,6 +172,7 @@ const financial = () => {
 // 테마 상품 조회 기능
 const tema = () => {
     listData.value = [];
+    showNoDataMessage.value = false;
     axiosInstance.get(`products/filter/THEMA`).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {

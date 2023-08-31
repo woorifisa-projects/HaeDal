@@ -22,8 +22,6 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/MainPage.vue'),
       },
-
-
       {
         path: "header",
         name: "Header",
@@ -69,12 +67,6 @@ const routes = [
         component: () => import('@/views/SubscribeDforShow.vue'),
         props: true
       },
-       {
-        path: '/success',
-        name: 'success',
-        component: () => import('@/views/SubscribeSuccess'),
-        props: true
-      },
       {
         path: '/recommend',
         name: 'recommended_product_list',
@@ -116,13 +108,12 @@ const routes = [
         name: 'portfolio',
         component: () => import('@/views/Portfolio.vue')
       },
-
-      {
+    ]
+  },
+  {
     path: '/success',
     name: 'success',
     component: () => import('@/views/SubscribeSuccess'),
-       }
-    ]
   }
 ]
 
