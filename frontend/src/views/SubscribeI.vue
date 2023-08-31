@@ -48,9 +48,12 @@
                         style=" font-size: 18px; font-weight: 600; color: rgb(0, 162, 255); padding: 0.4rem 2rem; margin-bottom: 1rem; box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.066) ;"
                         @click="calculate(formData.startMoney)" type="button">만기시 금액 예상하기
                     </v-btn>
-                    <p v-show="calculatedAmount !== null && calculatedAmount !== 0"> 만기시 예상 금액은 {{ calculatedAmount }}원
+                    <p
+                        v-show="calculatedAmount !== null && calculatedAmount !== 0 && calculatedAmount <= listData.maxProductMoney">
+                        만기시 예상 금액은 {{ calculatedAmount }}원
                         입니다!
                     </p>
+                    <p v-show="calculatedAmount > listData.maxProductMoney">입력하신 금액이 최대 금액을 초과하였습니다.</p>
                 </div>
                 <v-btn class="button-style" variant="outlined" type="submit">
                     신청하기
