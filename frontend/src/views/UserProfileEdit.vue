@@ -125,6 +125,9 @@
   
     const authStore = useAuthStore();
     const username = ref(0);
+    let useragegroupchange='';
+    let servicepurposechange='';
+
 
     const dialog = {
     isOpen: ref(false),
@@ -250,11 +253,43 @@ if(storedToken){
     },
   })
     .then (response => {
+       switch(response.data.userAgeGroup){
+          case 'ONE':
+          useragegroupchange = '10대'
+          break;
+          case 'TWO':
+          useragegroupchange = '20대'
+          break;
+          case 'THREE':
+          useragegroupchange = '30대'
+          break;
+          case 'FOUR':
+          useragegroupchange = '40대'
+          break;
+          case 'FIVE':
+          useragegroupchange = '50대'
+          break;
+
+        }
+        switch(response.data.servicePurpose){
+          case 'MOKDON':
+          servicepurposechange = '목돈 마련'
+          break;
+          case 'FORCAR':
+          servicepurposechange = '자동차 구매'
+          break;
+          case 'FORHOUSE':
+          servicepurposechange = '주택 구매'
+          break;  
+          case 'OTHERS':
+          servicepurposechange = '기타'
+          break;
+        }
       console.log(response.data);
      name.value.value = response.data.name
      phoneNumber.value.value =response.data.phoneNumber
-     userAgeGroup.value.value = response.data.userAgeGroup
-     servicePurpose.value.value = response.data.servicePurpose
+     userAgeGroup.value.value = useragegroupchange
+     servicePurpose.value.value = servicepurposechange
      accountNumber.value.value = response.data .accountNumber
      asset.value.value = response.data.asset
      authNumber.value.value = response.data.authNumber 
