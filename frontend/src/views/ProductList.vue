@@ -92,13 +92,6 @@ watchEffect(() => {
             listData.value.push(item)
         })
         console.log(listData);
-
-        // listData가 비어있는 경우 메시지를 표시
-        if (listData.value.length === 0) {
-            setTimeout(() => {
-                showNoDataMessage.value = true;
-            }, 200);
-        }
     })
 })
 
