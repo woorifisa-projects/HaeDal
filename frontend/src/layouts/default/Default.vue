@@ -14,3 +14,4 @@ import DefaultView from './View.vue'
 import DefaultBottomBar from './Footer.vue'
 </script>
 <style></style>
+  
