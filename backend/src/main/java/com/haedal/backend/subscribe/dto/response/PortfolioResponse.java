@@ -40,6 +40,7 @@ public class PortfolioResponse {
     private LocalDate endSubscribeDate; //구독 만료 날짜
 
     public static PortfolioResponse from(Subscribe subscribe){
+        LocalDate todayDate = LocalDate.now();
         return PortfolioResponse.builder()
         .subscribeId(subscribe.getSubscribeId())
         .presentMoney(subscribe.getPresentMoney())
@@ -59,7 +60,7 @@ public class PortfolioResponse {
                 .subscription(subscribe.getProduct().getSubscription())
                 .tag(subscribe.getProduct().getTag())
                 .userAgeGroup(subscribe.getProduct().getUserAgeGroup())
-                .progressdate(ChronoUnit.DAYS.between((subscribe.getTodayDate()),(subscribe.getSubscribeDate())))
+                .progressdate(ChronoUnit.DAYS.between(subscribe.getSubscribeDate(), todayDate) + 1)
                 .endSubscribeDate(subscribe.getSubscribeDate().plusMonths(subscribe.getProduct().getPeriod()))
                 .build();
 
