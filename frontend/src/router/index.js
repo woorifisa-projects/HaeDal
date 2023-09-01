@@ -108,6 +108,11 @@ const routes = [
         name: 'portfolio',
         component: () => import('@/views/Portfolio.vue')
       },
+      {
+        path: '/error',
+        name: 'error',
+        component: () => import('@/views/Error'),
+      }
     ]
   },
   {
