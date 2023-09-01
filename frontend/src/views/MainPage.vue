@@ -99,7 +99,7 @@ onMounted(() => {
   // 오전 12시에 주기적으로 데이터를 업데이트
   setInterval(() => {
     const now = new Date()
-    if (now.getHours() === 15 && now.getMinutes() === 0) {
+    if (now.getHours() === 0 && now.getMinutes() === 0) {
       fetchData()
     }
   }, 60000) // 1분마다 체크 (조절 가능)
