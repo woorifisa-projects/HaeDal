@@ -69,6 +69,10 @@ public class SubscribeController {
             Subscribe subscribe = new Subscribe(user, foundProduct , startMoney, startMoney, LocalDate.now());
             Subscribe saveSubscribe = subscribeService.save(subscribe);
             System.out.println(saveSubscribe);
+//            user.updateAsset(user.getAsset()-startMoney);
+//            User saveUser = profileService.save(user);
+//            System.out.println(startMoney);
+//            System.out.println(saveUser.getAsset());
             return ResponseEntity.ok("신청이 완료되었습니다.");
         } else{
             return ResponseEntity.badRequest().body("신청 정보가 올바르지 않습니다.");
