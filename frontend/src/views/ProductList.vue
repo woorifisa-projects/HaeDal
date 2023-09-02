@@ -50,12 +50,16 @@
                 </div>
             </v-card-item>
             <v-card-actions>
-                <v-btn
-                    style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem; margin-bottom: 1rem;"
+
+                <v-btn style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem;"
                     @click=subscribeProduct(item)>
                     가입 하기
                 </v-btn>
             </v-card-actions>
+            <span class="favorite" @click="dibs(item.productId)" style="cursor:pointer;">
+                <img v-if="dibed === true" src='@/assets/img/favorite.png'>
+                <img v-else src='@/assets/img/favorite_border.png'>
+            </span>
         </v-card>
     </div>
 </template>
@@ -75,10 +79,13 @@ const searchTerm = ref('');
 // 상품이 없을 때 띄워주는 메세지
 const showNoDataMessage = ref(false);
 
+//찜 해두었는지 여부
+const dibed = ref(false);
+
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    // baseURL: 'http://localhost:8080', // 서버의 주소
-    baseURL: 'http://15.164.189.153:8080',
+    baseURL: 'http://localhost:8080', // 서버의 주소
+    // baseURL: 'http://15.164.189.153:8080',
     // withCredentials: true // CORS 요청에 관련된 설정을 포함
 })
 
@@ -182,6 +189,32 @@ const tema = () => {
         console.log(listData)
     })
 }
+
+
+// 
+const dibs = (productId) => {
+    if (dibed.value === false) {
+        console.log("찜!")
+        axios({
+            method: "post",
+            url: `http://localhost:8080/dibs/${productId}/add`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+            },
+        })
+        dibed.value = true;
+    } else if (dibed.value === true) {
+        console.log("찜 취소")
+        axios({
+            method: "delete",
+            url: `http://localhost:8080/dibs/${productId}/delete`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+            },
+        })
+        dibed.value = false;
+    }
+}
 </script>
 
 
@@ -197,6 +230,7 @@ const tema = () => {
     box-shadow:
         -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
         12px -12px 16px rgba(255, 255, 255, 0.25);
+    padding: 15px
 }
 
 .mx-auto button {
@@ -262,5 +296,17 @@ const tema = () => {
     margin: -2px 4px;
     border-radius: 4px;
 
+}
+
+.favorite {
+    width: 10px;
+    margin: auto;
+
+}
+
+.favorite img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
 }
 </style>
