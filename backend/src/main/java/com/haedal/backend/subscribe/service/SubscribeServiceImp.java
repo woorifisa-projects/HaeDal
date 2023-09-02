@@ -4,11 +4,15 @@ import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.repository.SubscribeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 @Slf4j
+@EnableScheduling
 @Service
 public class SubscribeServiceImp implements SubscribeService{
     private SubscribeRepository subscribeRepository;
@@ -25,25 +29,17 @@ public class SubscribeServiceImp implements SubscribeService{
                 .collect(Collectors.toList());
     }
 
-    //    @Override
-//    public List<Product> filterProductsByAsset(Long userId) {
-//        return null;
-//    }
+    @Scheduled(cron = "0 0 9 * * *") // 매일 자정에 실행
+    public void updateTodayDate(){
+        log.info("스케쥴러실행");
+        LocalDate today = LocalDate.now(); // 일일날짜를 위한 today 변수 선언하여 오늘 날짜 받아와서 초기화
 
-//    @Override
-//    public List<Subscribe> findByUserId(Long userId) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<Product> findByProductId(Long productId) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<Product> findByProductId(Product productId) {
-//        return null;
-//    }
+        List<Subscribe> subscribes = subscribeRepository.findAll(); // Subscribe모든 리스트 조회하여
+        for(Subscribe subscribe: subscribes){
+            subscribe.updateTodayDate(today); // update 진행
+        }
+        subscribeRepository.saveAll(subscribes); // 다시저장
+    }
 
 
     public Subscribe save(Subscribe subscribe){

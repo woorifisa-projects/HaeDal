@@ -66,7 +66,7 @@ public class SubscribeController {
         
         //user가 입력한 인증번호가 DB와 같고, user_start_money(입력값)이 userAsset(본인 소유 자산)이상, productAsset(최대 금액)이하일 때
         if(authNumber == user.getAuthNumber() && user.getAsset() >= startMoney && startMoney<=foundProduct.getMaxProductMoney()){
-            Subscribe subscribe = new Subscribe(user, foundProduct , startMoney, startMoney, LocalDate.now());
+            Subscribe subscribe = new Subscribe(user, foundProduct , startMoney, startMoney, LocalDate.now(), LocalDate.now()); // 마지막 LocalDate.now()가 현재날짜생성부분임
             Subscribe saveSubscribe = subscribeService.save(subscribe);
             System.out.println(saveSubscribe);
 //            user.updateAsset(user.getAsset()-startMoney);

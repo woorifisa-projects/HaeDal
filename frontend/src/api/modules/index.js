@@ -1,0 +1,2 @@
+
+export {getApi} from "./getApi"

@@ -83,9 +83,10 @@ onMounted(() => {
   }
   if (storedToken) {
     // "http://localhost:8080/user/alog"
-    axios.get("http://15.164.189.153:8080/user/alog", {
+    // "http://15.164.189.153:8080/user/alog"
+    axios.get("http://localhost:8080/user/alog", {
       headers: {
-        Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
+        Authorization: `Bearer ${storedToken}`, // 토큰 포함
       },
     })
       .then(response => {

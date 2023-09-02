@@ -6,11 +6,11 @@
     </v-img>
 
     <v-card-text>
-      <div> 계좌번호 : {{ phonenumber }} </div>
+      <div> 계좌번호 : {{ accountNumber }} </div>
     </v-card-text>
 
     <v-card-text>
-      <div>현재 잔액 : {{ userAgeGroup }}</div>
+      <div>현재 잔액 : {{ asset }}</div>
     </v-card-text>
 
     <v-card-text>
@@ -45,42 +45,100 @@
         </v-layout>
     </div>
 
-    <div class="container">
-        <v-card class="mx-auto" width="30rem" v-bind:class="item.productName" v-for="(item, index) in listData"
-            :key="index">
-            <v-card-item class="products">
-                <div>
-                    <div class="text-h6 mb-1">
-                        {{ item.productName }}
+
+    <div style="margin-bottom: 200px;">
+        <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
+
+            <!-- <p
+                style="background-color: rgba(0, 179, 255, 0.362); width: 80px; font-weight: bolder; border-radius: 10px; color:rgb(0, 75, 121);; text-align: center;">
+                TOP {{ index + 1 }} </p> -->
+
+            <v-card class="mx-auto" max-width="70%" min-width="300px">
+                <v-card-item 
+                @click=subscribeProduct(item)
+                style="padding: 20px;">
+                    <div>
+                        <div class="text-h5 mb-3" style="font-weight: bolder;text-align: left;">
+                            {{ item.productName }}
+                        </div>
+                        <div class="text-overline mb-3" style="font-weight: bolder;text-align: left;">
+                            <span>
+                                <v-chip
+                                class="mr-1"
+                                color="green"
+                                text-color="white"
+                                >
+                                {{ item.period }}개월
+                                </v-chip>
+                                <v-chip
+                                class="ma-1"
+                                color="secondary"
+                                text-color="white"
+                                >
+                                {{ item.servicePurpose }}
+                                </v-chip>
+                                <v-chip
+                                class="ma-1"
+                                color="primary"
+                                text-color="white"
+                                >
+                                {{ item.userAgeGroup }}
+                                </v-chip>
+                                <div class="text-overline mb-3" style="font-weight: bolder;text-align: right;;">
+                                만난지{{ item.progressdate }}일째!
+                                </div>
+                                <b>상품 기간 :</b> {{ item.period }}개월,
+                                <b>금리 :</b> {{ item.interestRate }}%,
+                                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
+                                    {{ item.startMoney }}원
+                                    <div class="text-overline mb-3" style="font-weight: bolder;text-align: right;;">
+                                       +{{ item.cleanplusMoney}}원
+                                       <b>+</b> {{item.plusPercentage}}%
+                                    </div>    
+                                </div>
+                                
+                                <b>현재 금액 :</b> {{ item.presentMoney }}원
+                                
+                                
+                                <b> </b>
+                                <b>종료 일자 :</b> {{ item.endSubscribeDate }}
+
+                            </span>
+                        </div>
+                        <div class="text-caption">{{ item.longInfo }}</div>
                     </div>
-                    <div class="text-overline mb-1">
-                        {{ item.shortInfo }}
-                    </div>
-                    <div class="text-caption">{{ item.tag }}</div>
+                </v-card-item>
+                <div class="d-flex justify-end align-center">
+                    <v-card-actions>
+                    </v-card-actions>
                 </div>
-            </v-card-item>
-            <v-card-actions>
-                <v-btn variant="outlined" @click=subscribeProduct(item)>
-                    정보 보기
-                </v-btn>
-            </v-card-actions>
-        </v-card>
+            </v-card>
+        </div>
     </div>
+    
 </template>
 
 <script setup>
 import axios from 'axios'
-import { watchEffect, ref } from 'vue'
+import { watchEffect, ref, onBeforeMount } from 'vue'
 import router from '../router'
 import NavigationBar from '@/components/ProfileNavigationBar.vue';
-import { mdiConsoleNetwork } from '@mdi/js';
 import { useAuthStore } from '@/store/app';
+import { onMounted } from 'vue';
+import { getApi } from '@/api/modules';
 
 const authStore = useAuthStore();
 const username = ref(0);
+const servicePurpose = ref(0);
+const asset = ref(0);
+const accountNumber = ref(0);
+const cleanplusMoney = ref(0);
+let servicepurposechange='';
+
 
 // 서버에서 받아오는 정보
 const listData = ref([]);
+
 
 // Axios 인스턴스 생성
 axios({
@@ -95,14 +153,31 @@ axios({
         tempArr.forEach((item) => {
             console.log(item)
             listData.value.push(item)
+            const subscribeDate = new Date(item.subscribeDate);
+        const endSubscribeDate = new Date(item.endSubscribeDate);
+        const timeDifferenceInMilliseconds = endSubscribeDate - subscribeDate;
+
+        // 밀리초를 일로 변환
+        const daysDifference = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+        const minusfirtsdatefinishdate = daysDifference;
+        console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
+            const money = item.startMoney; //시작금액
+            let n = item.period;
+            
+            let totalAmount = 0;
+            totalAmount= parseFloat(money + (money * (item.interestRate) / 100));
+            console.log(totalAmount+"ㅇ"+money);
+           
+            const plusMoney = ((totalAmount-money)/minusfirtsdatefinishdate)*(item.progressdate);
+            item.cleanplusMoney = parseInt(plusMoney);
+            console.log(item.cleanplusMoney);  
         })
-        console.log(listData);
       })
       // POST 요청 실패 시 로직
       .catch(error => {
         console.error(error);
       });
-
     
     const subscribeProduct = (item) => {
     const productId = item.productId;
@@ -127,6 +202,94 @@ axios({
     }
 }
 
+const calculate = (item) => {
+    const minusfirtsdatefinishdate = item.endSubscribeDate-item.subscribeDate;
+    let money = item.startMoney;
+    let n = item.period;
+    let totalAmount = 0;
+    for(let i =0; i<n; i++){
+        totalAmount += (money * (item.interestRate / 100)) * (i / n);
+    } // 만기 시 금액
+     (totalAmount-money)/minusfirtsdatefinishdate*(item.progressdate);
+}
+
+// const calculate = (money,progressdate) => {
+//     if (money) {
+//         let totalAmount = 0;
+//         const n = item.period;
+
+//         for (let i = 0; i < n; i++) {
+//             totalAmount += money + (money * (item.interestRate / 100)) * (i / n);
+//         }
+//         const minusfirtsdatefinishdate = item.endSubscribeDate-item.subscribeDate;
+//         resultmoney = (totalAmount-money)/minusfirtsdatefinishdate*progressdate;
+//         presentMoney = parseFloat(resultmoney);
+//         console.log(presentMoney);
+//         listData.value.push(presentMoney);
+//     } else {
+//         calculatedAmount.value = 오류;
+//     }
+// };
+
+
+// onBeforeMount(async() => {
+// //     instance({
+// //     method:"get",
+// //     url: param,
+// // }).then((res) => {
+// //     return res.data 
+// // }).then({
+// //     data = data
+// // });
+
+// const data = await getApi({url:'/subscribe/portfolio'})
+// console.log(data);
+// listData.value = [...data]; 
+// })
+
+
+
+onMounted(() => {
+  
+  console.log("새로고췸");
+  // Local Storage에서 토큰을 가져와서 store에 저장
+  const storedToken = localStorage.getItem('accessToken');
+  console.log("저장된 토큰값 " + authStore.accessToken);
+
+  if (storedToken) {
+    console.log("요청전송");
+    axios.get("http://localhost:8080/profile/edit", {
+      headers: {
+        //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
+        Authorization: `Bearer ${storedToken}`
+      },
+    })
+      .then(response => {
+        switch(response.data.servicePurpose){
+          case 'MOKDON':
+          servicepurposechange = '목돈 마련'
+          break;
+          case 'FORCAR':
+          servicepurposechange = '자동차 구매'
+          break;
+          case 'FORHOUSE':
+          servicepurposechange = '주택 구매'
+          break;  
+          case 'OTHERS':
+          servicepurposechange = '기타'
+          break;
+        }
+
+        console.log(response.data);
+        username.value = response.data.name;
+        accountNumber.value = response.data.accountNumber;
+        asset.value = response.data.asset;
+        servicePurpose.value = servicepurposechange;
+      })
+  }
+
+});
+
 </script>
 
 
@@ -150,6 +313,8 @@ axios({
     grid-template-rows: repeat(3, minmax(100px, auto));
     grid-gap: 20px;
     margin: 10px 20rem 10rem 20rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .searchProduct {
@@ -167,4 +332,25 @@ axios({
     text-align: center;
     margin-bottom: 2rem;
 }
+
+.button-style {
+    width: 10rem;
+    border-radius: 10px;
+    box-shadow: none;
+    background: rgba(0, 179, 255, 0.826);
+    color: white;
+    margin-top: 14px;
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+.mx-auto {
+    padding: 1rem;
+    margin: 1rem 0rem 4rem 0rem;
+    box-shadow:
+        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+        12px -12px 16px rgba(255, 255, 255, 0.25);
+}
+
+
 </style>

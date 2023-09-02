@@ -39,11 +39,19 @@ public class Subscribe {
     @Column(name = "user_subscribe_date")
     private LocalDate subscribeDate;
 
-    public Subscribe(User user, Product product, Long startMoney, Long presentMoney, LocalDate subscribeDate) {
+    @Column(name = "today_date")
+    private LocalDate todayDate;
+
+    public Subscribe(User user, Product product, Long startMoney, Long presentMoney, LocalDate subscribeDate, LocalDate todayDate) {
         this.user = user;
         this.product = product;
         this.startMoney = startMoney;
         this.presentMoney = presentMoney;
         this.subscribeDate = subscribeDate;
+        this.todayDate = todayDate;
+    }
+
+    public void updateTodayDate(LocalDate todayDate) {
+        this.todayDate = todayDate;
     }
 }

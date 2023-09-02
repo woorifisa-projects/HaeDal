@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Builder
@@ -35,7 +36,11 @@ public class PortfolioResponse {
     private Tag tag;// 어떤 태그를 가지고 있는지//0
     private UserAgeGroup userAgeGroup; // 연령대//0
 
+    private Long progressdate; //현재 날짜 - 시작날짜 long값
+    private LocalDate endSubscribeDate; //구독 만료 날짜
+
     public static PortfolioResponse from(Subscribe subscribe){
+        LocalDate todayDate = LocalDate.now();
         return PortfolioResponse.builder()
         .subscribeId(subscribe.getSubscribeId())
         .presentMoney(subscribe.getPresentMoney())
@@ -55,6 +60,8 @@ public class PortfolioResponse {
                 .subscription(subscribe.getProduct().getSubscription())
                 .tag(subscribe.getProduct().getTag())
                 .userAgeGroup(subscribe.getProduct().getUserAgeGroup())
+                .progressdate(ChronoUnit.DAYS.between(subscribe.getSubscribeDate(), todayDate) + 1)
+                .endSubscribeDate(subscribe.getSubscribeDate().plusMonths(subscribe.getProduct().getPeriod()))
                 .build();
 
     }
