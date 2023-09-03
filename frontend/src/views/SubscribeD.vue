@@ -45,7 +45,12 @@
                     </p>
                     <p v-show="calculatedAmount > listData.maxProductMoney">입력하신 금액이 최대 금액을 초과하였습니다.</p>
                 </div>
-
+                <div>
+                    <div class="favorite" @click="dibs(listData.productId)" style="cursor:pointer;">
+                        <img v-if="isDibs === true" src='@/assets/img/favorite.png'>
+                        <img v-else src='@/assets/img/favorite_border.png'>
+                    </div>
+                </div>
                 <v-btn class=" button-style" @click="openModal" type="button">
                     신청하기
                 </v-btn>
@@ -79,6 +84,7 @@
                             <b>상품 가입 가능 금액</b><br>
                             최소 {{ listData.requiredStartMoney }} 원 ~최대{{ listData.maxProductMoney }} 원
                         </div>
+
                         <v-btn class="button-style" variant="outlined" type="submit">
                             신청하기
                         </v-btn>
@@ -110,6 +116,7 @@ const axiosInstance = axios.create({
 const listData = ref({});
 const calculatedAmount = ref(null);
 const showModal = ref(false);
+const isDibs = ref(false);
 
 const route = useRoute();
 const productId = route.params.id;
@@ -121,8 +128,46 @@ watchEffect(() => {
         console.log(res.data)
         listData.value = res.data
     })
+    // 찜되어있는지 확인
+    axiosInstance.get(`/dibs/${productId}/check`, {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
+        isDibs.value = res.data; // 서버에서 전달된 찜 여부
+        console.log(isDibs.value);
+    }).catch((error) => {
+        // 로그인 되어 있지 않을 시 무조건 false
+        isDibs.value = false;
+    });
+
 })
 console.log(listData)
+
+//찜하기 버튼 누를 시
+const dibs = (productId) => {
+    if (isDibs.value === false) {
+        console.log("찜!")
+        axios({
+            method: "post",
+            url: `http://localhost:8080/dibs/${productId}/add`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+            },
+        }).catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"))
+        isDibs.value = true;
+    } else if (isDibs.value === true) {
+        console.log("찜 취소")
+        axios({
+            method: "delete",
+            url: `http://localhost:8080/dibs/${productId}/delete`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+            },
+        })
+        isDibs.value = false;
+    }
+}
 
 const formData = {
     authenticationNumber: '',
@@ -160,7 +205,6 @@ const closeModal = () => {
 const submitForm = () => {
     const url = `http://localhost:8080/subscribe/${productId}/final`;
     // `http://15.164.189.153:8080/subscribe/${productId}/D`;
-
 
 
     // productId가 유효한 경우에만 요청을 보냅니다.
@@ -281,6 +325,19 @@ form {
     margin: 14px 5px 0px 5px;
     font-weight: bolder;
     font-size: 18px;
+}
+
+//찜 기능 관련
+.favorite {
+    width: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.favorite img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
 }
 </style>
   

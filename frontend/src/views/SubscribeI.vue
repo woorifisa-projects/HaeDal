@@ -45,6 +45,12 @@
                     </p>
                     <p v-show="calculatedAmount > listData.maxProductMoney">입력하신 금액이 최대 금액을 초과하였습니다.</p>
                 </div>
+                <div>
+                    <div class="favorite" @click="dibs(listData.productId)" style="cursor:pointer;">
+                        <img v-if="isDibs === true" src='@/assets/img/favorite.png'>
+                        <img v-else src='@/assets/img/favorite_border.png'>
+                    </div>
+                </div>
                 <v-btn class="button-style" variant="outlined" @click="openModal" type="button">
                     신청하기
                 </v-btn>
@@ -108,13 +114,52 @@ const listData = ref({});
 
 const calculatedAmount = ref(null);
 const showModal = ref(false);
+const isDibs = ref(false);
 
 watchEffect(() => {
     axiosInstance.get(`${currentPath}`).then((res) => {
         console.log(res.data)
         listData.value = res.data
-    })
+    });
+    // 찜되어있는지 확인
+    axiosInstance.get(`/dibs/${productId}/check`, {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
+        isDibs.value = res.data; // 서버에서 전달된 찜 여부
+        console.log(isDibs.value);
+    }).catch((error) => {
+        // 로그인 되어 있지 않을 시 무조건 false
+        isDibs.value = false;
+    });
+
 })
+
+//찜하기 버튼 누를 시
+const dibs = (productId) => {
+    if (isDibs.value === false) {
+        console.log("찜!")
+        axios({
+            method: "post",
+            url: `http://localhost:8080/dibs/${productId}/add`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+            },
+        }).catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"))
+        isDibs.value = true;
+    } else if (isDibs.value === true) {
+        console.log("찜 취소")
+        axios({
+            method: "delete",
+            url: `http://localhost:8080/dibs/${productId}/delete`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+            },
+        })
+        isDibs.value = false;
+    }
+}
 
 const openModal = () => {
     showModal.value = true;
@@ -280,6 +325,19 @@ form {
     /* 블러 효과 설정 */
     z-index: 9998;
     /* 모달 아래에 위치하도록 설정 */
+}
+
+//찜 기능 관련
+.favorite {
+    width: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.favorite img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
 }
 </style>
   
