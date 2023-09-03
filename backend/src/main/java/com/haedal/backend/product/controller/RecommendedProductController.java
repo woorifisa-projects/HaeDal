@@ -77,19 +77,25 @@ public class RecommendedProductController {
 
         // 상위 3개의 상품을 선택
 //        int maxRankingCount = Math.max(sortedAssets.size(), 3);
-        for (int i = 0; i < 3; i++) {
-            if (sellProducts.isEmpty() == false) {
+        if (sellProducts.size()>=3) {
+            for (int i = 0; i < 3 ; i++) {
                 Product product = sellProducts.get(i);
                 rankingAssets.add(product);
-                // 예외처리1 : 추천상품이 없는 경우
-            } else {
-                System.out.println("추천상품이 없습니다");
             }
+        } else if(sellProducts.size()<3) {
+            for (int i = 0;  i < sellProducts.size(); i++) {
+                Product product = sellProducts.get(i);
+                rankingAssets.add(product);
+            }
+        }
+        else if(sellProducts.size()==0) {
+            System.out.println("추천상품이 없습니다");
+        }
 
-            productResponses = rankingAssets.stream()
+        productResponses = rankingAssets.stream()
                     .map(ProductResponse::recommendedFrom)
                     .collect(Collectors.toList());
-        }
+
 
         return productResponses;
     }
@@ -112,6 +118,7 @@ public class RecommendedProductController {
 
         //status가 true인 것들만 저장
         List<Product> sellProducts = new ArrayList<>();
+
         for(int i =0;i<sortedServicePurpose.size();i++){
             if(sortedServicePurpose.get(i).getProductStatus()== true){
                 sellProducts.add(sortedServicePurpose.get(i));

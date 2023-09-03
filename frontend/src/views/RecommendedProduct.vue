@@ -54,7 +54,7 @@
                     </span>
                     <v-card-actions>
                         <v-btn class="button-style" @click=subscribeProduct(item)>
-                            가입 하기
+                            정보 보기
                         </v-btn>
                     </v-card-actions>
                 </div>
@@ -78,6 +78,7 @@ import { useAuthStore } from '@/store/app';
 const listData = ref([]);
 const authStore = useAuthStore();
 
+
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8080',
@@ -96,7 +97,6 @@ watchEffect(() => {
             console.log(item)
             listData.value.push(item)
         })
-
 
         // 모든 데이터를 받아온 후에 찜 여부를 확인
         listData.value.forEach((item) => {
@@ -163,6 +163,20 @@ const ageGroup = () => {
             console.log(item)
             listData.value.push(item)
         })
+
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData);
     })
 }
@@ -180,6 +194,20 @@ const purpose = () => {
             console.log(item)
             listData.value.push(item)
         })
+
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData);
     })
 }
@@ -197,6 +225,20 @@ const asset = () => {
             console.log(item)
             listData.value.push(item)
         })
+
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData)
     })
 }
