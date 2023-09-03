@@ -205,7 +205,7 @@ div {
 }
 
 .button-style {
-    width: 25rem;
+    width: 20rem;
     border-radius: 10px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
@@ -229,6 +229,7 @@ div {
 
 .datas {
     font-size: 14px;
+    margin-bottom: 200px
 }
 
 h2 {

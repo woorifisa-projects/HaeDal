@@ -93,7 +93,9 @@ watchEffect(() => {
             listData.value.push(item)
         })
         console.log(listData);
-    }).catch(router.push('/error'));
+    }).catch((error) => {
+        router.push('/error');
+    })
 })
 
 //연령대 해당 상품 버튼

@@ -239,6 +239,7 @@ div {
 
 .datas {
     font-size: 14px;
+    margin-bottom: 200px;
 }
 
 h2 {
