@@ -48,12 +48,12 @@
                     </div>
                 </v-card-item>
                 <div class="d-flex justify-end align-center">
-                    <span class="favorite" @click="dibs(item)" style="cursor:pointer;">
+                    <span class="favorite" @click="dibs(item)" style="cursor:pointer;margin-right: 10px;">
                         <img v-if="item.isDibs === true" src='@/assets/img/favorite.png'>
                         <img v-else src='@/assets/img/favorite_border.png'>
                     </span>
-                    <v-card-actions>
-                        <v-btn class="button-style" @click=subscribeProduct(item)>
+                    <v-card-actions style="margin-left: 1rem;">
+                        <v-btn class=" button-style" @click=subscribeProduct(item)>
                             정보 보기
                         </v-btn>
                     </v-card-actions>
@@ -77,7 +77,6 @@ import { useAuthStore } from '@/store/app';
 // 서버에서 받아오는 정보
 const listData = ref([]);
 const authStore = useAuthStore();
-
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
@@ -337,7 +336,6 @@ p {
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
     color: white;
-    margin-top: 14px;
     font-weight: bolder;
     font-size: 18px;
 }
