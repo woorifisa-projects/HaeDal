@@ -12,12 +12,11 @@
       <v-text-field class="center-text-field"
         v-model="id.value.value"
         :counter="10"
+        variant="outlined"
+        prepend-inner-icon="mdi-account-outline"
         :error-messages="id.errorMessage.value"
-        label="Id"
+        label="아이디"
       >
-          <template v-slot:prepend>
-            <div>아이디</div>
-          </template>
           <template v-slot:append>
           <v-btn
           @click="checkId">
@@ -30,11 +29,10 @@
         v-model="password.value.value"
         :counter="10"
         :error-messages="password.errorMessage.value"
-        label="Password"
+        prepend-inner-icon="mdi-lock-outline"
+        variant="outlined"
+        label="비밀번호"
       >
-      <template v-slot:prepend>
-        <div>비밀번호</div>
-      </template>
     </v-text-field>
 
 
@@ -42,22 +40,22 @@
         v-model="name.value.value"
         :counter="10"
         :error-messages="name.errorMessage.value"
-        label="Name"
+        prepend-inner-icon="mdi-account-outline"
+        variant="outlined"
+        label="이름"
       >
-      <template v-slot:prepend>
-        <div>이름</div>
-          </template>
+
     </v-text-field>
 
       <v-text-field
         v-model="phoneNumber.value.value"
         :counter="7"
         :error-messages="phoneNumber.errorMessage.value"
-        label="Phone Number"
+        prepend-inner-icon="mdi-phone-outline"
+        variant="outlined"
+        label="전화번호"
       >
-      <template v-slot:prepend>
-        <div>전화번호</div>
-          </template>
+
       </v-text-field>
 
     </v-container>
@@ -164,12 +162,12 @@
 </v-container>
 
   <div class="text-center">
-    <v-btn
+    <!-- <v-btn
       color="primary"
       @click="dialog.openDialog"
     >
       Open Dialog
-    </v-btn>
+    </v-btn> -->
 
     <v-dialog
       v-model="dialog.isOpen.value"
@@ -186,6 +184,19 @@
     </v-dialog>
   </div>
 
+  <v-dialog
+      v-model="dialogId.isOpen.value"
+      width="auto"
+    >
+      <v-card>
+        <v-card-text>
+          사용가능한 아이디입니다.
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="dialogId.closeDialog">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
   </form>
 
@@ -207,6 +218,18 @@
     location.href = "http://localhost:3000/login"
   }
 };
+
+
+const dialogId = {
+  isOpen: ref(false),
+  openDialog() {
+    dialogId.isOpen.value = true; // 다이얼로그 열기
+  },
+  closeDialog() {
+    dialogId.isOpen.value = false; // 다이얼로그 닫기
+  }
+};
+
 
 defineRule('customIdRule', async () => {
   if (id(value)?.length >= 2) {
@@ -305,18 +328,13 @@ defineRule('customIdRule', async () => {
   const asset = useField('asset')
   const authNumber = useField('authNumber')
 
-  const changeItems = () =>{
-    if(values.value.items === '10대'){
-    }
-
-  }
-
   const checkId = () => {
     const idcheck = id.value.value;
     console.log(idcheck);
     axios.get(`http://localhost:8080/user/idcheck?id=${idcheck}`)
     .then(response => {
       console.log(response.data);
+      dialogId.openDialog();
     })
 
     .catch(error => {
