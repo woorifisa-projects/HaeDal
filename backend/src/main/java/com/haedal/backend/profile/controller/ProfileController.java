@@ -36,6 +36,7 @@ public class ProfileController {
 
     @PostMapping ("/security")
     public ResponseEntity<ProfileResponse> getUserPassword(Authentication authentication, @RequestBody UserPasswordCheckRequest userPasswordCheckRequest){
+        log.info("비밀번호변경요청들어옴");
         String password = userPasswordCheckRequest.getPassword();
         String id = authentication.getName();
         User user = profileService.findById(id);

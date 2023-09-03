@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RestController
@@ -73,5 +74,10 @@ public class UserController {
         return new ResponseEntity<>(ProfileResponse.userNameInfoFrom(user), HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/leave")
+    public ResponseEntity<String> deleteUser(Authentication authentication){
+        String id = authentication.getName();
+        userService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(id + "회원탈퇴완료");
+    }
 }

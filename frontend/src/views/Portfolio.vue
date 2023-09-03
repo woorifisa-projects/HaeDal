@@ -10,7 +10,15 @@
     </v-card-text>
 
     <v-card-text>
-      <div>현재 잔액 : {{ asset }}</div>
+      <div>계좌 잔고 : {{ asset }}원</div>
+    </v-card-text>
+
+    <v-card-text>
+      <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
+    </v-card-text>
+
+    <v-card-text>
+      <div>총 수익율 : <b class="text-red-lighten-1"> +{{(parseFloat(((totalPresentAsset-asset)/asset)*100)).toFixed(2)}}%</b></div>
     </v-card-text>
 
     <v-card-text>
@@ -84,20 +92,20 @@
                                 >
                                 {{ item.userAgeGroup }}
                                 </v-chip>
-                                <div class="text-overline mb-3" style="font-weight: bolder;text-align: right;;">
-                                만난지{{ item.progressdate }}일째!
+                                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
+                                만난지 {{ item.progressdate }}일째!
                                 </div>
                                 <b>상품 기간 :</b> {{ item.period }}개월,
                                 <b>금리 :</b> {{ item.interestRate }}%,
                                 <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
-                                    {{ item.startMoney }}원
-                                    <div class="text-overline mb-3" style="font-weight: bolder;text-align: right;;">
-                                       +{{ item.cleanplusMoney}}원
-                                       <b>+</b> {{item.plusPercentage}}%
+                                    {{ item.presentMoney+item.cleanplusMoney }}원
+                                    <div class="text-overline mb-3 text-grey-darken-1" style="font-weight: bolder;text-align: right;;">
+                                       +{{item.cleanplusMoney}}원
+                                       <b class = "text-red-lighten-1">+{{item.plusPercentage}}%</b>
                                     </div>    
                                 </div>
                                 
-                                <b>현재 금액 :</b> {{ item.presentMoney }}원
+                                <b>초기 금액 :</b> {{ item.startMoney }}원
                                 
                                 
                                 <b> </b>
@@ -131,6 +139,7 @@ const authStore = useAuthStore();
 const username = ref(0);
 const servicePurpose = ref(0);
 const asset = ref(0);
+const totalPresentAsset = ref(0); //계좌 현재 총 자산액(적금액 모두포함)
 const accountNumber = ref(0);
 const cleanplusMoney = ref(0);
 let servicepurposechange='';
@@ -139,117 +148,6 @@ let servicepurposechange='';
 // 서버에서 받아오는 정보
 const listData = ref([]);
 
-
-// Axios 인스턴스 생성
-axios({
-        method:"get",
-        url:"http://localhost:8080/subscribe/portfolio",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
-        },
-    }).then(res => {
-         username.value = authStore.username;
-        let tempArr = [...res.data]
-        tempArr.forEach((item) => {
-            console.log(item)
-            listData.value.push(item)
-            const subscribeDate = new Date(item.subscribeDate);
-        const endSubscribeDate = new Date(item.endSubscribeDate);
-        const timeDifferenceInMilliseconds = endSubscribeDate - subscribeDate;
-
-        // 밀리초를 일로 변환
-        const daysDifference = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
-
-        const minusfirtsdatefinishdate = daysDifference;
-        console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
-            const money = item.startMoney; //시작금액
-            let n = item.period;
-            
-            let totalAmount = 0;
-            totalAmount= parseFloat(money + (money * (item.interestRate) / 100));
-            console.log(totalAmount+"ㅇ"+money);
-           
-            const plusMoney = ((totalAmount-money)/minusfirtsdatefinishdate)*(item.progressdate);
-            item.cleanplusMoney = parseInt(plusMoney);
-            console.log(item.cleanplusMoney);  
-        })
-      })
-      // POST 요청 실패 시 로직
-      .catch(error => {
-        console.error(error);
-      });
-    
-    const subscribeProduct = (item) => {
-    const productId = item.productId;
-    const productName = item.productName
-    console.log(productName);
-    console.log(item.deposit);
-    if (item.deposit == true) {
-        router.push(
-            {
-                name: 'subscribeDforShow',
-                params: {
-                    id: productId,
-                }
-            })
-    } else if (item.deposit == false) {
-        router.push({
-            name: 'subscribeIforShow',
-            params: {
-                id: productId,
-            }
-        })
-    }
-}
-
-const calculate = (item) => {
-    const minusfirtsdatefinishdate = item.endSubscribeDate-item.subscribeDate;
-    let money = item.startMoney;
-    let n = item.period;
-    let totalAmount = 0;
-    for(let i =0; i<n; i++){
-        totalAmount += (money * (item.interestRate / 100)) * (i / n);
-    } // 만기 시 금액
-     (totalAmount-money)/minusfirtsdatefinishdate*(item.progressdate);
-}
-
-// const calculate = (money,progressdate) => {
-//     if (money) {
-//         let totalAmount = 0;
-//         const n = item.period;
-
-//         for (let i = 0; i < n; i++) {
-//             totalAmount += money + (money * (item.interestRate / 100)) * (i / n);
-//         }
-//         const minusfirtsdatefinishdate = item.endSubscribeDate-item.subscribeDate;
-//         resultmoney = (totalAmount-money)/minusfirtsdatefinishdate*progressdate;
-//         presentMoney = parseFloat(resultmoney);
-//         console.log(presentMoney);
-//         listData.value.push(presentMoney);
-//     } else {
-//         calculatedAmount.value = 오류;
-//     }
-// };
-
-
-// onBeforeMount(async() => {
-// //     instance({
-// //     method:"get",
-// //     url: param,
-// // }).then((res) => {
-// //     return res.data 
-// // }).then({
-// //     data = data
-// // });
-
-// const data = await getApi({url:'/subscribe/portfolio'})
-// console.log(data);
-// listData.value = [...data]; 
-// })
-
-
-
-onMounted(() => {
   
   console.log("새로고췸");
   // Local Storage에서 토큰을 가져와서 store에 저장
@@ -283,12 +181,160 @@ onMounted(() => {
         console.log(response.data);
         username.value = response.data.name;
         accountNumber.value = response.data.accountNumber;
-        asset.value = response.data.asset;
+        asset.value = response.data.asset; // 잔고 남은 금액
         servicePurpose.value = servicepurposechange;
+        totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
       })
   }
 
-});
+
+
+// Axios 인스턴스 생성
+axios({
+        method:"get",
+        url:"http://localhost:8080/subscribe/portfolio",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+        },
+    }).then(res => {
+
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+            // chips 표시 내용 변환
+        switch(item.servicePurpose){
+          case 'MOKDON':
+          item.servicePurpose = '목돈 마련'
+          break;
+          case 'FORCAR':
+          item.servicePurpose = '자동차 구매'
+          break;
+          case 'FORHOUSE':
+          item.servicePurpose = '주택 구매'
+          break;  
+          case 'OTHERS':
+          item.servicePurpose = '기타'
+          break;
+        }
+
+        switch(item.userAgeGroup){
+          case 'ONE':
+          item.userAgeGroup = '10대'
+          break;
+          case 'TWO':
+          item.userAgeGroup = '20대'
+          break;
+          case 'THREE':
+          item.userAgeGroup = '30대'
+          break;  
+          case 'FOUR':
+          item.userAgeGroup = '40대'
+          break;
+          case 'FIVE':
+          item.userAgeGroup = '50대'
+          break;
+          case 'ONETWOTHREEFOURFIVE':
+          item.userAgeGroup = '전연령'
+          break;
+        }
+
+
+        const subscribeDate = new Date(item.subscribeDate);
+        const endSubscribeDate = new Date(item.endSubscribeDate);
+        const timeDifferenceInMilliseconds = endSubscribeDate - subscribeDate;
+
+        // 밀리초를 일로 변환
+        const daysDifference = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+        const minusfirtsdatefinishdate = daysDifference;
+        console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
+            const money = item.startMoney; //시작금액
+            let n = item.period;
+            
+            let totalAmount = 0;
+            //예금일때
+            if(item.deposit==true){
+                totalAmount= parseFloat(money + (money * (item.interestRate) / 100));
+                console.log(totalAmount+"예금"+money);
+            
+                const plusMoney = ((totalAmount-money)/minusfirtsdatefinishdate)*(item.progressdate); //현재 수익
+                item.cleanplusMoney = parseInt(plusMoney); //현재 수익 변수 값 초기화
+                const plusPercentage = ((item.interestRate)/minusfirtsdatefinishdate)*(item.progressdate);// 현재 수익율
+                item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+               
+                const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
+                item.totalMoney = totalMoney;
+                totalPresentAsset.value += totalMoney;
+                console.log(item.cleanplusMoney);  
+            }
+            else{ // 적금일때
+                totalAmount = money; // 초기 예금액
+                    for (let i = 0; i < item.progressdate; i++) {
+                        totalAmount += (totalAmount * ((item.interestRate / 100 )/minusfirtsdatefinishdate)); // 각 날짜에 대한 이자 계산
+                    }
+                    
+                    const plusMoney = (totalAmount - money); // 현재 수익
+                    item.cleanplusMoney = parseInt(plusMoney); // 현재 수익 변수 값 초기화
+                    const plusPercentage = ((totalAmount - money) / money) * 100; // 수익률 계산
+                    item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+
+
+                    const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
+                    item.totalMoney = totalMoney;
+                    totalPresentAsset.value += totalMoney;
+                    console.log(item.cleanplusMoney);
+                    console.log(totalAmount + " 적금 " + money);
+                }
+        })
+      })
+      // POST 요청 실패 시 로직
+      .catch(error => {
+        console.error(error);
+      });
+    
+    const subscribeProduct = (item) => {
+    const productId = item.productId;
+    const productName = item.productName
+    console.log(productName);
+    console.log(item.deposit);
+    if (item.deposit == true) {
+        router.push(
+            {
+                name: 'subscribeDforShow',
+                params: {
+                    id: productId,
+                }
+            })
+    } else if (item.deposit == false) {
+        router.push({
+            name: 'subscribeIforShow',
+            params: {
+                id: productId,
+            }
+        })
+    }
+}
+
+
+
+
+// onBeforeMount(async() => {
+// //     instance({
+// //     method:"get",
+// //     url: param,
+// // }).then((res) => {
+// //     return res.data 
+// // }).then({
+// //     data = data
+// // });
+
+// const data = await getApi({url:'/subscribe/portfolio'})
+// console.log(data);
+// listData.value = [...data]; 
+// })
+
+
 
 </script>
 
@@ -351,6 +397,7 @@ onMounted(() => {
         -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
         12px -12px 16px rgba(255, 255, 255, 0.25);
 }
+
 
 
 </style>
