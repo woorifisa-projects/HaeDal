@@ -4,7 +4,7 @@
 
     <div class=submitForm>
         <form @submit.prevent="submitForm">
-            <h2>{{ listData.productName }} 상품 신청</h2><br class=".mb-8">
+            <h2>{{ listData.productName }} 상품 정보</h2><br class=".mb-8">
             <div class=datas>
                 <div style="margin-bottom:4rem">
                     <b>상품 설명</b>
@@ -29,22 +29,14 @@
                 </div>
                 <br>
                 <div>
-                    <b>출금 계좌번호</b>
-                    {{ listData.accountNumber }}
-                </div>
-                <div>
-                    <b><label for="authenticationNumber">인증 번호</label></b>
-                    <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
-                </div>
-                <div>
                     <b><label for="startMoney">시작 구독료</label></b>
-                    <input type="number" id="startMoney" v-model="formData.startMoney" required>
+                    <input type="number" id="startMoney" v-model="startMoney">
                 </div>
                 <div style="margin: 2rem;">
                     <p style="font-size: 12px;font-weight: 300; margin-bottom: 0;">입력한 시작금액을 바탕으로</p>
                     <v-btn
                         style=" font-size: 18px; font-weight: 600; color: rgb(0, 162, 255); padding: 0.4rem 2rem; margin-bottom: 1rem; box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.066) ;"
-                        @click="calculate(formData.startMoney)" type="button">만기시 금액 예상하기
+                        @click="calculate" type="button">만기시 금액 예상하기
                     </v-btn>
                     <p
                         v-show="calculatedAmount !== null && calculatedAmount !== 0 && calculatedAmount <= listData.maxProductMoney">
@@ -54,9 +46,45 @@
                     <p v-show="calculatedAmount > listData.maxProductMoney">입력하신 금액이 최대 금액을 초과하였습니다.</p>
                 </div>
 
-                <v-btn class=" button-style" type=" submit">
+                <v-btn class=" button-style" @click="openModal" type="button">
                     신청하기
                 </v-btn>
+
+
+                <!-- 모달 창 -->
+                <div v-if="showModal" class="blur-background" @click="closeModal"></div>
+                <div v-if="showModal" class="modal">
+                    <!-- 모달 내용: 계좌번호와 인증 번호 입력 -->
+                    <div class="modal-content">
+                        <h2>{{ listData.productName }} 상품 가입</h2>
+
+                        <div>
+                            <b>출금 계좌번호</b>
+                            {{ listData.accountNumber }}
+                        </div>
+                        <div>
+                            <b>계좌 잔액</b>
+                            {{ listData.asset }}
+                        </div>
+                        <div>
+                            <b>인증 번호</b>
+                            <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
+                        </div>
+
+                        <div>
+                            <b><label for="startMoney">시작 구독료</label></b>
+                            <input type="number" id="startMoney" v-model="formData.startMoney" required>
+                        </div>
+                        <div style="margin-bottom:13px">
+                            <b>상품 가입 가능 금액</b><br>
+                            최소 {{ listData.requiredStartMoney }} 원 ~최대{{ listData.maxProductMoney }} 원
+                        </div>
+                        <v-btn class="button-style" variant="outlined" type="submit">
+                            신청하기
+                        </v-btn>
+                        <v-btn class="button-style" @click="closeModal">취소</v-btn>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -74,24 +102,22 @@ const authStore = useAuthStore();
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    // baseURL: 'http://localhost:8080', // 서버의 주소
-    baseURL: 'http://15.164.189.153:8080',
-    // withCredentials: true // CORS 요청에 관련된 설정을 포함
+    baseURL: 'http://localhost:8080', // 서버의 주소
+    // baseURL: 'http://15.164.189.153:8080',
+
 })
 
 const listData = ref({});
 const calculatedAmount = ref(null);
+const showModal = ref(false);
 
 const route = useRoute();
 const productId = route.params.id;
 const currentPath = `/subscribe/${productId}`;
 
 watchEffect(() => {
-    axiosInstance.get(`${currentPath}`, {
-        headers: {
-            Authorization: `Bearer ${authStore.accessToken}`
-        }
-    }).then((res) => {
+    axiosInstance.get(`${currentPath}`
+    ).then((res) => {
         console.log(res.data)
         listData.value = res.data
     })
@@ -103,7 +129,8 @@ const formData = {
     startMoney: ''
 };
 
-const calculate = (money) => {
+const calculate = () => {
+    const money = parseFloat(startMoney.value);
     if (money) {
         calculatedAmount.value = parseFloat(money + (money * (listData.value.interestRate) / 100)).toFixed(2);
     } else {
@@ -111,8 +138,27 @@ const calculate = (money) => {
     }
 };
 
+const openModal = () => {
+    showModal.value = true;
+    axiosInstance.get(`${currentPath}/semi`, {
+        headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+        }
+    }).then((res) => {
+        console.log(res);
+        listData.value = res.data;
+    }).catch((error) => {
+        router.push('/error');
+    })
+};
+
+const closeModal = () => {
+    showModal.value = false;
+};
+
+
 const submitForm = () => {
-    const url = `http://localhost:8080/subscribe/${productId}/D`;
+    const url = `http://localhost:8080/subscribe/${productId}/final`;
     // `http://15.164.189.153:8080/subscribe/${productId}/D`;
 
 
@@ -127,11 +173,10 @@ const submitForm = () => {
         .then(response => {
             console.log('신청 성공', response);
             alert("신청이 완료 되었습니다.");
-            router.push(/*TODO : 성공 화면 라우터 연결 */'/success'); // 성공한 경우, 리다이렉트 또는 다른 처리를 수행합니다.
+            router.push('/success'); // 성공한 경우, 리다이렉트 또는 다른 처리를 수행합니다.
         })
         .catch(error => {
             console.error('에러 발생', error);
-
             alert("정보가 올바르지 않습니다.");
         });
 };
@@ -193,6 +238,48 @@ h2 {
 
 form {
     margin-bottom: 10rem;
+}
+
+/* 모달 스타일 */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    max-width: 80%;
+    width: 450px;
+    overflow: hidden;
+}
+
+/* 블러 효과 스타일 */
+.blur-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 145, 255, 0.2);
+    /* 블러 색상 및 투명도 설정 */
+    backdrop-filter: blur(5px);
+    /* 블러 효과 설정 */
+    z-index: 9998;
+    /* 모달 아래에 위치하도록 설정 */
+}
+
+.modal-content .button-style {
+    width: 10rem;
+    border-radius: 10px;
+    box-shadow: none;
+    background: rgba(0, 179, 255, 0.826);
+    color: white;
+    margin: 14px 5px 0px 5px;
+    font-weight: bolder;
+    font-size: 18px;
 }
 </style>
   

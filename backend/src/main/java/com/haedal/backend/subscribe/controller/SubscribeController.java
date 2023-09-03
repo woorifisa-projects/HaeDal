@@ -35,22 +35,33 @@ public class SubscribeController {
 
     //신청 상품 정보 표출
     @GetMapping("/{productId}")
-    public ProductResponse showSubcribeProduct(Authentication authentication, @PathVariable(name = "productId") Long productId){
-        String id = authentication.getName();
-        User user = profileService.findById(id);
-
+    public ProductResponse showSubscribeProduct( @PathVariable(name = "productId") Long productId){
         Product foundProduct = productService.findByProductId(productId);
         System.out.println(productId + "정보 조회");
 
-        ProductResponse productResponse = ProductResponse.mapProductToResponse(foundProduct,user);
+        ProductResponse productResponse = ProductResponse.from(foundProduct);
 
         System.out.println(productResponse);
         return productResponse;
     }
 
+    //유저와 상품 페이지 정보 표출
+    @GetMapping("/{productId}/semi")
+    public ProductResponse showSubscribeProductAndUser(Authentication authentication, @PathVariable(name = "productId") Long productId) {
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+
+        Product foundProduct = productService.findByProductId(productId);
+        System.out.println(productId + "신청 페이지");
+
+        ProductResponse productResponse = ProductResponse.mapProductToResponse(foundProduct, user);
+
+        System.out.println(productResponse);
+        return productResponse;
+    }
 
     //상품 신청 페이지 '신청'버튼 클릭
-    @PostMapping("/{productId}/*")
+    @PostMapping("/{productId}/final")
     public ResponseEntity<String> subscribeproduct(Authentication authentication , @PathVariable Long productId, @RequestBody Map<String, String> requestData){
         //인증에 맞춰 정보 수정
         String id = authentication.getName();

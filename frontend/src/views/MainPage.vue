@@ -23,10 +23,9 @@
           </span>
           <div class="text-caption">{{ recommend.shortInfo }}</div>
         </div>
-        <v-btn
+        <v-btn @click="detail(recommend)"
           style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 15px; width:200px;height: 40px;">추천
           상품 정보 보기</v-btn>
-        <!--TODO : 상품 상세 정보 조회 페이지 제작-->
       </div>
     </v-card>
 
@@ -39,7 +38,8 @@
     <div style=" margin:auto; display: flex; justify-content: center;;">
       <img src='@/assets/img/main-image1.png' class="first-image">
     </div>
-    <p style="margin-top:100px; font-size: 18px; color:balck; font-weight: 500;">해달이 추천해드리는 여러분에게 딱 맞는 상품을 만나보세요.</p>
+    <p style="margin-top:100px; font-size: 18px; color:balck; font-weight: 500;">해달이 추천해드리는 여러분에게 딱 맞는 상품을 만나보세요.
+    </p>
     <p style="margin-top:150px; color:rgba(0, 179, 255, 0.826);">지금 시작해 보세요!</p>
     <v-btn
       style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 30px; margin-bottom: 1rem; margin-top:70px; width:400px;height: 60px;"
@@ -105,6 +105,29 @@ onMounted(() => {
   }, 60000) // 1분마다 체크 (조절 가능)
 })
 
+//추천 상품 상세 정보 보기 버튼
+const detail = (item) => {
+  const productId = item.productId;
+  const productName = item.productName
+  console.log(productName);
+  console.log(item.deposit);
+  if (item.deposit == true) {
+    router.push(
+      {
+        name: 'subscribeD',
+        params: {
+          id: productId,
+        }
+      })
+  } else if (item.deposit == false) {
+    router.push({
+      name: 'subscribeI',
+      params: {
+        id: productId,
+      }
+    })
+  }
+}
 </script>
 
 <style>

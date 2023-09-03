@@ -44,6 +44,8 @@ public class ProductResponse {
 
     private String accountNumber; //유저 계좌번호를 넘겨주기 위함
 
+    //사용자 계좌 잔액
+    private Long asset;
 
     public static ProductResponse from(Product product)  {
         return ProductResponse.builder()
@@ -91,7 +93,7 @@ public class ProductResponse {
             .maxProductMoney(foundProduct.getMaxProductMoney())
             .isDeposit(foundProduct.isDeposit())
             .subscription(foundProduct.getSubscription())
-            .accountNumber(user.getAccountNumber())
+            .accountNumber(user.getAccountNumber()).asset(user.getAsset())
             .build();
         return productResponse;
     }

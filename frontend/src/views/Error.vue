@@ -57,6 +57,7 @@ p {
     height: 500px;
     margin: auto;
     margin-top: 5%;
+    margin-bottom: 5%;
     color: rgb(0, 63, 90);
     border-radius: 30px;
     vertical-align: middle !important;

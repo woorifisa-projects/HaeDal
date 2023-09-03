@@ -53,7 +53,7 @@
 
                 <v-btn style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem;"
                     @click=subscribeProduct(item)>
-                    가입 하기
+                    정보 보기
                 </v-btn>
             </v-card-actions>
             <span class="favorite" @click="dibs(item.productId)" style="cursor:pointer;">
@@ -126,7 +126,7 @@ const searchForm = () => {
     })
 }
 
-//가입하기 버튼
+//상품 정보 버튼
 const subscribeProduct = (item) => {
     const productId = item.productId;
     const productName = item.productName
