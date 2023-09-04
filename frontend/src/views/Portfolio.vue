@@ -38,16 +38,16 @@
     <div>
         <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
-                <v-btn @click="viewAll">
-                    전체 가입 상품
+                <v-btn href="/viewAll">
+                    전체 가입 상품 (돈)
                 </v-btn>
 
-                <v-btn @click="financial">
+                <v-btn @click="redirectToPortfoliodibs">
                     찜해둔 상품
                 </v-btn>
 
-                <v-btn @click="tema">
-                    테마 상품
+                <v-btn @click="redirectToPortfolioDays">
+                    가입 일자 순
                 </v-btn>
             </v-bottom-navigation>
         </v-layout>
@@ -132,6 +132,7 @@ import { watchEffect, ref, onBeforeMount } from 'vue'
 import router from '../router'
 import NavigationBar from '@/components/ProfileNavigationBar.vue';
 import { useAuthStore } from '@/store/app';
+import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
 import { getApi } from '@/api/modules';
 
@@ -143,6 +144,20 @@ const totalPresentAsset = ref(0); //계좌 현재 총 자산액(적금액 모두
 const accountNumber = ref(0);
 const cleanplusMoney = ref(0);
 let servicepurposechange='';
+
+// const router = useRouter();
+
+const redirectToPortfolioDays = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfoliodays');
+};
+
+const redirectToPortfoliodibs = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfoliodibs');
+};
+
+
 
 
 // 서버에서 받아오는 정보

@@ -1,5 +1,8 @@
 package com.haedal.backend.subscribe.dto.response;
 
+import com.haedal.backend.Dibs.model.Dibs;
+import com.haedal.backend.product.dto.response.ProductResponse;
+import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.model.Tag;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
@@ -63,7 +66,20 @@ public class PortfolioResponse {
                 .progressdate(ChronoUnit.DAYS.between(subscribe.getSubscribeDate(), todayDate) + 1)
                 .endSubscribeDate(subscribe.getSubscribeDate().plusMonths(subscribe.getProduct().getPeriod()))
                 .build();
-
     }
     // Getters and setters...
+
+    public static PortfolioResponse dibsProfileFrom(Dibs dibs){
+        return PortfolioResponse.builder()
+                .productName(dibs.getProduct().getProductName())
+                .productId(dibs.getProduct().getProductId())
+                        .tag(dibs.getProduct().getTag())
+                        .shortInfo(dibs.getProduct().getShortInfo())
+                        .longInfo(dibs.getProduct().getLongInfo())
+                        .period(dibs.getProduct().getPeriod())
+                        .requiredStartMoney(dibs.getProduct().getRequiredStartMoney())
+                        .interestRate(dibs.getProduct().getInterestRate())
+                        .isDeposit(dibs.getProduct().isDeposit())
+                        .build();
+    }
 }

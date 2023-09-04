@@ -109,6 +109,16 @@ const routes = [
         component: () => import('@/views/Portfolio.vue')
       },
       {
+        path: '/portfoliodays',
+        name: 'portfoliodays',
+        component: () => import('@/views/PortfolioDays.vue')
+      },
+      {
+        path: '/portfoliodibs',
+        name: 'portfoliodibs',
+        component: () => import('@/views/PortfolioDibs.vue')
+      },
+      {
         path: '/leave',
         name: 'leave',
         component: () => import('@/views/UserLeave'),
