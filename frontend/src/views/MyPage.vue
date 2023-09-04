@@ -17,12 +17,10 @@
       <div>이용 목적 : {{ servicePurpose }}</div>
     </v-card-text>
 
-    <v-card-actions>
-      <v-btn color="orange">
-        Share
-      </v-btn>
+    <v-card-actions class="d-flex justify-center align-center">
 
-      <v-btn color="orange" href="http://localhost:3000/profile/edit">
+      <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px;  margin: 0rem 0rem 0.5rem 0.5rem; "
+        color="blue" href="http://localhost:3000/profile/edit">
         프로필 수정하기
       </v-btn>
     </v-card-actions>
@@ -42,11 +40,11 @@ const phonenumber = ref(0);
 const userAgeGroup = ref(0);
 const servicePurpose = ref(0);
 const authStore = useAuthStore();
-let useragegroupchange='';
-let servicepurposechange='';
+let useragegroupchange = '';
+let servicepurposechange = '';
 
 onMounted(() => {
-  
+
   console.log("새로고췸");
   // Local Storage에서 토큰을 가져와서 store에 저장
   const storedToken = localStorage.getItem('accessToken');
@@ -61,37 +59,37 @@ onMounted(() => {
       },
     })
       .then(response => {
-        switch(response.data.userAgeGroup){
+        switch (response.data.userAgeGroup) {
           case 'ONE':
-          useragegroupchange = '10대'
-          break;
+            useragegroupchange = '10대'
+            break;
           case 'TWO':
-          useragegroupchange = '20대'
-          break;
+            useragegroupchange = '20대'
+            break;
           case 'THREE':
-          useragegroupchange = '30대'
-          break;
+            useragegroupchange = '30대'
+            break;
           case 'FOUR':
-          useragegroupchange = '40대'
-          break;
+            useragegroupchange = '40대'
+            break;
           case 'FIVE':
-          useragegroupchange = '50대'
-          break;
+            useragegroupchange = '50대'
+            break;
 
         }
-        switch(response.data.servicePurpose){
+        switch (response.data.servicePurpose) {
           case 'MOKDON':
-          servicepurposechange = '목돈 마련'
-          break;
+            servicepurposechange = '목돈 마련'
+            break;
           case 'FORCAR':
-          servicepurposechange = '자동차 구매'
-          break;
+            servicepurposechange = '자동차 구매'
+            break;
           case 'FORHOUSE':
-          servicepurposechange = '주택 구매'
-          break;  
+            servicepurposechange = '주택 구매'
+            break;
           case 'OTHERS':
-          servicepurposechange = '기타'
-          break;
+            servicepurposechange = '기타'
+            break;
         }
 
         console.log(response.data);
@@ -113,7 +111,7 @@ onMounted(() => {
     -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
     12px -12px 16px rgba(255, 255, 255, 0.25);
   ;
-  margin: 5rem
+  margin: 5rem 0rem 8rem 0rem;
 }
 </style>
 

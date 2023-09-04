@@ -54,9 +54,12 @@ public class ProductResponse {
                 .tag(product.getTag())
                 .productName(product.getProductName())
                 .shortInfo(product.getShortInfo())
+                .longInfo(product.getLongInfo())
                 .period(product.getPeriod())
                 .interestRate(product.getInterestRate())
-                .isDeposit(product.isDeposit()) // boolean타입일 때는 Getter는 is로 시작하는 것이 관례
+                .isDeposit(product.isDeposit())
+                .requiredStartMoney(product.getRequiredStartMoney())
+                .maxProductMoney(product.getMaxProductMoney())
                 .subscription(product.getSubscription())
                 .build();
     }
