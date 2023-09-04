@@ -54,8 +54,10 @@ public class DibsController {
         User user = profileService.findById(id);
 
         Dibs deleteDibs = dibsService.findDibsByUserIDProductID(user.getUserId(),productId);
-        deleteDibs.updateUser(null);
-        System.out.print(deleteDibs.getUser());
+
+//        deleteDibs.updateUser(null);
+//        System.out.print(deleteDibs.getUser());
+
         dibsService.delete(deleteDibs);
         System.out.println("찜 취소");
         return ResponseEntity.ok("찜이 취소되었습니다.");

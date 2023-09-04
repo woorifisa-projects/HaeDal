@@ -54,7 +54,10 @@ public class User {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Subscribe> subscribes;
-    
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Dibs> dibs;
+
     //활동 가능 고객인지 여부
     @Column(name = "user_status", columnDefinition = "BOOLEAN DEFAULT true")
     private boolean userStatus;
