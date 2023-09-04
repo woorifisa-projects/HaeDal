@@ -2,7 +2,7 @@
     <form @submit.prevent="searchForm">
         <div class="search">
             <input type="text" v-model="searchTerm" class="searchProduct" placeholder="원하시는 상품명을 검색해 주세요">
-            <v-btn class="searchButton">
+            <v-btn class="searchButton" @click="searchForm">
                 검색
             </v-btn>
         </div>
@@ -97,12 +97,22 @@ const axiosInstance = axios.create({
 watchEffect(() => {
     axiosInstance.get('/products').then((res) => {
         showNoDataMessage.value = false;
+        console.log(res.data);
 
         let tempArr = [...res.data];
         tempArr.forEach((item) => {
             console.log(item);
+            switch (item.tag) {
+                case "THEMA":
+                    item.tag = '테마 상품'
+                    break;
+                case 'FINANCE':
+                    item.tag = '금융 상품'
+                    break;
+            }
             // 데이터를 받아온 후에 listData에 추가
             listData.value.push(item);
+            console.log(item.tag);
         });
 
         // 모든 데이터를 받아온 후에 찜 여부를 확인
@@ -171,6 +181,21 @@ const searchForm = () => {
             console.log(item)
             listData.value.push(item)
         })
+
+        // 모든 데이터를 받아온 후에 찜 여부를 확인
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData)
         // 검색 결과가 비어있을 때만 showNoDataMessage를 true로 설정
         if (listData.value.length === 0) {
@@ -215,6 +240,22 @@ const viewAll = () => {
             console.log(item)
             listData.value.push(item)
         })
+
+
+        // 모든 데이터를 받아온 후에 찜 여부를 확인
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData)
     })
 }
@@ -228,6 +269,22 @@ const financial = () => {
             console.log(item)
             listData.value.push(item)
         })
+
+
+        // 모든 데이터를 받아온 후에 찜 여부를 확인
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData)
     })
 }
@@ -241,6 +298,22 @@ const tema = () => {
             console.log(item)
             listData.value.push(item)
         })
+
+
+        // 모든 데이터를 받아온 후에 찜 여부를 확인
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData)
     })
 }

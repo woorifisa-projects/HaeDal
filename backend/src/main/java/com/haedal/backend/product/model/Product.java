@@ -1,5 +1,6 @@
 package com.haedal.backend.product.model;
 
+import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
 import com.haedal.backend.subscribe.model.Subscribe;
@@ -54,6 +55,9 @@ public class Product {
 
     @Column(name = "subscription")
     private int subscription; // 월 납입금액
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<Dibs> dibs;
 
     //구매 가능 상품인지 여부
     @Column(name="product_status",columnDefinition = "BOOLEAN DEFAULT true")

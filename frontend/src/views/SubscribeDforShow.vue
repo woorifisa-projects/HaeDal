@@ -4,7 +4,7 @@
 
     <div class=submitForm>
         <form @submit.prevent="submitForm">
-            <h2>{{ listData.productName }} 상품 신청</h2><br class=".mb-8">
+            <h2>{{ listData.productName }} 상품 정보</h2><br class=".mb-8">
             <div class=datas>
                 <div>
                     <b>상품 설명</b><br>
