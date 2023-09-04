@@ -91,15 +91,31 @@ public class SubscribeController {
     }
 
     @GetMapping("/portfolio")
-    public  List<PortfolioResponse>  getUserSubscribeList(Authentication authentication){
+    public  List<PortfolioResponse>  getUserSubscribeListOrderByMoney(Authentication authentication){
         String id = authentication.getName();
-        User user = profileService.findById(id);
-        Long userId = user.getUserId();
-        log.info("유저아이디 조회전"+userId);
-        List<PortfolioResponse> subscribeList = subscribeService.findSubscriptionsAndProductsByUser(userId);
-        log.info("실행은됨"+userId);
+        List<PortfolioResponse> subscribeList = subscribeService.findSubscriptionsAndProductsByUserSortedByMoney(id);
         System.out.println(subscribeList);
+
         return subscribeList;
+    }
+
+    @GetMapping("/portfolio/days")
+    public  List<PortfolioResponse>  getUserSubscribeListOrderByDay(Authentication authentication){
+        String id = authentication.getName();
+        List<PortfolioResponse> subscribeList = subscribeService.findSubscriptionsAndProductsByUserSortedByDays(id);
+        System.out.println(subscribeList);
+
+        return subscribeList;
+    }
+
+    @GetMapping("/portfolio/dibs")
+    public List<PortfolioResponse> getUserDibsList(Authentication authentication){
+        String id = authentication.getName();
+        List<PortfolioResponse> dibsList = subscribeService.findDibsAndProductsByUser(id);
+        log.info("실행완료"+id);
+        System.out.println(dibsList);
+
+        return dibsList;
     }
 
 }

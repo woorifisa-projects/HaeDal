@@ -1,5 +1,6 @@
 package com.haedal.backend.subscribe.repository;
 
+import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.subscribe.model.Subscribe;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,8 +17,14 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
     @Query("SELECT s " +
             "FROM Subscribe s " +
             "JOIN FETCH s.product " +
-            "WHERE s.user.userId = :userId")
-    List<Subscribe> findSubscriptionsAndProductsByUser(@Param("userId") Long userId);
+            "WHERE s.user.id = :id")
+    List<Subscribe> findSubscriptionsAndProductsByUser(@Param("id") String id);
 
     //select * from subscribe s join product p on s.product_id = p.product_id where user_id = 4;
+
+    @Query("SELECT d " +
+            "FROM Dibs d " +
+            "JOIN FETCH d.product " +
+            "WHERE d.user.id = :id")
+    List<Dibs> findDibsAndProductsByUser(@Param("id") String id);
 }

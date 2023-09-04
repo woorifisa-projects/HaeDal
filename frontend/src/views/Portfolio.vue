@@ -34,29 +34,29 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <div>
-    <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
-      <v-bottom-navigation v-model="value" color="teal" grow>
-        <v-btn @click="viewAll">
-          전체 가입 상품
-        </v-btn>
+    <div>
+        <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
+            <v-bottom-navigation v-model="value" color="teal" grow>
+                <v-btn href="/viewAll">
+                    전체 가입 상품 (돈)
+                </v-btn>
 
-        <v-btn @click="financial">
-          찜해둔 상품
-        </v-btn>
+                <v-btn @click="redirectToPortfoliodibs">
+                    찜해둔 상품
+                </v-btn>
 
-        <v-btn @click="tema">
-          테마 상품
-        </v-btn>
-      </v-bottom-navigation>
-    </v-layout>
-  </div>
+                <v-btn @click="redirectToPortfolioDays">
+                    가입 일자 순
+                </v-btn>
+            </v-bottom-navigation>
+        </v-layout>
+    </div>
 
 
   <div style="margin-bottom: 200px;">
     <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
 
-      <!-- <p
+            <!-- <p
                 style="background-color: rgba(0, 179, 255, 0.362); width: 80px; font-weight: bolder; border-radius: 10px; color:rgb(0, 75, 121);; text-align: center;">
                 TOP {{ index + 1 }} </p> -->
 
@@ -116,6 +116,7 @@ import { watchEffect, ref, onBeforeMount } from 'vue'
 import router from '../router'
 import NavigationBar from '@/components/ProfileNavigationBar.vue';
 import { useAuthStore } from '@/store/app';
+import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
 import { getApi } from '@/api/modules';
 
@@ -127,6 +128,20 @@ const totalPresentAsset = ref(0); //계좌 현재 총 자산액(적금액 모두
 const accountNumber = ref(0);
 const cleanplusMoney = ref(0);
 let servicepurposechange = '';
+
+// const router = useRouter();
+
+const redirectToPortfolioDays = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfoliodays');
+};
+
+const redirectToPortfoliodibs = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfoliodibs');
+};
+
+
 
 
 // 서버에서 받아오는 정보

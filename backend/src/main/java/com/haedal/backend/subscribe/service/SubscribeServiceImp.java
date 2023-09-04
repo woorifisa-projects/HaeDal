@@ -1,5 +1,7 @@
 package com.haedal.backend.subscribe.service;
 
+import com.haedal.backend.Dibs.model.Dibs;
+import com.haedal.backend.product.model.Product;
 import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.repository.SubscribeRepository;
@@ -9,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 @Slf4j
@@ -22,10 +25,32 @@ public class SubscribeServiceImp implements SubscribeService{
     }
 
     @Override
-    public List<PortfolioResponse> findSubscriptionsAndProductsByUser(Long userId) {
-        List<Subscribe> result = subscribeRepository.findSubscriptionsAndProductsByUser(userId);
-        return result.stream()
+    public List<PortfolioResponse> findSubscriptionsAndProductsByUserSortedByMoney(String id) {
+        List<Subscribe> result = subscribeRepository.findSubscriptionsAndProductsByUser(id);
+        List<Subscribe> sortedPortfolio = result.stream()
+                .sorted(Comparator.comparing(Subscribe::getStartMoney).reversed()) // 가입금액순으로 정렬해서
+                .collect(Collectors.toList()); // 리스트로 반환
+        return sortedPortfolio.stream()
                 .map(PortfolioResponse::from)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PortfolioResponse> findSubscriptionsAndProductsByUserSortedByDays(String id) {
+        List<Subscribe> result = subscribeRepository.findSubscriptionsAndProductsByUser(id);
+        List<Subscribe> sortedPortfolio = result.stream()
+                .sorted(Comparator.comparing(Subscribe::getSubscribeDate)) // 가입금액순으로 정렬해서
+                .collect(Collectors.toList()); // 리스트로 반환
+        return sortedPortfolio.stream()
+                .map(PortfolioResponse::from)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PortfolioResponse> findDibsAndProductsByUser(String id) {
+        List<Dibs> result = subscribeRepository.findDibsAndProductsByUser(id);
+        return result.stream()
+                .map(PortfolioResponse::dibsProfileFrom)
                 .collect(Collectors.toList());
     }
 
@@ -40,6 +65,7 @@ public class SubscribeServiceImp implements SubscribeService{
         }
         subscribeRepository.saveAll(subscribes); // 다시저장
     }
+
 
 
     public Subscribe save(Subscribe subscribe){

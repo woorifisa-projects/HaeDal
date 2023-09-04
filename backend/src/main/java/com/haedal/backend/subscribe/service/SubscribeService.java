@@ -1,8 +1,10 @@
 package com.haedal.backend.subscribe.service;
 
 
+import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,7 +21,11 @@ public interface SubscribeService extends CrudService<Subscribe, Long> {
 //    List<Product> findByProductId(Product productId);
 
 
-    List<PortfolioResponse> findSubscriptionsAndProductsByUser(Long userId);
+    List<PortfolioResponse> findSubscriptionsAndProductsByUserSortedByMoney(String id);
+
+    List<PortfolioResponse> findSubscriptionsAndProductsByUserSortedByDays(String id);
+
+    List<PortfolioResponse> findDibsAndProductsByUser(String id);
 
     public Subscribe save(Subscribe subscribe);
 }

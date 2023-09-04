@@ -37,8 +37,4 @@ public class Dibs {
         this.dibsDate = dibsDate;
     }
 
-    public Dibs updateUser(User user){
-        this.user=user;
-        return this;
-    }
 }
