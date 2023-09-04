@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Service
@@ -154,6 +156,13 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
         return productRepository.orderByUserAgeGroup(productIdsInUserAgeGroup);
     }
 
+    public List<Product> orderByInterestRate(List<Product> products) {
+        // 금리기준 내림차순 정렬
+        List<Product> sortedProducts = products.stream()
+                .sorted(Comparator.comparing(Product::getInterestRate).reversed())
+                .collect(Collectors.toList());
+        return sortedProducts;
+    }
 
     // TODO: Subscribe 테이블에서 productId에 해당하는 구독자 수를 조회하여 반환
 
