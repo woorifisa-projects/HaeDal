@@ -5,7 +5,7 @@
       </v-btn>
       <strong>HaeDal</strong>
       <div style="margin:20px 0px">
-        여러분의 자산정보 맞춤 상품을 추천해드리는 해달 프로젝트는 아래와 같은 멤버들이 만들었습니다.<br>
+        여러분의 자산정보 맞춤 상품을 추천해드리는 해달 프로젝트입니다.<br>
 
         <!-- Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut
         risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.
@@ -15,18 +15,17 @@
         et magnis dis parturient montes, nascetur ridiculus mus. -->
       </div>
 
-      <div style="letter-spacing: 6px; font-size: 15px; ">
+      <!-- <div style="letter-spacing: 6px; font-size: 15px; ">
         <v-btn variant="text" href="https://github.com/juneheel">
           이준희
         </v-btn>
-
         <v-btn variant="text" href="https://github.com/image00">
           임예지
         </v-btn>
         <v-btn variant="text" href="https://github.com/Cloudyee">
           정경연
         </v-btn>
-      </div>
+      </div> -->
       <v-divider></v-divider>
 
       <div>
