@@ -1,34 +1,54 @@
 <template>
-  <v-footer flat class="bg-blue-lighten-3 text-center d-flex flex-column">
-    <div>
-      <v-btn v-for="icon in icons" :key="icon" class="mx-4" :icon="icon" variant="text"></v-btn>
-    </div>
+  <footer>
+    <v-footer flat class="bg-blue-lighten-3 text-center d-flex flex-column" style="padding-bottom: 10px;">
+      <v-btn :icon="icon" variant="text" href="https://github.com/woorifisa-projects/HaeDal.git">
+      </v-btn>
+      <strong>HaeDal</strong>
+      <div style="margin:20px 0px">
+        여러분의 자산정보 맞춤 상품을 추천해드리는 해달 프로젝트는 아래와 같은 멤버들이 만들었습니다.<br>
 
-    <div class="pt-0">
-      Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut
-      risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis
-      commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus
-      iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus
-      et magnis dis parturient montes, nascetur ridiculus mus.
-    </div>
+        <!-- Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut
+        risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.
+        Duis
+        commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus
+        iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus
+        et magnis dis parturient montes, nascetur ridiculus mus. -->
+      </div>
 
-    <v-divider></v-divider>
+      <div style="letter-spacing: 6px; font-size: 15px; ">
+        <v-btn variant="text" href="https://github.com/juneheel">
+          이준희
+        </v-btn>
 
-    <div>
-      {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-    </div>
-  </v-footer>
+        <v-btn variant="text" href="https://github.com/image00">
+          임예지
+        </v-btn>
+        <v-btn variant="text" href="https://github.com/Cloudyee">
+          정경연
+        </v-btn>
+      </div>
+      <v-divider></v-divider>
+
+      <div>
+        {{ new Date().getFullYear() }} — <strong>Woori FISA TEAM 4</strong>
+
+      </div>
+    </v-footer>
+  </footer>
 </template>
 
 
 <script setup>
 import { ref } from 'vue';
+const icon = 'mdi-github';
 
-const icons = ref([
-  'mdi-facebook',
-  'mdi-twitter',
-  'mdi-linkedin',
-  'mdi-instagram',
-]);
+
 </script>
-<style></style>
+<style>
+v-footer {
+  width: 100%;
+  height: 60px;
+  /* footer의 높이 */
+  position: absolute;
+}
+</style>

@@ -1,5 +1,6 @@
 package com.haedal.backend.auth.model;
 
+import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.auth.dto.request.UserUpdateRequest;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
@@ -51,7 +52,7 @@ public class User {
     @Column(name = "auth_number")
     private int authNumber; // 인증번호
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Subscribe> subscribes;
     
     //활동 가능 고객인지 여부

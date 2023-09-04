@@ -20,11 +20,11 @@ public class Dibs {
     @Column(name="dibs_id")
     private long dibsId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -37,4 +37,8 @@ public class Dibs {
         this.dibsDate = dibsDate;
     }
 
+    public Dibs updateUser(User user){
+        this.user=user;
+        return this;
+    }
 }

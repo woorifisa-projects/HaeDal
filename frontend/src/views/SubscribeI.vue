@@ -308,7 +308,7 @@ form {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 3rem;
     max-width: 80%;
-    width: 450px;
+    width: 50rem;
     overflow: hidden;
 }
 
