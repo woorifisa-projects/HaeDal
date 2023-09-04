@@ -155,42 +155,6 @@ public class RecommendedProductController {
         return productResponses;
 
     }
-    
-//    @GetMapping("/filter/servicePurpose")
-//    public List<ProductResponse> getRecommendedByServicePurpose() {
-//        Long userId = 3L;
-//
-//        // userId를 기준으로 고객과 이용목적이 같은 상품들 저장
-//        List<Long> recommendedByServicePurpose = recommendedProductService.filterProductsByServicePurpose(userId);
-//        System.out.println("넘어옴 : "+recommendedProductService.filterProductsByServicePurpose(userId));
-//
-//        // 고객과 이용 목적이 같은 상품 중 인기가 많은 상품 정렬
-//        // filterByServicePurpose() : ProductRepository에서 선언한 JPQL 쿼리가 담겨있음
-//        List<Long> sortedServicePurpose = recommendedProductService.filterByServicePurpose(recommendedByServicePurpose);
-//        System.out.println("정렬 완료! :" + sortedServicePurpose);
-//
-//        // 인기 순위 상위 3개의 상품 저장
-//        List<Product> rankingServicePurpose = new ArrayList<>();
-////        int maxRankingCount = Math.max(sortedAssets.size(), 3);
-//        for (int i = 0; i < 3; i++) {
-//            if (sortedServicePurpose.isEmpty() == false) {
-//                Product product = sortedServicePurpose.get(i);
-//                rankingServicePurpose.add(product);
-//                // 예외처리1 : 추천상품이 없는 경우
-//            } else {
-//                System.out.println("추천상품이 없습니다");
-//            }
-//        }
-//            List<ProductResponse> productResponses = new ArrayList<>();
-//            productResponses = rankingServicePurpose.stream()
-//                    .map(ProductResponse::recommendedFrom)
-//                    .collect(Collectors.toList());
-//            System.out.println(productResponses);
-//        return productResponses;
-//    }
-
-
-
 
     // 사용자의 연령대에 따라, 추천상품을 조회
     @GetMapping("/filter/userAgeGroup")
@@ -241,45 +205,4 @@ public class RecommendedProductController {
         return productResponses;
     }
 
-
-
-
-
-//    // 사용자의 연령대에 따라, 추천상품을 조회
-//    @GetMapping("/filter/userAgeGroup")
-//    public List<ProductResponse> getRecommendedByUserAgeGroup() {
-//
-//        // userId를 기준으로, 기준을 충족하는 상품들만 저장
-//        Long userId=3L;
-//        List<Long> recommendedByUserAgeGroup = recommendedProductService.filterProductsByUserAgeGroup(userId);
-//
-//        // 정렬된 상품 기준, 구독자 수에 따라 정렬
-//        // filterByUserAgeGroup() : ProductRepository에서 선언한 JPQL 쿼리가 담겨있음
-//        List<Product> sortedUserAgeGroup = productRepository.orderByUserAgeGroup(recommendedByUserAgeGroup);
-//        List<Product> rankingUserAgeGroup = new ArrayList<>();
-//        List<ProductResponse> productResponses = new ArrayList<>();
-//
-//
-//
-//        // 상위 3개의 상품을 선택
-////        int maxRankingCount = Math.max(sortedAssets.size(), 3);
-//        for (int i = 0; i < 3; i++) {
-//            if (sortedUserAgeGroup.isEmpty() == false) {
-//                Product product = sortedUserAgeGroup.get(i);
-//                rankingUserAgeGroup.add(product);
-//
-//                // 예외처리1 : 추천상품이 없는 경우
-//            } else {
-//                System.out.println("추천상품이 없습니다");
-//            }
-//
-//
-//            productResponses = rankingUserAgeGroup.stream()
-//                    .map(ProductResponse::recommendedFrom)
-//                    .collect(Collectors.toList());
-//
-//
-//        }
-//        return productResponses;
-//    }
 }

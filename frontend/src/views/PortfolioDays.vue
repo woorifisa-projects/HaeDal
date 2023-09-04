@@ -26,28 +26,26 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="orange">
-        Share
-      </v-btn>
 
-      <v-btn color="orange" href="http://localhost:3000/profile/edit">
+      <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
+        color="blue" href="http://localhost:3000/profile/edit">
         계좌정보 수정하기
       </v-btn>
     </v-card-actions>
   </v-card>
     <div>
-        <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
+      <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
-                <v-btn @click="viewAll">
-                    전체 가입 상품
+                <v-btn @click="redirectToPortfolio">
+                    자산별 가입 상품
                 </v-btn>
 
-                <v-btn @click="financial">
+                <v-btn @click="redirectToPortfoliodibs">
                     찜해둔 상품
                 </v-btn>
 
-                <v-btn @click="tema">
-                    테마 상품
+                <v-btn @click="redirectToPortfolioDays">
+                    가입 일자 순
                 </v-btn>
             </v-bottom-navigation>
         </v-layout>
@@ -144,6 +142,21 @@ const accountNumber = ref(0);
 const cleanplusMoney = ref(0);
 let servicepurposechange='';
 
+
+const redirectToPortfolio = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfolio');
+};
+
+const redirectToPortfolioDays = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfoliodays');
+};
+
+const redirectToPortfoliodibs = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfoliodibs');
+};
 
 // 서버에서 받아오는 정보
 const listData = ref([]);
@@ -381,5 +394,31 @@ axios({
 }
 
 
+.v-bottom-navigation {
+  background: none;
+  color: rgb(0, 149, 255);
+  box-shadow: none;
+}
 
+.v-bottom-navigation button {
+  background: rgba(255, 255, 255, 0.264);
+  box-shadow:
+    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+    12px -12px 16px rgba(255, 255, 255, 0.25);
+  margin-left: 16px;
+  border-radius: 10px;
+  height: 2px;
+}
+
+.v-bottom-navigation .v-bottom-navigation__content>.v-btn {
+  font-size: inherit;
+  font-weight: bolder;
+  height: 3rem;
+  max-width: 168px;
+  min-width: 80px;
+  text-transform: none;
+  transition: inherit;
+  width: 118px;
+  border-radius: 24px;
+}
 </style>

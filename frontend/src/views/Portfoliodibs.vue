@@ -27,11 +27,9 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="orange">
-        Share
-      </v-btn>
-
-      <v-btn color="orange" href="http://localhost:3000/profile/edit">
+      
+        <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
+        color="blue" href="http://localhost:3000/profile/edit">
         계좌정보 수정하기
       </v-btn>
     </v-card-actions>
@@ -39,8 +37,8 @@
     <div>
         <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
-                <v-btn href="/viewAll">
-                    전체 가입 상품 (돈)
+                <v-btn @click="redirectToPortfolio">
+                    자산별 가입 상품
                 </v-btn>
 
                 <v-btn @click="redirectToPortfoliodibs">
@@ -73,7 +71,7 @@
                         <div class="text-caption">{{ item.longInfo }}</div>
                     </div>
                 </v-card-item>
-                <div class="d-flex justify-end align-center">
+                <div class="d-flex justify-end align-center ">
                     <span class="favorite" @click="dibs(item)" style="cursor:pointer;margin-right: 10px;">
                         <img v-if="item.isDibs === true" src='@/assets/img/favorite.png'>
                         <img v-else src='@/assets/img/favorite_border.png'>
@@ -97,7 +95,6 @@
 import axios from 'axios'
 import { watchEffect, ref } from 'vue'
 import router from '../router'
-import { mdiConsoleNetwork } from '@mdi/js';
 import NavigationBar from '@/components/ProfileNavigationBar.vue';
 import { useAuthStore } from '@/store/app';
 
@@ -111,6 +108,11 @@ const asset = ref(0);
 const totalPresentAsset = ref(0); //계좌 현재 총 자산액(적금액 모두포함)
 const accountNumber = ref(0);
 let servicepurposechange='';
+
+const redirectToPortfolio = () => {
+  // Vue Router를 사용하여 경로를 변경
+  router.push('/portfolio');
+};
 
 const redirectToPortfolioDays = () => {
   // Vue Router를 사용하여 경로를 변경
@@ -261,26 +263,126 @@ const subscribeProduct = (item) => {
         })
     }
 }
+
+// 여기서부터 위에 계좌 컬럼 두개띄우기위한 뻘코드..
+
+axios({
+        method:"get",
+        url:"http://localhost:8080/subscribe/portfolio",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+        },
+    }).then(res => {
+
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            // listData.value.push(item)
+          
+        const subscribeDate = new Date(item.subscribeDate);
+        const endSubscribeDate = new Date(item.endSubscribeDate);
+        const timeDifferenceInMilliseconds = endSubscribeDate - subscribeDate;
+
+        // 밀리초를 일로 변환
+        const daysDifference = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+        const minusfirtsdatefinishdate = daysDifference;
+        console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
+            const money = item.startMoney; //시작금액
+            let n = item.period;
+            
+            let totalAmount = 0;
+            //예금일때
+            if(item.deposit==true){
+                totalAmount= parseFloat(money + (money * (item.interestRate) / 100));
+                console.log(totalAmount+"예금"+money);
+            
+                const plusMoney = ((totalAmount-money)/minusfirtsdatefinishdate)*(item.progressdate); //현재 수익
+                item.cleanplusMoney = parseInt(plusMoney); //현재 수익 변수 값 초기화
+                const plusPercentage = ((item.interestRate)/minusfirtsdatefinishdate)*(item.progressdate);// 현재 수익율
+                item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+               
+                const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
+                item.totalMoney = totalMoney;
+                totalPresentAsset.value += item.cleanplusMoney;
+                console.log(item.cleanplusMoney);  
+            }
+            else{ // 적금일때
+                totalAmount = money; // 초기 예금액
+                    for (let i = 0; i < item.progressdate; i++) {
+                        totalAmount += (totalAmount * ((item.interestRate / 100 )/minusfirtsdatefinishdate)); // 각 날짜에 대한 이자 계산
+                    }
+                    
+                    const plusMoney = (totalAmount - money); // 현재 수익
+                    item.cleanplusMoney = parseInt(plusMoney); // 현재 수익 변수 값 초기화
+                    const plusPercentage = ((totalAmount - money) / money) * 100; // 수익률 계산
+                    item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+
+
+                    const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
+                    item.totalMoney = totalMoney;
+                    totalPresentAsset.value += item.cleanplusMoney;
+                    console.log(item.cleanplusMoney);
+                    console.log(totalAmount + " 적금 " + money);
+                }
+        })
+      })
+      // POST 요청 실패 시 로직
+      .catch(error => {
+        console.error(error);
+      });
+        
 </script>
 
 <style lang="scss" scoped>
-h2 {
-    text-align: center;
-    padding: 100px 0px 4px 0px;
+.overflow-visible {
+    margin-bottom: 4rem;
 }
 
-p {
+.mx-auto {
+    text-align: center;
+    justify-content: center;
+}
+
+.mx-auto button {
     margin: auto;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(100px, auto));
+    grid-gap: 20px;
+    margin: 10px 20rem 10rem 20rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.searchProduct {
+    width: 30%;
+    height: 100%;
+    background-color: rgb(238, 238, 238);
+    border-radius: 3px;
+    margin-right: 1rem;
+    padding: 7px 2rem;
+    outline: none;
+}
+
+.search {
+    padding: 10px;
     text-align: center;
+    margin-bottom: 2rem;
 }
 
-#products {
-    margin: 4rem 10rem;
-
-}
-
-.top {
-    background: linear-gradient(to bottom, rgba(0, 162, 255, 0.354), rgba(255, 255, 255, 0));
+.button-style {
+    width: 10rem;
+    border-radius: 10px;
+    box-shadow: none;
+    background: rgba(0, 179, 255, 0.826);
+    color: white;
+    margin-top: 14px;
+    font-weight: bolder;
+    font-size: 18px;
 }
 
 .mx-auto {
@@ -291,47 +393,39 @@ p {
         12px -12px 16px rgba(255, 255, 255, 0.25);
 }
 
+
 .v-bottom-navigation {
-    background: none;
-    color: rgb(0, 149, 255);
-    box-shadow: none;
+  background: none;
+  color: rgb(0, 149, 255);
+  box-shadow: none;
 }
 
 .v-bottom-navigation button {
-    background: rgba(255, 255, 255, 0.264);
-    box-shadow:
-        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
-        12px -12px 16px rgba(255, 255, 255, 0.25);
-    margin-left: 16px;
-    border-radius: 10px;
-    height: 2px;
+  background: rgba(255, 255, 255, 0.264);
+  box-shadow:
+    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+    12px -12px 16px rgba(255, 255, 255, 0.25);
+  margin-left: 16px;
+  border-radius: 10px;
+  height: 2px;
 }
 
 .v-bottom-navigation .v-bottom-navigation__content>.v-btn {
-    font-size: inherit;
-    font-weight: bolder;
-    height: 3rem;
-    max-width: 168px;
-    min-width: 80px;
-    text-transform: none;
-    transition: inherit;
-    width: 118px;
-    border-radius: 24px;
-}
-
-.button-style {
-    width: 10rem;
-    border-radius: 10px;
-    box-shadow: none;
-    background: rgba(0, 179, 255, 0.826);
-    color: white;
-    font-weight: bolder;
-    font-size: 18px;
+  font-size: inherit;
+  font-weight: bolder;
+  height: 3rem;
+  max-width: 168px;
+  min-width: 80px;
+  text-transform: none;
+  transition: inherit;
+  width: 118px;
+  border-radius: 24px;
 }
 
 .favorite {
     width: 10px;
     margin: auto;
+
 }
 
 .favorite img {
