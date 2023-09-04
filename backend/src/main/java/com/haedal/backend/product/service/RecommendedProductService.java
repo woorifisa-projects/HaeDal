@@ -28,4 +28,6 @@ public interface RecommendedProductService extends CrudService<Product, Long> {
 
     List<Product> orderByUserAgeGroup(List<Long> recommendedProductsIdsByUserAgeGroup);
 
+    List<Product> orderByInterestRate(List<Product> products);
+
 }

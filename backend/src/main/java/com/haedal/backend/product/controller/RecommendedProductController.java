@@ -64,10 +64,13 @@ public class RecommendedProductController {
         // filterByAsset() : ProductRepository에서 선언한 JPQL 쿼리가 담겨있음
         List<Product> sortedAssets = recommendedProductService.orderByAsset(productsIdsInAsset);
 
+        //상품 중 금리가 높은 것으로 정렬
+        List<Product> highInterests = recommendedProductService.orderByInterestRate(sortedAssets); //service단에서만 정렬
+
         //status가 true인 것들만 저장
         List<Product> sellProducts = new ArrayList<>();
-        for(int i =0;i<sortedAssets.size();i++){
-            if(sortedAssets.get(i).getProductStatus()== true){
+        for(int i =0;i<highInterests.size();i++){
+            if(highInterests.get(i).getProductStatus()== true){
                 sellProducts.add(sortedAssets.get(i));
             }
         }
@@ -214,7 +217,6 @@ public class RecommendedProductController {
 
         // 인기 순위 상위 3개의 상품 저장
         List<Product> rankingServicePurpose = new ArrayList<>();
-
         if (sellProducts.size()>=3) {
             for (int i = 0; i < 3 ; i++) {
                 Product product = sellProducts.get(i);

@@ -70,4 +70,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "GROUP BY p.productId " +
             "ORDER BY COUNT(s) DESC")
     List<Product> orderByUserAgeGroup(@Param("productIdsInUserAgeGroup") List<Long> productIdsInUserAgeGroup);
+
 }
