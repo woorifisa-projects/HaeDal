@@ -1,6 +1,6 @@
 <template>
-  <navigation-bar> </navigation-bar>
-  <v-card class="mx-auto" max-width="400">
+    <navigation-bar>  </navigation-bar>
+    <v-card class="mx-auto" max-width="400">
     <v-img class="align-end text-white" height="200" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
       <v-card-title>{{ username }}님 의 계좌</v-card-title>
     </v-img>
@@ -35,86 +35,87 @@
     </v-card-actions>
   </v-card>
 
-  <div>
-    <v-layout class="overflow-visible" style="height: 56px;">
-      <v-bottom-navigation v-model="value" color="teal" grow>
+    <div>
+        <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
+            <v-bottom-navigation v-model="value" color="teal" grow>
+                <v-btn @click="redirectToPortfolio">
+                    자산별 가입 상품
+                </v-btn>
 
-        <v-btn href="/viewAll">
-          전체 가입 상품 (돈)
-        </v-btn>
+                <v-btn @click="redirectToPortfoliodibs">
+                    찜해둔 상품
+                </v-btn>
 
-        <v-btn @click="redirectToPortfoliodibs">
-          찜해둔 상품
-        </v-btn>
-
-        <v-btn @click="redirectToPortfolioDays">
-          가입 일자 순
-        </v-btn>
-      </v-bottom-navigation>
-    </v-layout>
-  </div>
+                <v-btn @click="redirectToPortfolioDays">
+                    가입 일자 순
+                </v-btn>
+            </v-bottom-navigation>
+        </v-layout>
+    </div>
 
 
-  <div style="margin-bottom: 200px;">
-    <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
+
+    <div style="margin-bottom: 200px;">
+        <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
 
       <!-- <p
                 style="background-color: rgba(0, 179, 255, 0.362); width: 80px; font-weight: bolder; border-radius: 10px; color:rgb(0, 75, 121);; text-align: center;">
                 TOP {{ index + 1 }} </p> -->
 
-      <v-card class="mx-auto" max-width="70%" min-width="300px">
+            <v-card class="mx-auto" max-width="70%" min-width="300px">
         <v-card-item @click=subscribeProduct(item) style="padding: 20px;">
-          <div>
-            <div class="text-h5 mb-3" style="font-weight: bolder;text-align: left;">
-              {{ item.productName }}
-            </div>
-            <div class="text-overline mb-3" style="font-weight: bolder;text-align: left;">
-              <span>
+                    <div>
+                        <div class="text-h5 mb-3" style="font-weight: bolder;text-align: left;">
+                            {{ item.productName }}
+                        </div>
+                        <div class="text-overline mb-3" style="font-weight: bolder;text-align: left;">
+                            <span>
                 <v-chip class="mr-1" color="green" text-color="white">
-                  {{ item.period }}개월
-                </v-chip>
+                                {{ item.period }}개월
+                                </v-chip>
                 <v-chip class="ma-1" color="secondary" text-color="white">
-                  {{ item.servicePurpose }}
-                </v-chip>
+                                {{ item.servicePurpose }}
+                                </v-chip>
                 <v-chip class="ma-1" color="primary" text-color="white">
-                  {{ item.userAgeGroup }}
-                </v-chip>
-                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
-                  만난지 {{ item.progressdate }}일째!
+                                {{ item.userAgeGroup }}
+                                </v-chip>
+                                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
+                                만난지 {{ item.progressdate }}일째!
+                                </div>
+                                <b>상품 기간 :</b> {{ item.period }}개월,
+                                <b>금리 :</b> {{ item.interestRate }}%,
+                                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
+                                    {{ item.presentMoney+item.cleanplusMoney }}원
+                                    <div class="text-overline mb-3 text-grey-darken-1" style="font-weight: bolder;text-align: right;;">
+                                       +{{item.cleanplusMoney}}원
+                                       <b class = "text-red-lighten-1">+{{item.plusPercentage}}%</b>
+                                    </div>    
+                                </div>
+                                
+                                <b>초기 금액 :</b> {{ item.startMoney }}원
+                                
+                                
+                                <b> </b>
+                                <b>종료 일자 :</b> {{ item.endSubscribeDate }}
+
+                            </span>
+                        </div>
+                        <div class="text-caption">{{ item.longInfo }}</div>
+                    </div>
+                </v-card-item>
+                <div class="d-flex justify-end align-center">
+                    <v-card-actions>
+                    </v-card-actions>
                 </div>
-                <b>상품 기간 :</b> {{ item.period }}개월,
-                <b>금리 :</b> {{ item.interestRate }}%,
-                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
-                  {{ item.presentMoney + item.cleanplusMoney }}원
-                  <div class="text-overline mb-3 text-grey-darken-1" style="font-weight: bolder;text-align: right;;">
-                    +{{ item.cleanplusMoney }}원
-                    <b class="text-red-lighten-1">+{{ item.plusPercentage }}%</b>
-                  </div>
-                </div>
-
-                <b>초기 금액 :</b> {{ item.startMoney }}원
-
-
-                <b> </b>
-                <b>종료 일자 :</b> {{ item.endSubscribeDate }}
-
-              </span>
-            </div>
-            <div class="text-caption">{{ item.longInfo }}</div>
-          </div>
-        </v-card-item>
-        <div class="d-flex justify-end align-center">
-          <v-card-actions>
-          </v-card-actions>
+            </v-card>
         </div>
-      </v-card>
     </div>
-  </div>
+    
 </template>
 
 <script setup>
 import axios from 'axios'
-import { watchEffect, ref, onBeforeMount } from 'vue'
+import { ref } from 'vue'
 import router from '../router'
 import NavigationBar from '@/components/ProfileNavigationBar.vue';
 import { useAuthStore } from '@/store/app';
@@ -129,7 +130,7 @@ const asset = ref(0);
 const totalPresentAsset = ref(0); //계좌 현재 총 자산액(적금액 모두포함)
 const accountNumber = ref(0);
 const cleanplusMoney = ref(0);
-let servicepurposechange = '';
+let servicepurposechange='';
 
 // const router = useRouter();
 
@@ -149,172 +150,172 @@ const redirectToPortfoliodibs = () => {
 // 서버에서 받아오는 정보
 const listData = ref([]);
 
+  
+  console.log("새로고췸");
+  // Local Storage에서 토큰을 가져와서 store에 저장
+  const storedToken = localStorage.getItem('accessToken');
+  console.log("저장된 토큰값 " + authStore.accessToken);
 
-console.log("새로고췸");
-// Local Storage에서 토큰을 가져와서 store에 저장
-const storedToken = localStorage.getItem('accessToken');
-console.log("저장된 토큰값 " + authStore.accessToken);
-
-if (storedToken) {
-  console.log("요청전송");
-  axios.get("http://localhost:8080/profile/edit", {
-    headers: {
-      //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
-      Authorization: `Bearer ${storedToken}`
-    },
-  })
-    .then(response => {
-      switch (response.data.servicePurpose) {
-        case 'MOKDON':
+  if (storedToken) {
+    console.log("요청전송");
+    axios.get("http://localhost:8080/profile/edit", {
+      headers: {
+        //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
+        Authorization: `Bearer ${storedToken}`
+      },
+    })
+      .then(response => {
+        switch(response.data.servicePurpose){
+          case 'MOKDON':
           servicepurposechange = '목돈 마련'
           break;
-        case 'FORCAR':
+          case 'FORCAR':
           servicepurposechange = '자동차 구매'
           break;
-        case 'FORHOUSE':
+          case 'FORHOUSE':
           servicepurposechange = '주택 구매'
-          break;
-        case 'OTHERS':
+          break;  
+          case 'OTHERS':
           servicepurposechange = '기타'
           break;
-      }
+        }
 
-      console.log(response.data);
-      username.value = response.data.name;
-      accountNumber.value = response.data.accountNumber;
-      asset.value = response.data.asset; // 잔고 남은 금액
-      servicePurpose.value = servicepurposechange;
-      totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
-    })
-}
+        console.log(response.data);
+        username.value = response.data.name;
+        accountNumber.value = response.data.accountNumber;
+        asset.value = response.data.asset; // 잔고 남은 금액
+        servicePurpose.value = servicepurposechange;
+        totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
+      })
+  }
 
 
 
 // Axios 인스턴스 생성
 axios({
-  method: "get",
-  url: "http://localhost:8080/subscribe/portfolio",
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
-  },
-}).then(res => {
+        method:"get",
+        url:"http://localhost:8080/subscribe/portfolio",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+        },
+    }).then(res => {
 
-  let tempArr = [...res.data]
-  tempArr.forEach((item) => {
-    console.log(item)
-    listData.value.push(item)
-    // chips 표시 내용 변환
-    switch (item.servicePurpose) {
-      case 'MOKDON':
-        item.servicePurpose = '목돈 마련'
-        break;
-      case 'FORCAR':
-        item.servicePurpose = '자동차 구매'
-        break;
-      case 'FORHOUSE':
-        item.servicePurpose = '주택 구매'
-        break;
-      case 'OTHERS':
-        item.servicePurpose = '기타'
-        break;
-    }
-
-    switch (item.userAgeGroup) {
-      case 'ONE':
-        item.userAgeGroup = '10대'
-        break;
-      case 'TWO':
-        item.userAgeGroup = '20대'
-        break;
-      case 'THREE':
-        item.userAgeGroup = '30대'
-        break;
-      case 'FOUR':
-        item.userAgeGroup = '40대'
-        break;
-      case 'FIVE':
-        item.userAgeGroup = '50대'
-        break;
-      case 'ONETWOTHREEFOURFIVE':
-        item.userAgeGroup = '전연령'
-        break;
-    }
-
-
-    const subscribeDate = new Date(item.subscribeDate);
-    const endSubscribeDate = new Date(item.endSubscribeDate);
-    const timeDifferenceInMilliseconds = endSubscribeDate - subscribeDate;
-
-    // 밀리초를 일로 변환
-    const daysDifference = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
-
-    const minusfirtsdatefinishdate = daysDifference;
-    console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
-    const money = item.startMoney; //시작금액
-    let n = item.period;
-
-    let totalAmount = 0;
-    //예금일때
-    if (item.deposit == true) {
-      totalAmount = parseFloat(money + (money * (item.interestRate) / 100));
-      console.log(totalAmount + "예금" + money);
-
-      const plusMoney = ((totalAmount - money) / minusfirtsdatefinishdate) * (item.progressdate); //현재 수익
-      item.cleanplusMoney = parseInt(plusMoney); //현재 수익 변수 값 초기화
-      const plusPercentage = ((item.interestRate) / minusfirtsdatefinishdate) * (item.progressdate);// 현재 수익율
-      item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
-
-      const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
-      item.totalMoney = totalMoney;
-      totalPresentAsset.value += totalMoney;
-      console.log(item.cleanplusMoney);
-    }
-    else { // 적금일때
-      totalAmount = money; // 초기 예금액
-      for (let i = 0; i < item.progressdate; i++) {
-        totalAmount += (totalAmount * ((item.interestRate / 100) / minusfirtsdatefinishdate)); // 각 날짜에 대한 이자 계산
-      }
-
-      const plusMoney = (totalAmount - money); // 현재 수익
-      item.cleanplusMoney = parseInt(plusMoney); // 현재 수익 변수 값 초기화
-      const plusPercentage = ((totalAmount - money) / money) * 100; // 수익률 계산
-      item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
-
-
-      const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
-      item.totalMoney = totalMoney;
-      totalPresentAsset.value += totalMoney;
-      console.log(item.cleanplusMoney);
-      console.log(totalAmount + " 적금 " + money);
-    }
-  })
-})
-  // POST 요청 실패 시 로직
-  .catch(error => {
-    console.error(error);
-  });
-
-const subscribeProduct = (item) => {
-  const productId = item.productId;
-  const productName = item.productName
-  console.log(productName);
-  console.log(item.deposit);
-  if (item.deposit == true) {
-    router.push(
-      {
-        name: 'subscribeDforShow',
-        params: {
-          id: productId,
+        let tempArr = [...res.data]
+        tempArr.forEach((item) => {
+            console.log(item)
+            listData.value.push(item)
+            // chips 표시 내용 변환
+        switch(item.servicePurpose){
+          case 'MOKDON':
+          item.servicePurpose = '목돈 마련'
+          break;
+          case 'FORCAR':
+          item.servicePurpose = '자동차 구매'
+          break;
+          case 'FORHOUSE':
+          item.servicePurpose = '주택 구매'
+          break;  
+          case 'OTHERS':
+          item.servicePurpose = '기타'
+          break;
         }
+
+        switch(item.userAgeGroup){
+          case 'ONE':
+          item.userAgeGroup = '10대'
+          break;
+          case 'TWO':
+          item.userAgeGroup = '20대'
+          break;
+          case 'THREE':
+          item.userAgeGroup = '30대'
+          break;  
+          case 'FOUR':
+          item.userAgeGroup = '40대'
+          break;
+          case 'FIVE':
+          item.userAgeGroup = '50대'
+          break;
+          case 'ONETWOTHREEFOURFIVE':
+          item.userAgeGroup = '전연령'
+          break;
+        }
+
+
+        const subscribeDate = new Date(item.subscribeDate);
+        const endSubscribeDate = new Date(item.endSubscribeDate);
+        const timeDifferenceInMilliseconds = endSubscribeDate - subscribeDate;
+
+        // 밀리초를 일로 변환
+        const daysDifference = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+        const minusfirtsdatefinishdate = daysDifference;
+        console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
+            const money = item.startMoney; //시작금액
+            let n = item.period;
+            
+            let totalAmount = 0;
+            //예금일때
+            if(item.deposit==true){
+                totalAmount= parseFloat(money + (money * (item.interestRate) / 100));
+                console.log(totalAmount+"예금"+money);
+            
+                const plusMoney = ((totalAmount-money)/minusfirtsdatefinishdate)*(item.progressdate); //현재 수익
+                item.cleanplusMoney = parseInt(plusMoney); //현재 수익 변수 값 초기화
+                const plusPercentage = ((item.interestRate)/minusfirtsdatefinishdate)*(item.progressdate);// 현재 수익율
+                item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+               
+                const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
+                item.totalMoney = totalMoney;
+                totalPresentAsset.value += item.cleanplusMoney;
+                console.log(item.cleanplusMoney);  
+            }
+            else{ // 적금일때
+                totalAmount = money; // 초기 예금액
+                    for (let i = 0; i < item.progressdate; i++) {
+                        totalAmount += (totalAmount * ((item.interestRate / 100 )/minusfirtsdatefinishdate)); // 각 날짜에 대한 이자 계산
+                    }
+                    
+                    const plusMoney = (totalAmount - money); // 현재 수익
+                    item.cleanplusMoney = parseInt(plusMoney); // 현재 수익 변수 값 초기화
+                    const plusPercentage = ((totalAmount - money) / money) * 100; // 수익률 계산
+                    item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+
+
+                    const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
+                    item.totalMoney = totalMoney;
+                    totalPresentAsset.value += item.cleanplusMoney;
+                    console.log(item.cleanplusMoney);
+                    console.log(totalAmount + " 적금 " + money);
+                }
+        })
       })
-  } else if (item.deposit == false) {
-    router.push({
-      name: 'subscribeIforShow',
-      params: {
-        id: productId,
-      }
-    })
-  }
+      // POST 요청 실패 시 로직
+      .catch(error => {
+        console.error(error);
+      });
+    
+    const subscribeProduct = (item) => {
+    const productId = item.productId;
+    const productName = item.productName
+    console.log(productName);
+    console.log(item.deposit);
+    if (item.deposit == true) {
+        router.push(
+            {
+                name: 'subscribeDforShow',
+                params: {
+                    id: productId,
+                }
+            })
+    } else if (item.deposit == false) {
+        router.push({
+            name: 'subscribeIforShow',
+            params: {
+                id: productId,
+            }
+        })
+    }
 }
 
 
@@ -325,14 +326,14 @@ const subscribeProduct = (item) => {
 // //     method:"get",
 // //     url: param,
 // // }).then((res) => {
-// //     return res.data
+// //     return res.data 
 // // }).then({
 // //     data = data
 // // });
 
 // const data = await getApi({url:'/subscribe/portfolio'})
 // console.log(data);
-// listData.value = [...data];
+// listData.value = [...data]; 
 // })
 
 
@@ -342,61 +343,61 @@ const subscribeProduct = (item) => {
 
 <style lang="scss" scoped>
 .overflow-visible {
-  margin-bottom: 4rem;
+    margin-bottom: 4rem;
 }
 
 .mx-auto {
-  text-align: center;
-  justify-content: center;
+    text-align: center;
+    justify-content: center;
 }
 
 .mx-auto button {
-  margin: auto;
+    margin: auto;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(3, minmax(100px, auto));
-  grid-gap: 20px;
-  margin: 10px 20rem 10rem 20rem;
-  display: flex;
-  flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(100px, auto));
+    grid-gap: 20px;
+    margin: 10px 20rem 10rem 20rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .searchProduct {
-  width: 30%;
-  height: 100%;
-  background-color: rgb(238, 238, 238);
-  border-radius: 3px;
-  margin-right: 1rem;
-  padding: 7px 2rem;
-  outline: none;
+    width: 30%;
+    height: 100%;
+    background-color: rgb(238, 238, 238);
+    border-radius: 3px;
+    margin-right: 1rem;
+    padding: 7px 2rem;
+    outline: none;
 }
 
 .search {
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 2rem;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .button-style {
-  width: 10rem;
-  border-radius: 10px;
-  box-shadow: none;
-  background: rgba(0, 179, 255, 0.826);
-  color: white;
-  margin-top: 14px;
-  font-weight: bolder;
-  font-size: 18px;
+    width: 10rem;
+    border-radius: 10px;
+    box-shadow: none;
+    background: rgba(0, 179, 255, 0.826);
+    color: white;
+    margin-top: 14px;
+    font-weight: bolder;
+    font-size: 18px;
 }
 
 .mx-auto {
-  padding: 1rem;
-  margin: 1rem 0rem 4rem 0rem;
-  box-shadow:
-    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
-    12px -12px 16px rgba(255, 255, 255, 0.25);
+    padding: 1rem;
+    margin: 1rem 0rem 4rem 0rem;
+    box-shadow:
+        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+        12px -12px 16px rgba(255, 255, 255, 0.25);
 }
 
 
