@@ -53,13 +53,15 @@
 
                 <v-btn style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem;"
                     @click=subscribeProduct(item)>
-                    가입 하기
+                    정보 보기
                 </v-btn>
             </v-card-actions>
-            <span class="favorite" @click="dibs(item.productId)" style="cursor:pointer;">
-                <img v-if="dibed === true" src='@/assets/img/favorite.png'>
+
+            <span class="favorite" @click="dibs(item)" style="cursor:pointer;">
+                <img v-if="item.isDibs === true" src='@/assets/img/favorite.png'>
                 <img v-else src='@/assets/img/favorite_border.png'>
             </span>
+
         </v-card>
     </div>
 </template>
@@ -69,6 +71,7 @@ import axios from 'axios'
 import { watchEffect, ref } from 'vue'
 import router from '../router'
 import { mdiConsoleNetwork } from '@mdi/js';
+import { useAuthStore } from '@/store/app';
 
 // 서버에서 받아오는 정보
 const listData = ref([]);
@@ -80,7 +83,9 @@ const searchTerm = ref('');
 const showNoDataMessage = ref(false);
 
 //찜 해두었는지 여부
-const dibed = ref(false);
+const isDibs = ref(false);
+
+const authStore = useAuthStore();
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
@@ -93,19 +98,69 @@ watchEffect(() => {
     axiosInstance.get('/products').then((res) => {
         showNoDataMessage.value = false;
 
-        let tempArr = [...res.data]
+        let tempArr = [...res.data];
         tempArr.forEach((item) => {
-            console.log(item)
-            listData.value.push(item)
-        })
+            console.log(item);
+            // 데이터를 받아온 후에 listData에 추가
+            listData.value.push(item);
+        });
+
+        // 모든 데이터를 받아온 후에 찜 여부를 확인
+        listData.value.forEach((item) => {
+            axiosInstance.get(`/dibs/${item.productId}/check`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.accessToken}`
+                }
+            }).then((res) => {
+                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                console.log(item.isDibs);
+            }).catch((error) => {
+                // 로그인 되어 있지 않을 시 무조건 false
+                item.isDibs = false;
+            });
+        });
         console.log(listData);
-    })
-})
+    });
+});
+
+
+// 찜하기 버튼 누를 시
+const dibs = (item) => {
+    if (!item.isDibs) {
+        console.log("찜!");
+        axios({
+            method: "post",
+            url: `http://localhost:8080/dibs/${item.productId}/add`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        })
+            .then(() => {
+                item.isDibs = true; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+            })
+            .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
+    } else {
+        console.log("찜 취소");
+        axios({
+            method: "delete",
+            url: `http://localhost:8080/dibs/${item.productId}/delete`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        })
+            .then(() => {
+                item.isDibs = false; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+            })
+            .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
+    }
+}
+
+
 
 //검색 기능
 const searchForm = () => {
-    //listData 초기화
-    listData.value = [];
+    //기존 데이터 제거
+    listData.value.splice(0, listData.value.length);
 
     showNoDataMessage.value = false;
 
@@ -126,7 +181,7 @@ const searchForm = () => {
     })
 }
 
-//가입하기 버튼
+//상품 정보 버튼
 const subscribeProduct = (item) => {
     const productId = item.productId;
     const productName = item.productName
@@ -190,31 +245,6 @@ const tema = () => {
     })
 }
 
-
-// 
-const dibs = (productId) => {
-    if (dibed.value === false) {
-        console.log("찜!")
-        axios({
-            method: "post",
-            url: `http://localhost:8080/dibs/${productId}/add`,
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
-            },
-        })
-        dibed.value = true;
-    } else if (dibed.value === true) {
-        console.log("찜 취소")
-        axios({
-            method: "delete",
-            url: `http://localhost:8080/dibs/${productId}/delete`,
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
-            },
-        })
-        dibed.value = false;
-    }
-}
 </script>
 
 

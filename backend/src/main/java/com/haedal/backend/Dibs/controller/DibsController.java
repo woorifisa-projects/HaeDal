@@ -58,4 +58,18 @@ public class DibsController {
         System.out.println("찜 취소");
         return ResponseEntity.ok("찜이 취소되었습니다.");
     }
+
+    //해당상품의 찜 여부를 확인
+    @GetMapping("/{productId}/check")
+    public ResponseEntity<Boolean> checkDibs(Authentication authentication, @PathVariable Long productId) {
+        String id = authentication.getName();
+        User user = profileService.findById(id);
+
+        // 해당 사용자의 productId에 대한 찜 여부를 확인합니다.
+        Dibs dibs = dibsService.findDibsByUserIDProductID(user.getUserId(), productId);
+
+        // 찜 여부를 클라이언트에게 전달합니다.
+        boolean isDibs = (dibs != null);
+        return ResponseEntity.ok(isDibs);
+    }
 }
