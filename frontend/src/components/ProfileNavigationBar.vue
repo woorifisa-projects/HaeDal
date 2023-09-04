@@ -5,7 +5,7 @@
     <v-list color="transparent">
       <v-list-item prepend-icon="mdi-account-box" title="내 프로필" href="/mypage"></v-list-item>
       <v-list-item prepend-icon="mdi mdi-account-cog" title="보안 설정" href="/securitysetting"></v-list-item>
-      <v-list-item prepend-icon="mdi mdi-account-cash" title="계좌 관리" href="/portfolio"></v-list-item>
+      <v-list-item prepend-icon="mdi mdi-account-cash" title="포트폴리오" href="/portfolio"></v-list-item>
     </v-list>
 
 
