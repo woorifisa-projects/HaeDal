@@ -1,5 +1,6 @@
 package com.haedal.backend.auth.controller;
 
+import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.auth.dto.UserDto;
 import com.haedal.backend.auth.dto.request.UserIdCheckRequest;
 import com.haedal.backend.auth.dto.request.UserLoginRequest;
@@ -8,6 +9,9 @@ import com.haedal.backend.auth.dto.response.UserLoginResponse;
 import com.haedal.backend.auth.dto.response.UserRegisterResponse;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.auth.service.UserService;
+import com.haedal.backend.log.model.Log;
+import com.haedal.backend.log.model.LogType;
+import com.haedal.backend.log.service.LogService;
 import com.haedal.backend.profile.dto.response.ProfileResponse;
 import com.haedal.backend.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +34,7 @@ public class UserController {
 
     private final UserService userService;
     private final ProfileService profileService;
+    private final LogService logService;
 
     @GetMapping("/idcheck")
     public ResponseEntity<String> idCheckExists(@RequestParam("id")String id){
@@ -47,6 +54,14 @@ public class UserController {
     public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest userRegisterRequest) {
         try {
             UserDto userDto = userService.register(userRegisterRequest);
+
+            User user = profileService.findById(userDto.getUserId());
+            LogType logType = LogType.valueOf("SIGNUP");
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            String logRegister = user.getName()+" 고객님 회원가입";
+
+            Log savelog = logService.save( new Log(user, logType, logDateTime,logRegister));
+
             return new ResponseEntity<>(new UserRegisterResponse(userDto.getId()), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,6 +74,15 @@ public class UserController {
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
         try {
             String token = userService.login(userLoginRequest.getId(), userLoginRequest.getPassword());
+
+            User user= profileService.findById(userLoginRequest.getId());
+
+            LogType logType = LogType.valueOf("LOGIN");
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            String logLogIn = user.getName()+" 고객님 로그인";
+            System.out.println(logLogIn);
+            Log savelog = logService.save( new Log(user, logType, logDateTime,logLogIn));
+
             return new ResponseEntity<>(new UserLoginResponse(token), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

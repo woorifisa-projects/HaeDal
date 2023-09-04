@@ -87,6 +87,8 @@ const isDibs = ref(false);
 
 const authStore = useAuthStore();
 
+
+
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8080', // 서버의 주소
@@ -104,10 +106,10 @@ watchEffect(() => {
             console.log(item);
             switch (item.tag) {
                 case "THEMA":
-                    item.tag = '테마 상품'
+                    item.tag = '테마'
                     break;
                 case 'FINANCE':
-                    item.tag = '금융 상품'
+                    item.tag = '금융'
                     break;
             }
             // 데이터를 받아온 후에 listData에 추가
@@ -165,6 +167,44 @@ const dibs = (item) => {
     }
 }
 
+// //검색 기능
+// const searchForm = () => {
+//     //기존 데이터 제거
+//     listData.value.splice(0, listData.value.length);
+
+//     showNoDataMessage.value = false;
+
+//     const searchKeyword = searchTerm.value;
+//     axiosInstance.post(`/products/${searchKeyword}`).then((res) => {
+//         let tempArr = [...res.data]
+//         tempArr.forEach((item) => {
+//             console.log(item)
+//             listData.value.push(item)
+//         })
+
+//         // 모든 데이터를 받아온 후에 찜 여부를 확인
+//         listData.value.forEach((item) => {
+//             axiosInstance.get(`/dibs/${item.productId}/check`, {
+//                 headers: {
+//                     Authorization: `Bearer ${authStore.accessToken}`
+//                 }
+//             }).then((res) => {
+//                 item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+//                 console.log(item.isDibs);
+//             }).catch((error) => {
+//                 // 로그인 되어 있지 않을 시 무조건 false
+//                 item.isDibs = false;
+//             });
+//         });
+//         console.log(listData)
+//         // 검색 결과가 비어있을 때만 showNoDataMessage를 true로 설정
+//         if (listData.value.length === 0) {
+//             setTimeout(() => {
+//                 showNoDataMessage.value = true;
+//             }, 200)
+//         }
+//     })
+// }
 
 
 //검색 기능
@@ -172,39 +212,77 @@ const searchForm = () => {
     //기존 데이터 제거
     listData.value.splice(0, listData.value.length);
 
+    console.log("로그인한 검색기록 로그 저장 요청 보냄");
+    console.log(authStore.accessToken);
+
     showNoDataMessage.value = false;
 
-    const searchKeyword = searchTerm.value;
-    axiosInstance.post(`/products/${searchKeyword}`).then((res) => {
-        let tempArr = [...res.data]
-        tempArr.forEach((item) => {
-            console.log(item)
-            listData.value.push(item)
-        })
 
-        // 모든 데이터를 받아온 후에 찜 여부를 확인
-        listData.value.forEach((item) => {
-            axiosInstance.get(`/dibs/${item.productId}/check`, {
-                headers: {
-                    Authorization: `Bearer ${authStore.accessToken}`
-                }
-            }).then((res) => {
-                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-                console.log(item.isDibs);
-            }).catch((error) => {
-                // 로그인 되어 있지 않을 시 무조건 false
-                item.isDibs = false;
+    listData.value.splice(0, listData.value.length);
+
+    // const searchKeyword = searchTerm.value;
+    if (localStorage.getItem("accessToken")) {
+        const searchKeyword = searchTerm.value;
+        axiosInstance.post(`/products/${searchKeyword}/login`, null, {
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`
+            }
+        }).then((res) => {
+            let tempArr = [...res.data]
+            tempArr.forEach((item) => {
+                console.log(item)
+                listData.value.push(item)
+            })
+
+            // 모든 데이터를 받아온 후에 찜 여부를 확인
+            listData.value.forEach((item) => {
+                axiosInstance.get(`/dibs/${item.productId}/check`, {
+                    headers: {
+                        Authorization: `Bearer ${authStore.accessToken}`
+                    }
+                }).then((res) => {
+                    item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                    console.log(item.isDibs);
+                }).catch((error) => {
+                    // 로그인 되어 있지 않을 시 무조건 false
+                    item.isDibs = false;
+                });
             });
-        });
-        console.log(listData)
-        // 검색 결과가 비어있을 때만 showNoDataMessage를 true로 설정
-        if (listData.value.length === 0) {
-            setTimeout(() => {
-                showNoDataMessage.value = true;
-            }, 200)
-        }
-    })
+        })
+    } else {
+        const searchKeyword = searchTerm.value;
+        axiosInstance.post(`/products/${searchKeyword}`).then((res) => {
+            let tempArr = [...res.data]
+            tempArr.forEach((item) => {
+                console.log(item)
+                listData.value.push(item)
+            })
+
+            // 모든 데이터를 받아온 후에 찜 여부를 확인
+            listData.value.forEach((item) => {
+                axiosInstance.get(`/dibs/${item.productId}/check`, {
+                    headers: {
+                        Authorization: `Bearer ${authStore.accessToken}`
+                    }
+                }).then((res) => {
+                    item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                    console.log(item.isDibs);
+                }).catch((error) => {
+                    // 로그인 되어 있지 않을 시 무조건 false
+                    item.isDibs = false;
+                });
+            });
+
+        })
+    }
+    if (listData.value.length === 0) {
+        setTimeout(() => {
+            showNoDataMessage.value = true;
+        }, 200)
+    }
+
 }
+
 
 //상품 정보 버튼
 const subscribeProduct = (item) => {

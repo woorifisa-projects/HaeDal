@@ -2,10 +2,8 @@ package com.haedal.backend.Dibs.model;
 
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.product.model.Product;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
