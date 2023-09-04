@@ -1,9 +1,11 @@
 package com.haedal.backend.Dibs.controller;
 
-import com.haedal.backend.Dibs.dto.response.DibsResponse;
 import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.Dibs.service.DibsService;
 import com.haedal.backend.auth.model.User;
+import com.haedal.backend.log.model.Log;
+import com.haedal.backend.log.model.LogType;
+import com.haedal.backend.log.service.LogService;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import com.haedal.backend.profile.service.ProfileService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000", "http://13.209.167.190"})
@@ -20,12 +24,14 @@ public class DibsController {
 
     private final DibsService dibsService;
     private final ProfileService profileService;
+    private final LogService logService;
 
     private ProductService productService;
 
-    public DibsController(DibsService dibsService, ProfileService profileService, ProductService productService) {
+    public DibsController(DibsService dibsService, ProfileService profileService, LogService logService, ProductService productService) {
         this.dibsService = dibsService;
         this.profileService = profileService;
+        this.logService = logService;
         this.productService = productService;
     }
 
@@ -36,10 +42,18 @@ public class DibsController {
         Dibs duplicateDibs = dibsService.findDibsByUserIDProductID(user.getUserId(),productId);
         System.out.println(duplicateDibs);
         if(duplicateDibs==null) {
+
+            LogType logType = LogType.valueOf("DIB");
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            String logDib = productService.findByProductId(productId).getProductName()+" 찜";
+
+            Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
+            System.out.println(logDateTime);
+
             Product foundProduct = productService.findByProductId(productId);
             Dibs newDibs = new Dibs(user, foundProduct, LocalDate.now());
             Dibs saveDibs = dibsService.save(newDibs);
-            System.out.println(saveDibs);
+            System.out.println();
             System.out.println("찜 완료");
             return ResponseEntity.ok("찜이 완료되었습니다.");
         }else{
@@ -55,6 +69,14 @@ public class DibsController {
 
         Dibs deleteDibs = dibsService.findDibsByUserIDProductID(user.getUserId(),productId);
         dibsService.delete(deleteDibs);
+
+        LogType logType = LogType.valueOf("CANCELDIB");
+        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        String logDib = productService.findByProductId(productId).getProductName()+" 찜 취소";
+
+        Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
+
+
         System.out.println("찜 취소");
         return ResponseEntity.ok("찜이 취소되었습니다.");
     }

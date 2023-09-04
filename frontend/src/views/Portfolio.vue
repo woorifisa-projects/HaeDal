@@ -34,6 +34,7 @@
       </v-btn>
     </v-card-actions>
   </v-card>
+
     <div>
         <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
@@ -53,10 +54,11 @@
     </div>
 
 
+
     <div style="margin-bottom: 200px;">
         <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
 
-            <!-- <p
+      <!-- <p
                 style="background-color: rgba(0, 179, 255, 0.362); width: 80px; font-weight: bolder; border-radius: 10px; color:rgb(0, 75, 121);; text-align: center;">
                 TOP {{ index + 1 }} </p> -->
 

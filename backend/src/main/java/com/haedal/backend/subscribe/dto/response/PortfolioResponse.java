@@ -1,8 +1,6 @@
 package com.haedal.backend.subscribe.dto.response;
 
 import com.haedal.backend.Dibs.model.Dibs;
-import com.haedal.backend.product.dto.response.ProductResponse;
-import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.model.Tag;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
