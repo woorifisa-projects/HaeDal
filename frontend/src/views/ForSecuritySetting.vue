@@ -122,7 +122,7 @@ const onSubmit = ()=>{
     }
     else
     {
-      router.push('/changePW'); 
+      router.push('/security'); 
     }
     }
   

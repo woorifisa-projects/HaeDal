@@ -94,14 +94,24 @@ const routes = [
         component: () => import('@/views/ForSecuritySetting.vue')
       },
       {
+        path: '/security',
+        name: 'security',
+        component: () => import('@/views/SecurityMain.vue')
+      },
+      {
         path: '/changePW',
         name: 'changepassword',
-        component: () => import('@/views/ChangePassword.vue')
+        component: () => import('@/views/ForPasswordChange.vue')
       },
       {
         path: '/portfolio',
         name: 'portfolio',
         component: () => import('@/views/Portfolio.vue')
+      },
+      {
+        path: '/leave',
+        name: 'leave',
+        component: () => import('@/views/UserLeave'),
       },
       {
         path: '/error',

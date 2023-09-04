@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -19,6 +21,7 @@ public class UserService {
     private String key;
     private final long expireTimeMs = 1000 * 60 * 60 * 24L; // 토큰 1일
 
+    @Transactional
     public UserDto register(UserRegisterRequest request) {
         String id = request.getId();
         userRepository.findById(request.getId())
@@ -30,6 +33,7 @@ public class UserService {
         return UserDto.fromEntity(saveUser);
     }
 
+    @Transactional
     public String login(String id, String password) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("가입되지 않은 ID입니다."));
@@ -39,6 +43,13 @@ public class UserService {
         }
 
         return JwtUtil.createToken(id, expireTimeMs, key);
+    }
+
+
+
+    @Transactional
+    public void deleteById(String id){
+        userRepository.deleteById(id);
     }
 
 }
