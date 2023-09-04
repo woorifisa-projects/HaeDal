@@ -97,12 +97,22 @@ const axiosInstance = axios.create({
 watchEffect(() => {
     axiosInstance.get('/products').then((res) => {
         showNoDataMessage.value = false;
+        console.log(res.data);
 
         let tempArr = [...res.data];
         tempArr.forEach((item) => {
             console.log(item);
+            switch (item.tag) {
+                case "THEMA":
+                    item.tag = '테마 상품'
+                    break;
+                case 'FINANCE':
+                    item.tag = '금융 상품'
+                    break;
+            }
             // 데이터를 받아온 후에 listData에 추가
             listData.value.push(item);
+            console.log(item.tag);
         });
 
         // 모든 데이터를 받아온 후에 찜 여부를 확인
