@@ -5,5 +5,6 @@ public enum LogType {
     SIGNUP,
     SEARCH,
     DIB,
-    CANCELDIB
+    CANCELDIB,
+    SUBSCRIBE
 }

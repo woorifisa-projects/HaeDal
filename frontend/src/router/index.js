@@ -116,7 +116,7 @@ const routes = [
       {
         path: '/portfoliodibs',
         name: 'portfoliodibs',
-        component: () => import('@/views/PortfolioDibs.vue')
+        component: () => import('@/views/Portfoliodibs.vue')
       },
       {
         path: '/leave',
