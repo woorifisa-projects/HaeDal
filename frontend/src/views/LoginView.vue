@@ -71,7 +71,8 @@ const onSubmit = handleSubmit(values => {
   loading.value = true;
   setTimeout(() => (loading.value = false), 2000);
   console.log(values);
-  axios.post("http://localhost:8080/user/login", values)
+  // axios.post("http://localhost:8080/user/login", values)
+  axios.post("https://backend.haedal.store/user/login", values)
     .then(response => {
       // POST 요청 성공 시 로직
       console.log(response.data);
@@ -84,7 +85,8 @@ const onSubmit = handleSubmit(values => {
 
       console.log("전역관리토큰입니다" + authStore.accessToken);
 
-      axios.get("http://15.164.189.153:8080/user/alog", { // 사용자 이름 pinia에 저장하기위해
+      // axios.get("http://15.164.189.153:8080/user/alog", { // 사용자 이름 pinia에 저장하기위해
+      axios.get("https://backend.haedal.store/user/alog", { // 사용자 이름 pinia에 저장하기위해
         headers: {
           Authorization: `Bearer ${receivedToken}`, // 토큰 포함
         },
