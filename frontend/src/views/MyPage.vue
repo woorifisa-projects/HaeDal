@@ -98,7 +98,7 @@ onMounted(() => {
         userAgeGroup.value = useragegroupchange;
         servicePurpose.value = servicepurposechange;
       })
-  }
+  } else { router.push('/error') };
 
 });
 
