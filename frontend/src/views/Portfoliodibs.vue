@@ -1,39 +1,41 @@
 
 <template>
-    <navigation-bar>  </navigation-bar>
+    <navigation-bar> </navigation-bar>
     <v-card class="mx-auto" max-width="400">
-    <v-img class="align-end text-white" height="200" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
-      <v-card-title>{{ username }}님 의 계좌</v-card-title>
-    </v-img>
+        <v-img class="align-end text-white" height="200" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
+            <v-card-title>{{ username }}님 의 계좌</v-card-title>
+        </v-img>
 
-    <v-card-text>
-      <div> 계좌번호 : {{ accountNumber }} </div>
-    </v-card-text>
+        <v-card-text>
+            <div> 계좌번호 : {{ accountNumber }} </div>
+        </v-card-text>
 
-    <v-card-text>
-      <div>계좌 잔고 : {{ asset }}원</div>
-    </v-card-text>
+        <v-card-text>
+            <div>계좌 잔고 : {{ asset }}원</div>
+        </v-card-text>
 
-    <v-card-text>
-      <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
-    </v-card-text>
+        <v-card-text>
+            <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
+        </v-card-text>
 
-    <v-card-text>
-      <div>총 수익율 : <b class="text-red-lighten-1"> +{{(parseFloat(((totalPresentAsset-asset)/asset)*100)).toFixed(2)}}%</b></div>
-    </v-card-text>
+        <v-card-text>
+            <div>총 수익율 : <b class="text-red-lighten-1">
+                    +{{ (parseFloat(((totalPresentAsset - asset) / asset) * 100)).toFixed(2) }}%</b></div>
+        </v-card-text>
 
-    <v-card-text>
-      <div>이용 목적 : {{ servicePurpose }}</div>
-    </v-card-text>
+        <v-card-text>
+            <div>이용 목적 : {{ servicePurpose }}</div>
+        </v-card-text>
 
-    <v-card-actions>
-      
-        <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
-        color="blue" href="http://localhost:3000/profile/edit">
-        계좌정보 수정하기
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+        <v-card-actions class="d-flex justify-center align-center">
+
+            <v-btn
+                style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
+                color="blue" href="http://localhost:3000/profile/edit">
+                계좌정보 수정하기
+            </v-btn>
+        </v-card-actions>
+    </v-card>
     <div>
         <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
             <v-bottom-navigation v-model="value" color="teal" grow>
@@ -107,60 +109,60 @@ const servicePurpose = ref(0);
 const asset = ref(0);
 const totalPresentAsset = ref(0); //계좌 현재 총 자산액(적금액 모두포함)
 const accountNumber = ref(0);
-let servicepurposechange='';
+let servicepurposechange = '';
 
 const redirectToPortfolio = () => {
-  // Vue Router를 사용하여 경로를 변경
-  router.push('/portfolio');
+    // Vue Router를 사용하여 경로를 변경
+    router.push('/portfolio');
 };
 
 const redirectToPortfolioDays = () => {
-  // Vue Router를 사용하여 경로를 변경
-  router.push('/portfoliodays');
+    // Vue Router를 사용하여 경로를 변경
+    router.push('/portfoliodays');
 };
 
 const redirectToPortfoliodibs = () => {
-  // Vue Router를 사용하여 경로를 변경
-  router.push('/portfoliodibs');
+    // Vue Router를 사용하여 경로를 변경
+    router.push('/portfoliodibs');
 };
 
 console.log("새로고췸");
-  // Local Storage에서 토큰을 가져와서 store에 저장
-  const storedToken = localStorage.getItem('accessToken');
-  console.log("저장된 토큰값 " + authStore.accessToken);
+// Local Storage에서 토큰을 가져와서 store에 저장
+const storedToken = localStorage.getItem('accessToken');
+console.log("저장된 토큰값 " + authStore.accessToken);
 
 if (storedToken) {
     console.log("요청전송");
     axios.get("http://localhost:8080/profile/edit", {
-      headers: {
-        //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
-        Authorization: `Bearer ${storedToken}`
-      },
+        headers: {
+            //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
+            Authorization: `Bearer ${storedToken}`
+        },
     })
-      .then(response => {
-        switch(response.data.servicePurpose){
-          case 'MOKDON':
-          servicepurposechange = '목돈 마련'
-          break;
-          case 'FORCAR':
-          servicepurposechange = '자동차 구매'
-          break;
-          case 'FORHOUSE':
-          servicepurposechange = '주택 구매'
-          break;  
-          case 'OTHERS':
-          servicepurposechange = '기타'
-          break;
-        }
+        .then(response => {
+            switch (response.data.servicePurpose) {
+                case 'MOKDON':
+                    servicepurposechange = '목돈 마련'
+                    break;
+                case 'FORCAR':
+                    servicepurposechange = '자동차 구매'
+                    break;
+                case 'FORHOUSE':
+                    servicepurposechange = '주택 구매'
+                    break;
+                case 'OTHERS':
+                    servicepurposechange = '기타'
+                    break;
+            }
 
-        console.log(response.data);
-        username.value = response.data.name;
-        accountNumber.value = response.data.accountNumber;
-        asset.value = response.data.asset; // 잔고 남은 금액
-        servicePurpose.value = servicepurposechange;
-        totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
-      })
-  }
+            console.log(response.data);
+            username.value = response.data.name;
+            accountNumber.value = response.data.accountNumber;
+            asset.value = response.data.asset; // 잔고 남은 금액
+            servicePurpose.value = servicepurposechange;
+            totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
+        })
+}
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
@@ -267,18 +269,18 @@ const subscribeProduct = (item) => {
 // 여기서부터 위에 계좌 컬럼 두개띄우기위한 뻘코드..
 
 axios({
-        method:"get",
-        url:"http://localhost:8080/subscribe/portfolio",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
-        },
-    }).then(res => {
+    method: "get",
+    url: "http://localhost:8080/subscribe/portfolio",
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+    },
+}).then(res => {
 
-        let tempArr = [...res.data]
-        tempArr.forEach((item) => {
-            console.log(item)
-            // listData.value.push(item)
-          
+    let tempArr = [...res.data]
+    tempArr.forEach((item) => {
+        console.log(item)
+        // listData.value.push(item)
+
         const subscribeDate = new Date(item.subscribeDate);
         const endSubscribeDate = new Date(item.endSubscribeDate);
         const timeDifferenceInMilliseconds = endSubscribeDate - subscribeDate;
@@ -288,50 +290,50 @@ axios({
 
         const minusfirtsdatefinishdate = daysDifference;
         console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
-            const money = item.startMoney; //시작금액
-            let n = item.period;
-            
-            let totalAmount = 0;
-            //예금일때
-            if(item.deposit==true){
-                totalAmount= parseFloat(money + (money * (item.interestRate) / 100));
-                console.log(totalAmount+"예금"+money);
-            
-                const plusMoney = ((totalAmount-money)/minusfirtsdatefinishdate)*(item.progressdate); //현재 수익
-                item.cleanplusMoney = parseInt(plusMoney); //현재 수익 변수 값 초기화
-                const plusPercentage = ((item.interestRate)/minusfirtsdatefinishdate)*(item.progressdate);// 현재 수익율
-                item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
-               
-                const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
-                item.totalMoney = totalMoney;
-                totalPresentAsset.value += item.cleanplusMoney;
-                console.log(item.cleanplusMoney);  
+        const money = item.startMoney; //시작금액
+        let n = item.period;
+
+        let totalAmount = 0;
+        //예금일때
+        if (item.deposit == true) {
+            totalAmount = parseFloat(money + (money * (item.interestRate) / 100));
+            console.log(totalAmount + "예금" + money);
+
+            const plusMoney = ((totalAmount - money) / minusfirtsdatefinishdate) * (item.progressdate); //현재 수익
+            item.cleanplusMoney = parseInt(plusMoney); //현재 수익 변수 값 초기화
+            const plusPercentage = ((item.interestRate) / minusfirtsdatefinishdate) * (item.progressdate);// 현재 수익율
+            item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+
+            const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
+            item.totalMoney = totalMoney;
+            totalPresentAsset.value += item.cleanplusMoney;
+            console.log(item.cleanplusMoney);
+        }
+        else { // 적금일때
+            totalAmount = money; // 초기 예금액
+            for (let i = 0; i < item.progressdate; i++) {
+                totalAmount += (totalAmount * ((item.interestRate / 100) / minusfirtsdatefinishdate)); // 각 날짜에 대한 이자 계산
             }
-            else{ // 적금일때
-                totalAmount = money; // 초기 예금액
-                    for (let i = 0; i < item.progressdate; i++) {
-                        totalAmount += (totalAmount * ((item.interestRate / 100 )/minusfirtsdatefinishdate)); // 각 날짜에 대한 이자 계산
-                    }
-                    
-                    const plusMoney = (totalAmount - money); // 현재 수익
-                    item.cleanplusMoney = parseInt(plusMoney); // 현재 수익 변수 값 초기화
-                    const plusPercentage = ((totalAmount - money) / money) * 100; // 수익률 계산
-                    item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
+
+            const plusMoney = (totalAmount - money); // 현재 수익
+            item.cleanplusMoney = parseInt(plusMoney); // 현재 수익 변수 값 초기화
+            const plusPercentage = ((totalAmount - money) / money) * 100; // 수익률 계산
+            item.plusPercentage = parseFloat(plusPercentage).toFixed(3);
 
 
-                    const totalMoney = item.presentMoney+item.cleanplusMoney; //현재 총 잔고 더하기
-                    item.totalMoney = totalMoney;
-                    totalPresentAsset.value += item.cleanplusMoney;
-                    console.log(item.cleanplusMoney);
-                    console.log(totalAmount + " 적금 " + money);
-                }
-        })
-      })
-      // POST 요청 실패 시 로직
-      .catch(error => {
+            const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
+            item.totalMoney = totalMoney;
+            totalPresentAsset.value += item.cleanplusMoney;
+            console.log(item.cleanplusMoney);
+            console.log(totalAmount + " 적금 " + money);
+        }
+    })
+})
+    // POST 요청 실패 시 로직
+    .catch(error => {
         console.error(error);
-      });
-        
+    });
+
 </script>
 
 <style lang="scss" scoped>
@@ -358,21 +360,6 @@ axios({
     flex-direction: column;
 }
 
-.searchProduct {
-    width: 30%;
-    height: 100%;
-    background-color: rgb(238, 238, 238);
-    border-radius: 3px;
-    margin-right: 1rem;
-    padding: 7px 2rem;
-    outline: none;
-}
-
-.search {
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 2rem;
-}
 
 .button-style {
     width: 10rem;
@@ -395,31 +382,31 @@ axios({
 
 
 .v-bottom-navigation {
-  background: none;
-  color: rgb(0, 149, 255);
-  box-shadow: none;
+    background: none;
+    color: rgb(0, 149, 255);
+    box-shadow: none;
 }
 
 .v-bottom-navigation button {
-  background: rgba(255, 255, 255, 0.264);
-  box-shadow:
-    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
-    12px -12px 16px rgba(255, 255, 255, 0.25);
-  margin-left: 16px;
-  border-radius: 10px;
-  height: 2px;
+    background: rgba(255, 255, 255, 0.264);
+    box-shadow:
+        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+        12px -12px 16px rgba(255, 255, 255, 0.25);
+    margin-left: 16px;
+    border-radius: 10px;
+    height: 2px;
 }
 
 .v-bottom-navigation .v-bottom-navigation__content>.v-btn {
-  font-size: inherit;
-  font-weight: bolder;
-  height: 3rem;
-  max-width: 168px;
-  min-width: 80px;
-  text-transform: none;
-  transition: inherit;
-  width: 118px;
-  border-radius: 24px;
+    font-size: inherit;
+    font-weight: bolder;
+    height: 3rem;
+    max-width: 168px;
+    min-width: 80px;
+    text-transform: none;
+    transition: inherit;
+    width: 118px;
+    border-radius: 24px;
 }
 
 .favorite {

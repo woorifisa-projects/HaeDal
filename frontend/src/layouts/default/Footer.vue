@@ -15,17 +15,7 @@
         et magnis dis parturient montes, nascetur ridiculus mus. -->
       </div>
 
-      <!-- <div style="letter-spacing: 6px; font-size: 15px; ">
-        <v-btn variant="text" href="https://github.com/juneheel">
-          이준희
-        </v-btn>
-        <v-btn variant="text" href="https://github.com/image00">
-          임예지
-        </v-btn>
-        <v-btn variant="text" href="https://github.com/Cloudyee">
-          정경연
-        </v-btn>
-      </div> -->
+
       <v-divider></v-divider>
 
       <div>

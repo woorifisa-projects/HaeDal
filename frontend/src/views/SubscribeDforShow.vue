@@ -26,21 +26,8 @@
                     <b>가입기간</b>
                     {{ listData.period }} 개월
                 </div>
-                <br>
-                <div>
-                    <b><label for="accountNumber">출금 계좌번호</label></b>
-                    {{ listData.accountNumber }}
-                </div>
-                <div style="margin: 2rem;">
-                    <p style="font-size: 12px;font-weight: 300; margin-bottom: 0;">입력한 시작금액을 바탕으로</p>
-                    <v-btn
-                        style=" font-size: 18px; font-weight: 600; color: rgb(0, 162, 255); padding: 0.4rem 2rem; margin-bottom: 1rem; box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.066) ;"
-                        @click="calculate(formData.startMoney)" type="button">만기시 금액 예상하기
-                    </v-btn>
-                    <p v-show="calculatedAmount !== null && calculatedAmount !== 0"> 만기시 예상 금액은 {{ calculatedAmount }}원
-                        입니다!
-                    </p>
-                </div>
+
+                <div style="margin-bottom: 60px;"></div>
 
                 <v-btn class=" button-style" type=" submit">
                     해지하기
