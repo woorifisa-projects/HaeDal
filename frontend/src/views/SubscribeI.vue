@@ -204,7 +204,7 @@ const calculate = () => {
 };
 
 const submitForm = () => {
-    const url = `http://15.164.189.153:8080/subscribe/${productId}/final`;
+    const url = `http://localhost:8080/subscribe/${productId}/final`;
 
     // productId가 유효한 경우에만 요청을 보냅니다.
     axios.post(url, formData,
@@ -220,7 +220,7 @@ const submitForm = () => {
         })
         .catch(error => {
             console.error('에러 발생', error);
-            alert("정보가 올바르지 않습니다.");
+            alert("정보가 올바르지 않거나, 이미 가입된 상품입니다.");
         });
     closeModal(); // 모달 창 닫기
 };

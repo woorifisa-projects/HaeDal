@@ -25,4 +25,12 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
             "JOIN FETCH d.product " +
             "WHERE d.user.id = :id")
     List<Dibs> findDibsAndProductsByUser(@Param("id") String id);
+
+    @Query("SELECT s " +
+            "FROM Subscribe s " +
+            "JOIN FETCH s.product p " +
+            "JOIN FETCH s.user u " +
+            "WHERE u.id = :userId " +
+            "AND p.id = :productId")
+    Subscribe findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
 }

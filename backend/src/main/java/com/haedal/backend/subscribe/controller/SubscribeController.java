@@ -1,6 +1,9 @@
 package com.haedal.backend.subscribe.controller;
 
 import com.haedal.backend.auth.model.User;
+import com.haedal.backend.log.model.Log;
+import com.haedal.backend.log.model.LogType;
+import com.haedal.backend.log.service.LogService;
 import com.haedal.backend.product.dto.response.ProductResponse;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.service.ProductService;
@@ -14,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +30,13 @@ public class SubscribeController {
     private SubscribeService subscribeService;
     private ProfileService profileService;
     private ProductService productService;
+    private LogService logService;
 
-    public SubscribeController(SubscribeService subscribeService, ProfileService profileService, ProductService productService) {
+    public SubscribeController(SubscribeService subscribeService, ProfileService profileService, ProductService productService,LogService logService) {
         this.subscribeService = subscribeService;
         this.profileService = profileService;
         this.productService = productService;
+        this.logService = logService;
     }
 
 
@@ -69,6 +76,8 @@ public class SubscribeController {
 
         System.out.println(requestData);
         Product foundProduct = productService.findByProductId(productId);
+        //해당 고객이 해당 상품에 대해 구독한 기록이 있는지 여부 확인
+        Subscribe alreadySubscribe = subscribeService.findSubscriptionsByProductsAndUser(user.getUserId(),productId);
 
         System.out.println(productId + " 접근 성공했다.");
 
@@ -76,14 +85,19 @@ public class SubscribeController {
         long startMoney = Long.parseLong(requestData.get("startMoney"));
         
         //user가 입력한 인증번호가 DB와 같고, user_start_money(입력값)이 userAsset(본인 소유 자산)이상, productAsset(최대 금액)이하일 때
-        if(authNumber == user.getAuthNumber() && user.getAsset() >= startMoney && startMoney<=foundProduct.getMaxProductMoney()){
+        // + user가 해당 상품을 구독한 기록이 없을 때 구독
+        if(authNumber == user.getAuthNumber() && user.getAsset() >= startMoney && startMoney<=foundProduct.getMaxProductMoney()
+        && alreadySubscribe==null){
             Subscribe subscribe = new Subscribe(user, foundProduct , startMoney, startMoney, LocalDate.now(), LocalDate.now()); // 마지막 LocalDate.now()가 현재날짜생성부분임
             Subscribe saveSubscribe = subscribeService.save(subscribe);
             System.out.println(saveSubscribe);
-//            user.updateAsset(user.getAsset()-startMoney);
-//            User saveUser = profileService.save(user);
-//            System.out.println(startMoney);
-//            System.out.println(saveUser.getAsset());
+
+            LogType logType = LogType.valueOf("SUBSCRIBE");
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+            String logDib = "id"+productId+" "+productService.findByProductId(productId).getProductName()+" 구독";
+
+            Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
+
             return ResponseEntity.ok("신청이 완료되었습니다.");
         } else{
             return ResponseEntity.badRequest().body("신청 정보가 올바르지 않습니다.");

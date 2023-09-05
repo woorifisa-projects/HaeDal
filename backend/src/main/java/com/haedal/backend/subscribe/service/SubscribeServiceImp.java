@@ -53,6 +53,12 @@ public class SubscribeServiceImp implements SubscribeService{
                 .collect(Collectors.toList());
     }
 
+    //해당 user가 같은 상품을 구독하였는지 여부 확인
+    @Override
+    public Subscribe findSubscriptionsByProductsAndUser(Long userId, Long productId) {
+        return subscribeRepository.findSubscriptionsByProductsAndUser(userId,productId);
+    }
+
     @Scheduled(cron = "0 0 9 * * *") // 매일 자정에 실행
     public void updateTodayDate(){
         log.info("스케쥴러실행");
