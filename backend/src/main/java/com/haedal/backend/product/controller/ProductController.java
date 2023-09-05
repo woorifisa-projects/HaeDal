@@ -128,7 +128,7 @@ public class ProductController {
         LogType logType = LogType.valueOf("SEARCH");
         String logSearch = search+" 검색";
         System.out.println(logSearch);
-        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
 
         Log savelog = logService.save( new Log(user, logType, logDateTime,logSearch));
 

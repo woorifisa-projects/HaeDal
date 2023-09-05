@@ -57,7 +57,7 @@ public class UserController {
 
             User user = profileService.findById(userDto.getUserId());
             LogType logType = LogType.valueOf("SIGNUP");
-            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
             String logRegister = user.getName()+" 고객님 회원가입";
 
             Log savelog = logService.save( new Log(user, logType, logDateTime,logRegister));
@@ -78,7 +78,7 @@ public class UserController {
             User user= profileService.findById(userLoginRequest.getId());
 
             LogType logType = LogType.valueOf("LOGIN");
-            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
             String logLogIn = user.getName()+" 고객님 로그인";
             System.out.println(logLogIn);
             Log savelog = logService.save( new Log(user, logType, logDateTime,logLogIn));
