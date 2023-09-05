@@ -144,30 +144,38 @@ watchEffect(() => {
 })
 console.log(listData)
 
-//찜하기 버튼 누를 시
-const dibs = (productId) => {
-    if (isDibs.value === false) {
-        console.log("찜!")
+// 찜하기 버튼 누를 시
+const dibs = (item) => {
+    if (!item.isDibs) {
+        console.log("찜!");
         axios({
             method: "post",
-            url: `http://localhost:8080/dibs/${productId}/add`,
+            url: `http://localhost:8080/dibs/${item.productId}/add`,
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
-            },
-        }).catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"))
-        isDibs.value = true;
-    } else if (isDibs.value === true) {
-        console.log("찜 취소")
-        axios({
-            method: "delete",
-            url: `http://localhost:8080/dibs/${productId}/delete`,
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         })
-        isDibs.value = false;
+            .then(() => {
+                item.isDibs = true; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+            })
+            .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
+
+    } else {
+        console.log("찜 취소");
+        axios({
+            method: "delete",
+            url: `http://localhost:8080/dibs/${item.productId}/delete`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        })
+            .then(() => {
+                item.isDibs = false; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+            })
+            .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
     }
 }
+
 
 const formData = {
     authenticationNumber: '',

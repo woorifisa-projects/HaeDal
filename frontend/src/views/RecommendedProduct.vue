@@ -86,36 +86,40 @@ const axiosInstance = axios.create({
 })
 
 watchEffect(() => {
-    axiosInstance.get('/recommendedProduct', {
-        headers: {
-            Authorization: `Bearer ${authStore.accessToken}`
-        }
-    }).then((res) => {
-        let tempArr = [...res.data]
-        tempArr.forEach((item) => {
-            console.log(item)
-            listData.value.push(item)
-        })
+    if (localStorage.getItem("accessToken")) {
+        axiosInstance.get('/recommendedProduct', {
+            headers: {
+                Authorization: `Bearer ${authStore.accessToken}`
+            }
+        }).then((res) => {
+            let tempArr = [...res.data]
+            tempArr.forEach((item) => {
+                console.log(item)
+                listData.value.push(item)
+            })
 
-        // 모든 데이터를 받아온 후에 찜 여부를 확인
-        listData.value.forEach((item) => {
-            axiosInstance.get(`/dibs/${item.productId}/check`, {
-                headers: {
-                    Authorization: `Bearer ${authStore.accessToken}`
-                }
-            }).then((res) => {
-                item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-                console.log(item.isDibs);
-            }).catch((error) => {
-                // 로그인 되어 있지 않을 시 무조건 false
-                item.isDibs = false;
+            // 모든 데이터를 받아온 후에 찜 여부를 확인
+            listData.value.forEach((item) => {
+                axiosInstance.get(`/dibs/${item.productId}/check`, {
+                    headers: {
+                        Authorization: `Bearer ${authStore.accessToken}`
+                    }
+                }).then((res) => {
+                    item.isDibs = res.data; // 상품 객체에 찜 여부 추가
+                    console.log(item.isDibs);
+                }).catch((error) => {
+                    // 로그인 되어 있지 않을 시 무조건 false
+                    item.isDibs = false;
+                });
             });
-        });
-        console.log(listData);
-    }).catch((error) => {
-        // router.push('/error');
-    })
+            console.log(listData);
+        })
+    }
+    else {
+        router.push('/error');
+    }
 })
+
 
 // 찜하기 버튼 누를 시
 const dibs = (item) => {

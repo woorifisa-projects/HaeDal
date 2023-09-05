@@ -44,8 +44,8 @@ public class DibsController {
         if(duplicateDibs==null) {
 
             LogType logType = LogType.valueOf("DIB");
-            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-            String logDib = productService.findByProductId(productId).getProductName()+" 찜";
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9) ;
+            String logDib = "id"+productId+" "+productService.findByProductId(productId).getProductName()+" 찜";
 
             Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
             System.out.println(logDateTime);
@@ -71,8 +71,8 @@ public class DibsController {
         dibsService.delete(deleteDibs);
 
         LogType logType = LogType.valueOf("CANCELDIB");
-        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-        String logDib = productService.findByProductId(productId).getProductName()+" 찜 취소";
+        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+        String logDib = "id"+productId+" "+productService.findByProductId(productId).getProductName()+" 찜 취소";
 
         Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
 
