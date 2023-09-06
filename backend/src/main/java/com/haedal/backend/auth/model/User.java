@@ -65,6 +65,11 @@ public class User {
     public void updatePassword(String password){
         this.password = password;
     }
+
+    public void updateUserStatus() {
+        this.userStatus = false;
+    }
+
     public void updateProfile(UserUpdateRequest userUpdateRequest)
     {
         this.name = userUpdateRequest.getName();

@@ -20,7 +20,7 @@ public class Subscribe {
     private Long subscribeId;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH) // cascade = CascadeType.DETACH
     @JoinColumn(name = "user_id")
     private User user;
 

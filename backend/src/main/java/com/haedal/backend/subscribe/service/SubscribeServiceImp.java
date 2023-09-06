@@ -1,6 +1,7 @@
 package com.haedal.backend.subscribe.service;
 
 import com.haedal.backend.Dibs.model.Dibs;
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import com.haedal.backend.subscribe.repository.SubscribeRepository;
@@ -71,7 +72,10 @@ public class SubscribeServiceImp implements SubscribeService{
         subscribeRepository.saveAll(subscribes); // 다시저장
     }
 
-
+    @Override
+    public void deleteByUser(User user){
+        subscribeRepository.deleteByUser(user);
+    }
 
     public Subscribe save(Subscribe subscribe){
         return subscribeRepository.save(subscribe);
