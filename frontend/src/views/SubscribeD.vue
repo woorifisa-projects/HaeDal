@@ -91,6 +91,25 @@
                         <v-btn class="button-style" @click="closeModal">취소</v-btn>
                     </div>
                 </div>
+
+                <!--에러 모달창 설정-->
+                <div v-if="showErrorModal === true" class="blur-background" @click="showErrorModal = false"></div>
+                <div v-show="showErrorModal === true" class="modal" id="errorModal" role="dialog" style="width: 40%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="error-icon">
+                                <img src='@/assets/img/exception.png'>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <p id="errorText">{{ errorText }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <v-btn type="button" class="button-style" data-dismiss="modal"
+                                @click="showErrorModal = false">닫기</v-btn>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -116,6 +135,7 @@ const axiosInstance = axios.create({
 const listData = ref({});
 const calculatedAmount = ref(null);
 const showModal = ref(false);
+const showErrorModal = ref(false);
 const isDibs = ref(false);
 
 const route = useRoute();
@@ -229,10 +249,13 @@ const submitForm = () => {
         .catch(error => {
             console.error('에러 발생', error);
             if (error.response && error.response.status === 400) {
-                // 400 Bad Request 응답인 경우 서버에서 전달한 메시지를 출력
-                alert(error.response.data);
+                // 400 Bad Request 응답인 경우 모달 창을 열고 서버에서 전달한 메시지를 모달에 표시
+                const errorModal = document.getElementById('errorModal');
+                const errorText = document.getElementById('errorText');
+                errorText.textContent = error.response.data;
+                showErrorModal.value = true; // 모달 창 열기
             } else {
-                // 다른 에러인 경우 일반 에러 메시지를 출력합니다.
+                // 다른 에러인 경우 일반 에러 메시지 출력
                 alert("정보가 올바르지 않습니다.");
             }
         });
