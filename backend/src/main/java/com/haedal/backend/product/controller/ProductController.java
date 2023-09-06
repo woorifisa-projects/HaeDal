@@ -95,7 +95,7 @@ public class ProductController {
         }
     }
 
-    // 키워드 검색
+    // 로그인 하지 않은 유저가 키워드 검색
     @PostMapping("/{search}")
     public List<ProductResponse> searchProduct(@PathVariable String search){
         List<Product> products = new ArrayList<>();
@@ -119,7 +119,7 @@ public class ProductController {
         return productResponse;
     }
 
-    //로그인한 유저가 검색하는 api
+    //로그인한 유저가 키워드 검색
     @PostMapping("/{search}/login")
     public List<ProductResponse> searchProductLogin(Authentication authentication, @PathVariable String search){
 

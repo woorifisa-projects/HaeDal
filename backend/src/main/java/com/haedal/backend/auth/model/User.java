@@ -79,7 +79,7 @@ public class User {
         this.accountNumber = userUpdateRequest.getAccountNumber();
         this.asset = userUpdateRequest.getAsset();
     }
-//    public void updateAsset(Long asset) {
-//        this.asset = asset;
-//    }
+    public void updateAsset(Long asset) {
+        this.asset = asset;
+    }
 }

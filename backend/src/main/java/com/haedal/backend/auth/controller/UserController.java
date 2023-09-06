@@ -84,8 +84,13 @@ public class UserController {
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); //처리를 무엇으로 할지 생각해보기
             }
             LogType logType = LogType.valueOf("LOGIN");
+
             LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+
             String logLogIn = user.getName()+" 고객님 로그인";
+
+            System.out.println("로그인");
+            System.out.println(logDateTime);
             System.out.println(logLogIn);
             Log savelog = logService.save( new Log(user, logType, logDateTime,logLogIn));
 
