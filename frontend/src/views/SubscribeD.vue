@@ -84,30 +84,31 @@
                             <b>상품 가입 가능 금액</b><br>
                             최소 {{ listData.requiredStartMoney }} 원 ~최대{{ listData.maxProductMoney }} 원
                         </div>
-
-                        <v-btn class="button-style" variant="outlined" type="submit">
-                            신청하기
-                        </v-btn>
-                        <v-btn class="button-style" @click="closeModal">취소</v-btn>
+                        <div style="margin-bottom: 30px;">
+                            <v-btn class="button-style" variant="outlined" type="submit">
+                                신청하기
+                            </v-btn>
+                            <v-btn class="button-style" @click="closeModal">취소</v-btn>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!--에러 모달창 설정-->
-                <div v-if="showErrorModal === true" class="blur-background" @click="showErrorModal = false"></div>
-                <div v-show="showErrorModal === true" class="modal" id="errorModal" role="dialog" style="width: 40%;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="error-icon">
-                                <img src='@/assets/img/exception.png'>
-                            </div>
+            <!--에러 모달창 설정-->
+            <div v-if="showErrorModal === true" class="error-background" @click="showErrorModal = false"></div>
+            <div v-show="showErrorModal === true" class="modal" id="errorModal" role="dialog" style="width: 30%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="error-icon">
+                            <img src='@/assets/img/exception.png'>
                         </div>
-                        <div class="modal-body">
-                            <p id="errorText">{{ errorText }}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <v-btn type="button" class="button-style" data-dismiss="modal"
-                                @click="showErrorModal = false">닫기</v-btn>
-                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errorText">{{ errorText }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <v-btn type="button" class="button-style" data-dismiss="modal"
+                            @click="showErrorModal = false">닫기</v-btn>
                     </div>
                 </div>
             </div>
@@ -247,10 +248,10 @@ const submitForm = () => {
             router.push('/success');
         })
         .catch(error => {
+            showModal.value = true;
             console.error('에러 발생', error);
             if (error.response && error.response.status === 400) {
                 // 400 Bad Request 응답인 경우 모달 창을 열고 서버에서 전달한 메시지를 모달에 표시
-                const errorModal = document.getElementById('errorModal');
                 const errorText = document.getElementById('errorText');
                 errorText.textContent = error.response.data;
                 showErrorModal.value = true; // 모달 창 열기
@@ -265,6 +266,32 @@ const submitForm = () => {
   
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500&display=swap');
+
+.error-icon {
+    width: 30%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.error-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.error-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.087);
+    /* 블러 색상 및 투명도 설정 */
+    backdrop-filter: blur(5px);
+    /* 블러 효과 설정 */
+    z-index: 9999;
+    /* 모달 아래에 위치하도록 설정 */
+}
 
 input {
     width: 300px;
