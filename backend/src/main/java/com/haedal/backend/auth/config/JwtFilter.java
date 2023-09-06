@@ -34,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if(authorization == null || !authorization.startsWith("Bearer" )){
             log.info("authorization");
             filterChain.doFilter(request,response);
-            return; //여기서 걸리고있음
+            return;
         }
 
         // Token 꺼내기

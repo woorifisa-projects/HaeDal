@@ -1,6 +1,7 @@
 package com.haedal.backend.subscribe.service;
 
 
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +29,9 @@ public interface SubscribeService extends CrudService<Subscribe, Long> {
 
     Subscribe findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
 
-   Subscribe save(Subscribe subscribe);
+
+    void deleteByUser(User user);
+
+    public Subscribe save(Subscribe subscribe);
+
 }
