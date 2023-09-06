@@ -220,7 +220,13 @@ const submitForm = () => {
         })
         .catch(error => {
             console.error('에러 발생', error);
-            alert("정보가 올바르지 않거나, 이미 가입된 상품입니다.");
+            if (error.response && error.response.status === 400) {
+                // 400 Bad Request 응답인 경우 서버에서 전달한 메시지를 출력
+                alert(error.response.data);
+            } else {
+                // 다른 에러인 경우 일반 에러 메시지를 출력합니다.
+                alert("정보가 올바르지 않습니다.");
+            }
         });
     closeModal(); // 모달 창 닫기
 };

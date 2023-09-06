@@ -28,5 +28,5 @@ public interface SubscribeService extends CrudService<Subscribe, Long> {
 
     Subscribe findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
 
-    public Subscribe save(Subscribe subscribe);
+   Subscribe save(Subscribe subscribe);
 }

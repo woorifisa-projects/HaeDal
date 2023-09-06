@@ -78,8 +78,13 @@ public class UserController {
             User user= profileService.findById(userLoginRequest.getId());
 
             LogType logType = LogType.valueOf("LOGIN");
+
             LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+
             String logLogIn = user.getName()+" 고객님 로그인";
+
+            System.out.println("로그인");
+            System.out.println(logDateTime);
             System.out.println(logLogIn);
             Log savelog = logService.save( new Log(user, logType, logDateTime,logLogIn));
 

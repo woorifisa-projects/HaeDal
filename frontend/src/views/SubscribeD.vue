@@ -224,12 +224,17 @@ const submitForm = () => {
         },)
         .then(response => {
             console.log('신청 성공', response);
-            alert("신청이 완료 되었습니다.");
-            router.push('/success'); // 성공한 경우, 리다이렉트 또는 다른 처리를 수행합니다.
+            router.push('/success');
         })
         .catch(error => {
             console.error('에러 발생', error);
-            alert("정보가 올바르지 않습니다.");
+            if (error.response && error.response.status === 400) {
+                // 400 Bad Request 응답인 경우 서버에서 전달한 메시지를 출력
+                alert(error.response.data);
+            } else {
+                // 다른 에러인 경우 일반 에러 메시지를 출력합니다.
+                alert("정보가 올바르지 않습니다.");
+            }
         });
 };
 
