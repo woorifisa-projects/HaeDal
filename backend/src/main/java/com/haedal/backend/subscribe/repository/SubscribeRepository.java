@@ -1,6 +1,7 @@
 package com.haedal.backend.subscribe.repository;
 
 import com.haedal.backend.Dibs.model.Dibs;
+import com.haedal.backend.auth.model.User;
 import com.haedal.backend.subscribe.model.Subscribe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,4 +34,6 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
             "WHERE u.id = :userId " +
             "AND p.id = :productId")
     Subscribe findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
+
+    void deleteByUser(User user);
 }
