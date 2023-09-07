@@ -16,7 +16,7 @@
         <div style="white-space: nowrap;">
           <!-- 로그인 상태에 따라 다른 내용을 표시 -->
           <div v-if="authStore.isLoggedIn">
-            <p> {{ username }}고객님 환영합니다.</p>
+            <p> {{ authStore.username }}고객님 환영합니다.</p>
           </div>
           <div v-else>
             <p></p>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '@/store/app';
 import { ref } from 'vue';
@@ -70,8 +70,7 @@ const submit = () => {
 }
 
 
-
-onMounted(() => {
+onMounted(async () => {
   console.log("새로고췸");
   console.log("헤더전역관리토큰입니다" + authStore.accessToken);
   // Local Storage에서 토큰을 가져와서 store에 저장
@@ -82,23 +81,25 @@ onMounted(() => {
     // 페이지 로딩 시 사용자 정보 요청 로직 추가
   }
   if (storedToken) {
-    axios.get("http://localhost:8080/user/alog", {
-      // "http://15.164.189.153:8080/user/alog"
-      // axios.get("https://backend.haedal.store/user/alog", {
-      headers: {
-        Authorization: `Bearer ${storedToken}`, // 토큰 포함
-      },
-    })
-      .then(response => {
-        console.log(response.data);
-        console.log(response.data.name);
-        authStore.setUserName(response.data.name)
-        // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
-        console.log("오이오이" + authStore.username);
-        username.value = authStore.username;
-      })
+    // 사용자 정보를 미리 가져오기
+    try {
+      const response = await axios.get("http://localhost:8080/user/alog", {
+        // "http://15.164.189.153:8080/user/alog"
+        // axios.get("https://backend.haedal.store/user/alog", {
+        headers: {
+          Authorization: `Bearer ${storedToken}`, // 토큰 포함
+        },
+      });
+      console.log(response.data);
+      console.log(response.data.name);
+      authStore.setUserName(response.data.name)
+      // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
+      console.log("오이오이" + authStore.username);
+      username.value = authStore.username;
+    } catch (error) {
+      console.error("사용자 정보 조회 중 오류 발생 : ", error);
+    }
   }
-
 });
 
 const scrolling = ref(false);
