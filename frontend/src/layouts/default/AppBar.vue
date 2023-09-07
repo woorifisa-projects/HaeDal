@@ -81,6 +81,7 @@ onMounted(async () => {
     // 페이지 로딩 시 사용자 정보 요청 로직 추가
   }
   if (storedToken) {
+
     // 사용자 정보를 미리 가져오기
     try {
       const response = await axios.get("http://localhost:8080/user/alog", {
@@ -99,6 +100,7 @@ onMounted(async () => {
     } catch (error) {
       console.error("사용자 정보 조회 중 오류 발생 : ", error);
     }
+
   }
 });
 

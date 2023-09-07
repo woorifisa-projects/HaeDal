@@ -42,10 +42,6 @@ public class SmsController {
     private final ProductService productService;
     private final LogRepository logRepository;
 
-    @GetMapping("/send")
-    public String getSmsPage() {
-        return "sendSms";
-    }
 
     @PostMapping("/sms/send")
     public String sendSmsTest(@RequestBody MessageDTO messageDto, Model model) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
