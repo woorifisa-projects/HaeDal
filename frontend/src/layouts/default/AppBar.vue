@@ -82,21 +82,7 @@ onMounted(() => {
     // 페이지 로딩 시 사용자 정보 요청 로직 추가
   }
   if (storedToken) {
-    axios.get("http://localhost:8080/user/alog", {
-    // "http://15.164.189.153:8080/user/alog"
-    // axios.get("https://backend.haedal.store/user/alog", {
-      headers: {
-        Authorization: `Bearer ${storedToken}`, // 토큰 포함
-      },
-    })
-      .then(response => {
-        console.log(response.data);
-        console.log(response.data.name);
-        authStore.setUserName(response.data.name)
-        // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
-        console.log("오이오이" + authStore.username);
-        username.value = authStore.username;
-      })
+    username.value = localStorage.getItem('userName');
   }
 
 });

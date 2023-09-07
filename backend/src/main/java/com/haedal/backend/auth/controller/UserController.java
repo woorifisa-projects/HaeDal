@@ -58,13 +58,6 @@ public class UserController {
         try {
             UserDto userDto = userService.register(userRegisterRequest);
 
-//            User user = profileService.findById(userDto.getUserId());
-//            LogType logType = LogType.valueOf("SIGNUP");
-//            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
-//            String logRegister = user.getName()+" 고객님 회원가입";
-//
-//            Log savelog = logService.save( new Log(user, logType, logDateTime,logRegister));
-
             return new ResponseEntity<>(new UserRegisterResponse(userDto.getId()), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,36 +70,12 @@ public class UserController {
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
         try {
             String token = userService.login(userLoginRequest.getId(), userLoginRequest.getPassword());
-            User user= profileService.findById(userLoginRequest.getId());
-
-            if(user.isUserStatus()==false)
-            {
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); //처리를 무엇으로 할지 생각해보기
-            }
-            LogType logType = LogType.valueOf("LOGIN");
-
-            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
-
-            String logLogIn = user.getName()+" 고객님 로그인";
-
-            System.out.println("로그인");
-            System.out.println(logDateTime);
-            System.out.println(logLogIn);
-            Log savelog = logService.save( new Log(user, logType, logDateTime,logLogIn));
-
-            return new ResponseEntity<>(new UserLoginResponse(token), HttpStatus.OK);
+            String userName = profileService.findById(userLoginRequest.getId()).getName();
+            return new ResponseEntity<>(new UserLoginResponse(token,userName), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    @GetMapping("/alog")
-    public ResponseEntity<ProfileResponse> getUserId(Authentication authentication){
-        String id = authentication.getName();
-        User user = profileService.findById(id);
-
-        return new ResponseEntity<>(ProfileResponse.userNameInfoFrom(user), HttpStatus.OK);
     }
 
     @Transactional
