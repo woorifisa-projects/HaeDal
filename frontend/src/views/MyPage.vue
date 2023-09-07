@@ -97,7 +97,7 @@ onMounted(() => {
         phonenumber.value = response.data.phoneNumber;
         userAgeGroup.value = useragegroupchange;
         servicePurpose.value = servicepurposechange;
-      })
+      }).catch((error) => router.push('/error'))
   } else { router.push('/error') };
 
 });

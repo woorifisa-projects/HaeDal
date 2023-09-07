@@ -10,7 +10,7 @@
   <div style="text-align: center;">
     <p style="margin:30px; color:rgba(0, 179, 255, 0.826);font-size:20px; font-weight: 600;">✨ 해달의 오늘의 추천 상품 ✨</p>
     <v-card class="recommend"
-      style="width:50%; height:220px; margin: auto; color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle !important;">
+      style="width:50%; height:28%; margin: auto; color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle; !important;">
       <div>
         <div class="text-h5 mb-3" style="font-weight: bolder;">
           {{ recommend.productName }}

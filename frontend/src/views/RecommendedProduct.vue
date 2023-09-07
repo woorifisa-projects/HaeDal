@@ -113,7 +113,7 @@ watchEffect(() => {
                 });
             });
             console.log(listData);
-        })
+        }).catch((error) => router.push('/error'))
     }
     else {
         router.push('/error');

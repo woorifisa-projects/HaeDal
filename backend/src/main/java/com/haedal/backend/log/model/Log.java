@@ -10,8 +10,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
 @Getter
-@AllArgsConstructor
 @Table(name="log")
 public class Log {
     @Id
@@ -39,4 +39,5 @@ public class Log {
         this.logTime = logTime;
         this.logDesc = logDesc;
     }
+
 }
