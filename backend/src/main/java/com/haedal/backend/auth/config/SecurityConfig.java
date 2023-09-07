@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/**","/user/login","/alog**","/mainpage").permitAll() //백엔드 요청경로 기준
+                .antMatchers("/**","user/**","/user/login","/alog**","/mainpage").permitAll() //백엔드 요청경로 기준
                 .antMatchers("/profile").hasAnyRole("USER") //권한으로 체크
                 .anyRequest().authenticated()
                 .and()
