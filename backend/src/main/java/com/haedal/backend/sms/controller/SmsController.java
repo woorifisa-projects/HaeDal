@@ -11,6 +11,9 @@ import com.haedal.backend.sms.dto.response.SmsResponseDTO;
 import com.haedal.backend.sms.service.SmsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
+import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
@@ -30,10 +34,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@EnableScheduling
+@Transactional
 public class SmsController {
 
     private final SmsService smsService;
-
     private final ProductService productService;
     private final LogRepository logRepository;
 
@@ -66,11 +71,12 @@ public class SmsController {
     }
 
 
+    @Scheduled(cron= "0 0 1 3 * ?")// 매주 3일 1시에 실행
     @PostMapping("/sms/dibs/send")
-    public String sendDibsSmS() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+    public void sendDibsSmS() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         // 1. 6시간 이전 로그 조회
         LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
-        LocalDateTime sixHoursAgo = currentTime.minusHours(6);
+        LocalDateTime sixHoursAgo = currentTime.minusHours(12);
 
         // 현재 시간과 6시간 전 사이의 로그 기록들 조회
         List<Log> logs = logRepository.findByLogTimeBetween(sixHoursAgo, currentTime);
@@ -86,6 +92,7 @@ public class SmsController {
         // 이미 SMS를 보낸 고객을 추적하는 Set 생성
         Set<Long> sentSmsCustomers = new HashSet<>();
 
+        System.out.println(sentSmsCustomers);
 
         for (Log log : dibsLogs) {
             Long userId = log.getUser().getUserId();
@@ -131,7 +138,6 @@ public class SmsController {
                 MessageDTO messageDTO = new MessageDTO(userPhoneNumber, content);
                 SmsResponseDTO response = smsService.sendSms(messageDTO);
                 System.out.println(userPhoneNumber + content);
-                System.out.println("전송 완료");
 
                 // SMS를 보냈음을 표시
                 sentSmsCustomers.add(userId);
@@ -140,7 +146,7 @@ public class SmsController {
                 userProducts.clear();
             }
         }
-        return "전송 완료";
+        System.out.println("전송 완료");
     }
 }
 
