@@ -39,7 +39,6 @@ public class ProductResponse {
     private final double interestRate; // 금리
     private List<Subscribe> subscribers; // 한 개의 상품에 몇 명의 고객들이 가입했는지 list
     private boolean isDeposit; // 예금, 적금 타입 확인용 컬럼(0=예금, 1=적금)
-    private int subscription; // 월 납입금액(구독료)
     private Long maxProductMoney;
 
     private String accountNumber; //유저 계좌번호를 넘겨주기 위함
@@ -60,7 +59,6 @@ public class ProductResponse {
                 .isDeposit(product.isDeposit())
                 .requiredStartMoney(product.getRequiredStartMoney())
                 .maxProductMoney(product.getMaxProductMoney())
-                .subscription(product.getSubscription())
                 .build();
     }
 
@@ -77,7 +75,6 @@ public class ProductResponse {
                 .longInfo(product.getLongInfo())
                 .interestRate(product.getInterestRate())
                 .isDeposit(product.isDeposit())
-                .subscription(product.getSubscription())
                 .build();
         return productResponse;
     }
@@ -95,7 +92,6 @@ public class ProductResponse {
             .requiredStartMoney(foundProduct.getRequiredStartMoney())
             .maxProductMoney(foundProduct.getMaxProductMoney())
             .isDeposit(foundProduct.isDeposit())
-            .subscription(foundProduct.getSubscription())
             .accountNumber(user.getAccountNumber()).asset(user.getAsset())
             .build();
         return productResponse;
