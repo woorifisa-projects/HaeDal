@@ -29,7 +29,9 @@ public interface SubscribeService extends CrudService<Subscribe, Long> {
 
     Subscribe findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
 
+
     void deleteByUser(User user);
 
     public Subscribe save(Subscribe subscribe);
+
 }

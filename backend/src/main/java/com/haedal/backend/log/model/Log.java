@@ -1,5 +1,6 @@
 package com.haedal.backend.log.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.haedal.backend.auth.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Log {
     @Column(name="log_type")
     private LogType logType;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @Column(name="log_time")
     private LocalDateTime logTime;
     @Column(name="log_desc")

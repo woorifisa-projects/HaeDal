@@ -73,17 +73,17 @@ public class SubscribeController {
         //인증에 맞춰 정보 수정
         String id = authentication.getName();
         User user = profileService.findById(id);
-
+        Long userId = user.getUserId();
         System.out.println(requestData);
+
         Product foundProduct = productService.findByProductId(productId);
         //해당 고객이 해당 상품에 대해 구독한 기록이 있는지 여부 확인
-        Subscribe alreadySubscribe = subscribeService.findSubscriptionsByProductsAndUser(user.getUserId(),productId);
+        Subscribe alreadySubscribe = subscribeService.findSubscriptionsByProductsAndUser(userId,productId);
 
         System.out.println(productId + " 접근 성공했다.");
-
         long authNumber = Long.parseLong(requestData.get("authenticationNumber"));
         long startMoney = Long.parseLong(requestData.get("startMoney"));
-        
+
         //user가 입력한 인증번호가 DB와 같고, user_start_money(입력값)이 userAsset(본인 소유 자산)이상, productAsset(최대 금액)이하일 때
         // + user가 해당 상품을 구독한 기록이 없을 때 구독
         if(authNumber == user.getAuthNumber() && user.getAsset() >= startMoney && startMoney<=foundProduct.getMaxProductMoney()
@@ -92,15 +92,24 @@ public class SubscribeController {
             Subscribe saveSubscribe = subscribeService.save(subscribe);
             System.out.println(saveSubscribe);
 
+            //유저 자산 업데이트
+            user.updateAsset(user.getAsset()-startMoney);
+            System.out.println(user.getAsset());
+
+            //로그 저장
             LogType logType = LogType.valueOf("SUBSCRIBE");
+
             LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
             String logDib = "id"+productId+" "+productService.findByProductId(productId).getProductName()+" 구독";
 
             Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
 
             return ResponseEntity.ok("신청이 완료되었습니다.");
-        } else{
-            return ResponseEntity.badRequest().body("신청 정보가 올바르지 않습니다.");
+        }else if(alreadySubscribe!=null) {
+            return ResponseEntity.badRequest().body("이미 해당 상품을 구독하고 있습니다.");
+        }
+        else{
+            return ResponseEntity.badRequest().body("정보가 올바르지 않습니다.");
         }
     }
 
