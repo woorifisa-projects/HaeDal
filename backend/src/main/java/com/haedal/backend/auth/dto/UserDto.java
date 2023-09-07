@@ -21,7 +21,6 @@ public class UserDto {
     private String accountNumber;
     private Long asset;
     private int authNumber;
-    private String adminKey;
 
     public static UserDto fromEntity(User user)  {
         UserDto userDto = UserDto.builder()
