@@ -33,7 +33,20 @@ class UserControllerTest extends ControllerTest {
                 , "1234"
                 , 10000L
                 , 1234);
-        given(userService.register(any(UserRegisterRequest.class))).willReturn(UserDto.fromEntity(new User()));
+
+        UserDto userDto = new UserDto(
+                1L,
+                "asdfasdf"
+                , "asdfasdf"
+                , "테스트용이름"
+                , "01000000000"
+                , UserAgeGroup.ONE
+                , ServicePurpose.FORCAR
+                , "1234"
+                , 10000L
+                , 1234
+        );
+        given(userService.register(any(UserRegisterRequest.class))).willReturn(userDto);
 
         // when & then
         mockMvc.perform(MockMvcRequestBuilders.post("/user/register").with(csrf())
