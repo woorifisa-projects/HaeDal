@@ -25,11 +25,6 @@ public class SmsController {
 
     private final SmsService smsService;
 
-    @GetMapping("/send")
-    public String getSmsPage() {
-        return "sendSms";
-    }
-
     @PostMapping("/sms/send")
     public String sendSms(@RequestBody MessageDTO messageDto, Model model) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         System.out.println("요청은 들어옴");

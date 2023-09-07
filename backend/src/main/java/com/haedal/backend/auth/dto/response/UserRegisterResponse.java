@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class UserRegisterResponse {
-    private String name;
+    private String id;
 }

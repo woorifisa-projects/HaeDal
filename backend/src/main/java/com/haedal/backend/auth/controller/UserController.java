@@ -58,12 +58,12 @@ public class UserController {
         try {
             UserDto userDto = userService.register(userRegisterRequest);
 
-            User user = profileService.findById(userDto.getUserId());
-            LogType logType = LogType.valueOf("SIGNUP");
-            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
-            String logRegister = user.getName()+" 고객님 회원가입";
-
-            Log savelog = logService.save( new Log(user, logType, logDateTime,logRegister));
+//            User user = profileService.findById(userDto.getUserId());
+//            LogType logType = LogType.valueOf("SIGNUP");
+//            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+//            String logRegister = user.getName()+" 고객님 회원가입";
+//
+//            Log savelog = logService.save( new Log(user, logType, logDateTime,logRegister));
 
             return new ResponseEntity<>(new UserRegisterResponse(userDto.getId()), HttpStatus.OK);
         } catch (Exception e) {
