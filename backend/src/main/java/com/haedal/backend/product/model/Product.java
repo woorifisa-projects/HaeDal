@@ -52,11 +52,9 @@ public class Product {
     @Column(name = "is_deposit")
     private boolean isDeposit; // 예금, 적금 타입 확인용 컬럼(0:적금 1:예금)
 
-    @Column(name = "subscription")
-    private int subscription; // 월 납입금액
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Dibs> dibs;
+
 
     //구매 가능 상품인지 여부
     @Column(name="product_status",columnDefinition = "BOOLEAN DEFAULT true")

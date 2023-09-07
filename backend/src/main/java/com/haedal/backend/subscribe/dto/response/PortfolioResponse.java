@@ -33,7 +33,7 @@ public class PortfolioResponse {
     private int requiredStartMoney; // 시작 금액//0
     private ServicePurpose servicePurpose; // 서비스 이용 목적//0
     private String shortInfo; // 상품 한 줄 설명//0
-    private int subscription; // 월 납입금액(구독료)//0
+
     private Tag tag;// 어떤 태그를 가지고 있는지//0
     private UserAgeGroup userAgeGroup; // 연령대//0
 
@@ -58,7 +58,6 @@ public class PortfolioResponse {
                 .requiredStartMoney(subscribe.getProduct().getRequiredStartMoney())
                 .servicePurpose(subscribe.getProduct().getServicePurpose())
                 .shortInfo(subscribe.getProduct().getShortInfo())
-                .subscription(subscribe.getProduct().getSubscription())
                 .tag(subscribe.getProduct().getTag())
                 .userAgeGroup(subscribe.getProduct().getUserAgeGroup())
                 .progressdate(ChronoUnit.DAYS.between(subscribe.getSubscribeDate(), todayDate) + 1)

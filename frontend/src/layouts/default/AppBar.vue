@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <v-app-bar flat :color="scrolling ? 'rgba(255,255,255,0.9)' : 'rgba(0, 162, 255, 0.354)'">
+    <v-app-bar class="bar" flat :color="scrolling ? 'rgba(255,255,255,0.8)' : 'rgba(0, 162, 255, 0.354)'">
       <v-container class="mx-auto d-flex align-center justify-center ">
         <!-- <v-btn icon
           class="me-4"
@@ -83,8 +83,8 @@ onMounted(() => {
   }
   if (storedToken) {
     axios.get("http://localhost:8080/user/alog", {
-    // "http://15.164.189.153:8080/user/alog"
-    // axios.get("https://backend.haedal.store/user/alog", {
+      // "http://15.164.189.153:8080/user/alog"
+      // axios.get("https://backend.haedal.store/user/alog", {
       headers: {
         Authorization: `Bearer ${storedToken}`, // 토큰 포함
       },
@@ -113,5 +113,9 @@ window.addEventListener('scroll', () => {
 .logo {
   width: 120px;
   margin: 2rem;
+}
+
+.bar {
+  backdrop-filter: blur(6px);
 }
 </style>

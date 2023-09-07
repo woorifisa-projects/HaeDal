@@ -66,8 +66,8 @@ public class User {
         this.password = password;
     }
 
-    public void updateUserStatus() {
-        this.userStatus = false;
+    public void updateUserStatus(boolean userStatus) {
+        this.userStatus = userStatus;
     }
 
     public void updateProfile(UserUpdateRequest userUpdateRequest)
