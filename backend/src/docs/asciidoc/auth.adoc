@@ -1,0 +1,13 @@
+= REST API 문서
+
+== 회원 API
+로그인한 회원의 정보를 조회한다.
+
+=== 요청
+include::{snippets}/auth/sign-up/http-request.adoc[]
+
+=== 응답
+
+include::{snippets}/auth/sign-up/http-response.adoc[]
+
+include::{snippets}/user/register/response-fields.adoc[]

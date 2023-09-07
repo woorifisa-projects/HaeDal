@@ -1,6 +1,10 @@
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.14'
+
+	// .adoc RestDocs
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -15,6 +19,13 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	// asciidoctorExt : Asciidoctor의 확장 기능을 사용하기 위한 설정
+	asciidoctorExt
+}
+
+// snippetsDir : 테스트 실행시 생성되는 응답을 저장할 디렉토리 지정
+ext {
+	snippetsDir = file('build/generated-snippets')
 }
 
 repositories {
@@ -23,21 +34,72 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Security 설정
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// SMS 설정
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+
+	// JWT 설정
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+
+	//Rest docs
+	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
-tasks.named('test') {
+// test 할 때 snippetsDir에 생성된 응답을 asciidoctor로 변환하여 .adoc 파일 생성
+test {
 	useJUnitPlatform()
+	outputs.dir snippetsDir
+}
+
+// asciidoctor 실행 전에 실행
+// 기존에 있던 API 문서를 삭제
+asciidoctor.doFirst {
+	delete file('src/main/resources/static')
+}
+
+// asciidoctor를 사용하기 위해서 asciidoctor task에 asciidoctorExt 설정
+asciidoctor {
+	inputs.dir snippetsDir
+	configurations 'asciidoctorExt'
+	dependsOn test
+}
+
+// asciidoctor task 실행시 생성된 html 파일을 src/main/resources/static 디렉토리에 복사
+tasks.register('copyDocument', Copy) {
+	dependsOn asciidoctor
+	from file("build/docs/asciidoc")
+	into file("src/main/resources/static")
+}
+
+// jar 파일로 만들어질 때 build/docs/asciidoc 파일을 src/main/resources/static 로 복사
+bootJar {
+	dependsOn copyDocument
+	from ("build/docs/asciidoc") {
+		into 'src/main/resources/static'
+	}
+}
+
+// 빌드 전에 copyDocument task 실행
+build {
+	dependsOn(copyDocument)
 }
