@@ -83,7 +83,7 @@ public class UserController {
     public ResponseEntity<String> deleteUser(Authentication authentication){
         String id = authentication.getName();
         User user = profileService.findById(id);
-        user.updateUserStatus();
+        user.updateUserStatus(false);
         //구독삭제도 추가하기
         subscribeService.deleteByUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(id + "휴면계정되었습니다");

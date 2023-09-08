@@ -38,7 +38,11 @@ public class UserService {
                     throw new RuntimeException(id + "는 이미 있습니다.");
                 });
 
-        User saveUser = userRepository.save(request.toEntity(bCryptPasswordEncoder.encode(request.getPassword())));
+        // 새로운 유저 생성 및 userStatus를 1로 설정
+        User user = request.toEntity(bCryptPasswordEncoder.encode(request.getPassword()));
+        user.updateUserStatus(true); // userStatus를 1로 설정
+        User saveUser = userRepository.save(user);
+
         // 로그를 위한 비즈니스 로직
         LogType logType = LogType.valueOf("SIGNUP");
         LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
