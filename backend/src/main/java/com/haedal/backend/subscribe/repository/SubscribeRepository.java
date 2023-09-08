@@ -33,7 +33,7 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
             "JOIN FETCH s.user u " +
             "WHERE u.userId = :userId " +
             "AND p.productId = :productId")
-    Subscribe findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
+    List<Subscribe> findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
 
     void deleteByUser(User user);
 }

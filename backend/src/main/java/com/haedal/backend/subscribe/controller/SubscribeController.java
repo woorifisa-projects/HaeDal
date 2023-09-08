@@ -78,7 +78,7 @@ public class SubscribeController {
 
         Product foundProduct = productService.findByProductId(productId);
         //해당 고객이 해당 상품에 대해 구독한 기록이 있는지 여부 확인
-        Subscribe alreadySubscribe = subscribeService.findSubscriptionsByProductsAndUser(userId,productId);
+        List<Subscribe> alreadySubscribe = subscribeService.findSubscriptionsByProductsAndUser(userId,productId);
 
         System.out.println(productId + " 접근 성공했다.");
         long authNumber = Long.parseLong(requestData.get("authenticationNumber"));
