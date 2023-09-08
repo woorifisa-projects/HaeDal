@@ -30,7 +30,7 @@
         </div>
         <div v-if="showNoDataMessage"
             style="font-size:20px; width:500px; font-weight: bold; color:rgba(0, 179, 255, 0.826); text-align: center; margin:auto; margin-top:80px">
-            :sob: 관련 상품이 존재하지 않습니다.:sob:
+            😭 관련 상품이 존재하지 않습니다.😭
         </div>
         <div class="container">
 
