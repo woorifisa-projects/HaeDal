@@ -1,68 +1,72 @@
 <template>
-    <form @submit.prevent="searchForm">
-        <div class="search">
-            <input type="text" v-model="searchTerm" class="searchProduct" placeholder="원하시는 상품명을 검색해 주세요">
-            <v-btn class="searchButton" @click="searchForm">
-                검색
-            </v-btn>
-        </div>
-    </form>
-    <div>
-        <v-layout class="overflow-visible" style="height: 56px; box-shadow: none; margin-bottom:30px;">
-            <v-bottom-navigation v-model="value" color="teal" grow>
-                <v-btn @click="viewAll">
-                    전체 상품
+    <div style=" background-color: rgba(0, 179, 255, 0.056); padding: 10px;">
+        <form @submit.prevent="searchForm">
+            <div class="search">
+                <input type="text" v-model="searchTerm" class="searchProduct" placeholder="원하시는 상품명을 검색해 주세요">
+                <v-btn class="searchButton" @click="searchForm">
+                    검색
                 </v-btn>
+            </div>
+        </form>
 
-                <v-btn @click="financial">
-                    금융 상품
-                </v-btn>
+        <div>
+            <v-layout class="overflow-visible" style="height: 56px; box-shadow: none; margin-bottom:30px;">
+                <v-bottom-navigation v-model="value" color="teal" grow>
+                    <v-btn @click="viewAll">
+                        전체 상품
+                    </v-btn>
 
-                <v-btn @click="tema">
-                    테마 상품
-                </v-btn>
-            </v-bottom-navigation>
-        </v-layout>
-        <v-divider :thickness="3" color="info" style="width:60%;     border-style: double;
+                    <v-btn @click="financial">
+                        금융 상품
+                    </v-btn>
+
+                    <v-btn @click="tema">
+                        테마 상품
+                    </v-btn>
+                </v-bottom-navigation>
+            </v-layout>
+            <v-divider :thickness="3" color="info" style="width:60%;     border-style: double;
     margin: auto;"></v-divider>
-    </div>
-    <div v-if="showNoDataMessage"
-        style="font-size:20px; width:500px; font-weight: bold; color:rgba(0, 179, 255, 0.826); text-align: center; margin:auto; margin-top:80px">
-        😭 관련 상품이 존재하지 않습니다.😭
-    </div>
-    <div class="container">
+        </div>
+        <div v-if="showNoDataMessage"
+            style="font-size:20px; width:500px; font-weight: bold; color:rgba(0, 179, 255, 0.826); text-align: center; margin:auto; margin-top:80px">
+            :sob: 관련 상품이 존재하지 않습니다.:sob:
+        </div>
+        <div class="container">
 
-        <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="( item, index ) in  listData "
-            :key="index">
+            <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="( item, index ) in  listData "
+                :key="index">
 
-            <v-card-item class="products">
-                <div style="display: flex;flex-direction: column;align-items: center; ">
-                    <div style="font-size: 20px; font-weight: bold; margin: 1rem 0rem 1.3rem 0rem;">
-                        {{ item.productName }}
+                <v-card-item class="products">
+                    <div style="display: flex;flex-direction: column;align-items: center; ">
+                        <div style="font-size: 20px; font-weight: bold; margin: 1rem 0rem 1.3rem 0rem;">
+                            {{ item.productName }}
+                        </div>
+                        <div style="font-size: 12px; margin-bottom: 1rem; text-align: left;">
+                            {{ item.shortInfo }}
+                        </div>
+                        <div class="text-caption"
+                            style="background-color: rgba(0, 162, 255, 0.225); width:4rem; padding:2px; border-radius: 15px; color:rgb(0, 111, 186); font-size:6px; margin-top: 0.3rem;">
+                            {{ item.tag }}
+                        </div>
                     </div>
-                    <div style="font-size: 12px; margin-bottom: 1rem; text-align: left;">
-                        {{ item.shortInfo }}
-                    </div>
-                    <div class="text-caption"
-                        style="background-color: rgba(0, 162, 255, 0.225); width:4rem; padding:2px; border-radius: 15px; color:rgb(0, 111, 186); font-size:6px; margin-top: 0.3rem;">
-                        {{ item.tag }}
-                    </div>
-                </div>
-            </v-card-item>
-            <v-card-actions>
+                </v-card-item>
+                <v-card-actions>
 
-                <v-btn style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem;"
-                    @click=subscribeProduct(item)>
-                    정보 보기
-                </v-btn>
-            </v-card-actions>
+                    <v-btn
+                        style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem;"
+                        @click=subscribeProduct(item)>
+                        정보 보기
+                    </v-btn>
+                </v-card-actions>
 
-            <span class="favorite" @click="dibs(item)" style="cursor:pointer;">
-                <img v-if="item.isDibs === true" src='@/assets/img/favorite.png'>
-                <img v-else src='@/assets/img/favorite_border.png'>
-            </span>
+                <span class="favorite" @click="dibs(item)" style="cursor:pointer;">
+                    <img v-if="item.isDibs === true" src='@/assets/img/favorite.png'>
+                    <img v-else src='@/assets/img/favorite_border.png'>
+                </span>
 
-        </v-card>
+            </v-card>
+        </div>
     </div>
 </template>
 
@@ -416,6 +420,7 @@ const tema = () => {
         -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
         12px -12px 16px rgba(255, 255, 255, 0.25);
     padding: 15px;
+    border-radius: 15px;
 }
 
 .mx-auto button {
@@ -426,7 +431,7 @@ const tema = () => {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(3, minmax(100px, auto));
-    grid-gap: 40px;
+    grid-gap: 30px;
     margin: 10px 20rem 10rem 20rem;
     padding: 1rem;
     justify-content: center;
@@ -439,8 +444,7 @@ const tema = () => {
     box-shadow: 2px 4px 10px 0px rgba(0, 140, 200, 0.219);
     background-color: rgb(255, 255, 255);
     border-radius: 30px;
-    margin-top: 1.4rem;
-    margin-right: 0.6rem;
+    margin: 2rem 0.6rem 1rem 0rem;
     padding: 10px 1rem;
     outline: none;
 }
