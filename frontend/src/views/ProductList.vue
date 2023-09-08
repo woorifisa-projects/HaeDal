@@ -435,18 +435,18 @@ const tema = () => {
 .searchProduct {
     width: 40%;
     height: 100%;
-    box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.033) inset;
-    background-color: rgba(236, 236, 236, 0.337);
+    box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.089) inset;
+    background-color: rgba(236, 236, 236, 0.131);
     border-radius: 10px;
     margin-top: 1.4rem;
     margin-right: 0.6rem;
-    padding: 6px 1rem;
+    padding: 10px 1rem;
     outline: none;
 }
 
 
 .searchButton {
-    width: 5rem;
+    width: 6rem;
     border-radius: 16px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);

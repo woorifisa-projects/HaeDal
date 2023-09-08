@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <v-footer flat class="bg-blue-lighten-3 text-center d-flex flex-column" style="padding-bottom: 10px;">
+    <v-footer flat class="bg-blue-lighten-4 text-center d-flex flex-column" style="padding-bottom: 10px;">
       <v-btn :icon="icon" variant="text" href="https://github.com/woorifisa-projects/HaeDal.git">
       </v-btn>
       <strong>HaeDal</strong>

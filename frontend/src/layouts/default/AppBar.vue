@@ -109,7 +109,7 @@ const appBarColor = computed(() => {
   if ((currentRoute === '/recommend' || currentRoute.startsWith('/subscribe/')) && !scrolling.value) {
     return 'rgba(0, 162, 255, 0.354)'; // 원하는 색상으로 변경
   } else {
-    return 'rgba(0, 162, 255, 0)'; // 기본 색상
+    return 'rgba(255, 255, 255, 0.5)'; // 기본 색상
   }
 });
 
