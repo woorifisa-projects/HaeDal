@@ -74,20 +74,21 @@ public class SubscribeController {
         String id = authentication.getName();
         User user = profileService.findById(id);
         Long userId = user.getUserId();
+
         System.out.println(requestData);
 
         Product foundProduct = productService.findByProductId(productId);
         //해당 고객이 해당 상품에 대해 구독한 기록이 있는지 여부 확인
-        Subscribe alreadySubscribe = subscribeService.findSubscriptionsByProductsAndUser(userId,productId);
+        List<Subscribe> alreadySubscribe = subscribeService.findSubscriptionsByProductsAndUser(userId,productId);
 
         System.out.println(productId + " 접근 성공했다.");
         long authNumber = Long.parseLong(requestData.get("authenticationNumber"));
         long startMoney = Long.parseLong(requestData.get("startMoney"));
 
-        //user가 입력한 인증번호가 DB와 같고, user_start_money(입력값)이 userAsset(본인 소유 자산)이상, productAsset(최대 금액)이하일 때
+        //user가 입력한 인증번호가 DB와 같고, 시작금액이 상품 최소, 최대 금액 범주 안이자 userAsset보다 작을 경우
         // + user가 해당 상품을 구독한 기록이 없을 때 구독
         if(authNumber == user.getAuthNumber() && user.getAsset() >= startMoney && startMoney<=foundProduct.getMaxProductMoney()
-        && alreadySubscribe==null){
+        && alreadySubscribe.size()==0 && startMoney>=foundProduct.getRequiredStartMoney()){
             Subscribe subscribe = new Subscribe(user, foundProduct , startMoney, startMoney, LocalDate.now(), LocalDate.now()); // 마지막 LocalDate.now()가 현재날짜생성부분임
             Subscribe saveSubscribe = subscribeService.save(subscribe);
             System.out.println(saveSubscribe);
@@ -105,11 +106,11 @@ public class SubscribeController {
             Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
 
             return ResponseEntity.ok("신청이 완료되었습니다.");
-        }else if(alreadySubscribe!=null) {
+        }else if(alreadySubscribe.size()!=0) {
             return ResponseEntity.badRequest().body("이미 해당 상품을 구독하고 있습니다.");
         }
         else{
-            return ResponseEntity.badRequest().body("정보가 올바르지 않습니다.");
+            return ResponseEntity.badRequest().body("입력하신 정보가 올바르지 않습니다.");
         }
     }
 

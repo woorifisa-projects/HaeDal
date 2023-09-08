@@ -56,7 +56,7 @@ public class SubscribeServiceImp implements SubscribeService{
 
     //해당 user가 같은 상품을 구독하였는지 여부 확인
     @Override
-    public Subscribe findSubscriptionsByProductsAndUser(Long userId, Long productId) {
+    public List<Subscribe> findSubscriptionsByProductsAndUser(Long userId, Long productId) {
         return subscribeRepository.findSubscriptionsByProductsAndUser(userId,productId);
     }
 
