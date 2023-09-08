@@ -74,16 +74,7 @@ onMounted(async () => {
   if (storedToken) {
     // 사용자 정보를 미리 가져오기
     try {
-      const response = await axios.get("http://localhost:8080/user/alog", {
-        // "http://15.164.189.153:8080/user/alog"
-        // axios.get("https://backend.haedal.store/user/alog", {
-        headers: {
-          Authorization: `Bearer ${storedToken}`, // 토큰 포함
-        },
-      });
-      console.log(response.data);
-      console.log(response.data.name);
-      authStore.setUserName(response.data.name)
+      authStore.setUserName(localStorage.getItem('userName'))
       // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
       console.log("오이오이" + authStore.username);
       username.value = authStore.username;
