@@ -51,6 +51,7 @@ const links = [
 ];
 const submit = () => {
   if (authStore.isLoggedIn) {
+    alert("로그아웃되었습니다.")
     console.log("로그아웃되었습니다.");
     authStore.logout();
     router.push('/home'); // 예시: 로그인 후 헤더 페이지로 이동

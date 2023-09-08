@@ -66,8 +66,8 @@ public class User {
         this.password = password;
     }
 
-    public void updateUserStatus(boolean userSataus) {
-        this.userStatus = userSataus;
+    public void updateUserStatus(boolean userStatus) {
+        this.userStatus = userStatus;
     }
 
     public void updateProfile(UserUpdateRequest userUpdateRequest)
@@ -81,5 +81,10 @@ public class User {
     }
     public void updateAsset(Long asset) {
         this.asset = asset;
+    }
+
+    public User(Long userId, String id) {
+        this.userId = userId;
+        this.id = id;
     }
 }

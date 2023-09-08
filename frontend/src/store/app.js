@@ -16,6 +16,7 @@ export const useAuthStore = defineStore('auth', {
       this.accessToken = null; // 로그아웃 시 토큰 값 제거
       localStorage.removeItem('accessToken'); // 추가: 로컬 스토리지에서도 제거
       this.username = null;
+      localStorage.removeItem('userName');
     },
     setUserName(username){
       this.username = username;

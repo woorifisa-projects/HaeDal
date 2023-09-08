@@ -2,6 +2,9 @@ package com.haedal.backend.auth.service;
 
 import com.haedal.backend.auth.dto.UserDto;
 import com.haedal.backend.auth.dto.request.UserRegisterRequest;
+import com.haedal.backend.auth.exception.InactiveUserException;
+import com.haedal.backend.auth.exception.InvalidIdException;
+import com.haedal.backend.auth.exception.InvalidPasswordException;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.auth.repository.UserRepository;
 import com.haedal.backend.auth.util.JwtUtil;
@@ -38,7 +41,6 @@ public class UserService {
                     throw new RuntimeException(id + "는 이미 있습니다.");
                 });
 
-        // 새로운 유저 생성 및 userStatus를 1로 설정
         User user = request.toEntity(bCryptPasswordEncoder.encode(request.getPassword()));
         user.updateUserStatus(true); // userStatus를 1로 설정
         User saveUser = userRepository.save(user);
@@ -56,15 +58,16 @@ public class UserService {
     public String login(String id, String password) {
 
         User user = userRepository.findById(id) // ID 체크
-                .orElseThrow(() -> new RuntimeException("가입되지 않은 ID입니다."));
+                .orElseThrow(() -> new InvalidIdException("가입되지 않은 ID입니다."));
         // PW 체크
         if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
         // 휴면유저체크
         if(!user.isUserStatus())
         {
-            throw new RuntimeException("휴면처리된 아이디입니다");
+            System.out.println("후면유저");
+            throw new InactiveUserException("휴면처리된 아이디입니다.");
         }
 
         LogType logType = LogType.valueOf("LOGIN");
@@ -76,6 +79,7 @@ public class UserService {
     }
 
 
+    public User findbyId(String id) {return userRepository.findById(id).orElse(null);}
 
     @Transactional
     public void deleteById(String id){
