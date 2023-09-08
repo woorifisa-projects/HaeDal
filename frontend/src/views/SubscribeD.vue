@@ -39,11 +39,13 @@
                         @click="calculate" type="button">만기시 금액 예상하기
                     </v-btn>
                     <p
-                        v-show="calculatedAmount !== null && calculatedAmount !== 0 && startMoney <= listData.maxProductMoney">
+                        v-show="calculatedAmount !== null && calculatedAmount !== 0 && startMoney <= listData.maxProductMoney && startMoney >= listData.maxProductMone">
                         만기시 예상 금액은 {{ calculatedAmount }}원
                         입니다!
                     </p>
                     <p v-show="startMoney > listData.maxProductMoney">입력하신 금액이 최대 금액을 초과하였습니다.</p>
+                    <p v-show="startMoney < listData.requiredStartMoney">입력하신 금액이 최소 금액 미만입니다.</p>
+
                 </div>
                 <div>
                     <div class="favorite" @click="dibs(listData.productId)" style="cursor:pointer;">

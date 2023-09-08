@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <v-app-bar class="bar" flat :color="scrolling ? 'rgba(255,255,255,0.5)' : 'rgba(0, 162, 255, 0.354)'">
+    <v-app-bar class="bar" flat :style="{ backgroundColor: appBarColor }">
       <v-container class="mx-auto d-flex align-center justify-center ">
         <!-- <v-btn icon
           class="me-4"
@@ -36,7 +36,7 @@
   </form>
 </template>
 <script setup>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, watch } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '@/store/app';
 import { ref } from 'vue';
@@ -92,10 +92,27 @@ onMounted(async () => {
     }
   }
 });
+
 const scrolling = ref(false);
-window.addEventListener('scroll', () => {
-  scrolling.value = window.scrollY > 0;
+// 스크롤 이벤트 리스너 추가
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    scrolling.value = window.scrollY > 0;
+  });
 });
+
+// 동적으로 v-app-bar의 배경색을 설정하는 계산된 속성 추가
+const appBarColor = computed(() => {
+  // 현재 라우트 경로를 가져옴
+  const currentRoute = router.currentRoute.value.path;
+  // /recommend 경로인 경우에만 다른 색상 반환
+  if ((currentRoute === '/recommend' || currentRoute.startsWith('/subscribe/')) && !scrolling.value) {
+    return 'rgba(0, 162, 255, 0.354)'; // 원하는 색상으로 변경
+  } else {
+    return 'rgba(0, 162, 255, 0)'; // 기본 색상
+  }
+});
+
 </script>
 <style>
 .logo {
@@ -104,7 +121,7 @@ window.addEventListener('scroll', () => {
 }
 
 .bar {
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
 }
 
 .nav-link {
