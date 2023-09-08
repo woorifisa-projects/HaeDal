@@ -323,7 +323,7 @@ p {
 }
 
 .v-bottom-navigation .v-bottom-navigation__content>.v-btn {
-    font-size: inherit;
+    font-size: 14px;
     font-weight: bolder;
     height: 3rem;
     max-width: 168px;

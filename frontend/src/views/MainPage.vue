@@ -18,11 +18,11 @@
         </div>
         <div class="text-overline mb-3">
           <span>
-            <b>상품 기간 :</b> {{ recommend.period }}개월,
-            <b>금리 :</b> {{ recommend.interestRate }}%,
-            <b>최소 가입 금액 :</b> {{ recommend.requiredStartMoney }}원
+            <b>상품 기간</b> {{ recommend.period }}개월,
+            <b>금리</b> {{ recommend.interestRate }}%,
+            <b>최소 가입 금액</b> {{ recommend.requiredStartMoney }}원
           </span>
-          <div class="text-caption">{{ recommend.shortInfo }}</div>
+          <div class="text-caption" style="margin-top: 8px;">{{ recommend.shortInfo }}</div>
         </div>
         <v-btn @click="detail(recommend)"
           style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 15px; width:200px;height: 40px;">추천
@@ -173,5 +173,12 @@ const detail = (item) => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.recommend b {
+  background-color: rgba(0, 179, 255, 0.264);
+  padding: 4px;
+  border-radius: 10px;
+  color: rgba(0, 68, 128, 0.826);
 }
 </style>

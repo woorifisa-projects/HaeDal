@@ -432,12 +432,13 @@ const tema = () => {
     justify-content: center;
 }
 
+
 .searchProduct {
     width: 40%;
     height: 100%;
-    box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.089) inset;
-    background-color: rgba(236, 236, 236, 0.131);
-    border-radius: 10px;
+    box-shadow: 2px 4px 10px 0px rgba(0, 140, 200, 0.219);
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
     margin-top: 1.4rem;
     margin-right: 0.6rem;
     padding: 10px 1rem;
@@ -447,12 +448,14 @@ const tema = () => {
 
 .searchButton {
     width: 6rem;
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
+    box-shadow: -2px 4px 10px 0px rgba(0, 39, 62, 0.089);
     color: white;
     font-weight: bolder;
     font-size: 16px;
+    height: 40px !important;
 }
 
 
@@ -460,6 +463,7 @@ const tema = () => {
     padding: 10px;
     text-align: center;
     margin-bottom: 2rem;
+    margin-top: 0rem;
 }
 
 .v-bottom-navigation {
@@ -469,18 +473,14 @@ const tema = () => {
 }
 
 .v-bottom-navigation .v-bottom-navigation__content>.v-btn {
-    font-size: 15px;
-    font-weight: bolder;
+    font-size: 16px;
+    font-weight: bold;
     transition: inherit;
-    background-color: rgba(0, 179, 255, 0.062);
-    box-shadow:
-        1px 3px 2px 0 rgba(51, 96, 133, 0.252),
-        12px -12px 16px rgba(255, 255, 255, 0.25);
-    width: 100px;
-    border-radius: 0px;
-    margin: -2px 4px;
-    border-radius: 10px;
+    background-color: rgba(0, 179, 255, 0.176);
 
+    width: 100px;
+    margin: -2px 4px;
+    border-radius: 20px;
 }
 
 .favorite {
