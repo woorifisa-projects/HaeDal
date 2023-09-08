@@ -7,6 +7,9 @@ import com.haedal.backend.auth.dto.request.UserLoginRequest;
 import com.haedal.backend.auth.dto.request.UserRegisterRequest;
 import com.haedal.backend.auth.dto.response.UserLoginResponse;
 import com.haedal.backend.auth.dto.response.UserRegisterResponse;
+import com.haedal.backend.auth.exception.InactiveUserException;
+import com.haedal.backend.auth.exception.InvalidIdException;
+import com.haedal.backend.auth.exception.InvalidPasswordException;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.auth.service.UserService;
 import com.haedal.backend.log.model.Log;
@@ -41,7 +44,7 @@ public class UserController {
 
     @GetMapping("/idcheck")
     public ResponseEntity<String> idCheckExists(@RequestParam("id")String id){
-        User user = profileService.findById(id);
+        User user = userService.findbyId(id);
 
         if (user != null) {
             // ID가 이미 존재하는 경우
@@ -68,22 +71,31 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
+
         try {
             String token = userService.login(userLoginRequest.getId(), userLoginRequest.getPassword());
-            String userName = profileService.findById(userLoginRequest.getId()).getName();
+            String userName = userService.findbyId(userLoginRequest.getId()).getName();
+
             return new ResponseEntity<>(new UserLoginResponse(token,userName), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (InvalidPasswordException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); // 비밀번호가 일치하지 않는 경우 400 Bad Request 응답
+        } catch (InactiveUserException e) {
+            System.out.println("비활성화유저");
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT); // 휴면처리된 아이디인 경우 409 Conflict 응답
+        } catch (InvalidIdException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); // 가입되지 않은 ID인 경우 400 Bad Request 응답
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // 기타 예외의 경우 500 Internal Server Error 응답
         }
     }
+
 
     @Transactional
     @PatchMapping("/leave")
     public ResponseEntity<String> deleteUser(Authentication authentication){
         String id = authentication.getName();
-        User user = profileService.findById(id);
-        user.updateUserStatus();
+        User user = userService.findbyId(id);
+        user.updateUserStatus(false);
         //구독삭제도 추가하기
         subscribeService.deleteByUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(id + "휴면계정되었습니다");

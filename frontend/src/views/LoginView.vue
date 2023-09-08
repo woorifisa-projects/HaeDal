@@ -75,6 +75,16 @@ const onSubmit = handleSubmit(values => {
   // axios.post("https://backend.haedal.store/user/login", values)
     .then(response => {
       // POST 요청 성공 시 로직
+
+      if (response.status === 400) {
+          // 400 Bad Request
+          console.log("어이어이")
+           alert("로그인 정보가 일치하지 않습니다")};
+
+      if (response.status === 409) {
+          // 400 Bad Request
+           alert("휴면처리된 계정입니다.")};
+
       console.log(response.data);
       const receivedToken = response.data.token;
       const username = response.data.name;
@@ -98,9 +108,17 @@ const onSubmit = handleSubmit(values => {
     // POST 요청 실패 시 로직
     .catch(error => {
       console.error(error);
+      console.log(error.response.status);
+      if (error.response.status === 400) {
+          // 400 Bad Request
+          console.log("어이어이")
+           alert("로그인 정보가 일치하지 않습니다")}
+      else if(error.response.status === 409){
+        alert("휴면처리된 계정입니다.")}
+      }
+    )
     });
-}
-)
+
 
 
 </script>
