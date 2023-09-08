@@ -1,8 +1,8 @@
 <template class = "mypage">
   <navigation-bar> </navigation-bar>
   <v-card class="mx-auto" max-width="400">
-    <v-img class="align-end text-white" height="200" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
-      <v-card-title>{{ username }}님 환영합니다</v-card-title>
+    <v-img class="align-end text-black" height="200" src='@/assets/img/profile.png' cover>
+      <v-card-title style="font-weight: bolder; color:rgba(0, 179, 255, 0.826);">{{ username }}님 환영합니다</v-card-title>
     </v-img>
 
     <v-card-text>
@@ -112,6 +112,7 @@ onMounted(() => {
     12px -12px 16px rgba(255, 255, 255, 0.25);
   ;
   margin: 5rem 0rem 8rem 0rem;
+  padding: 10px;
 }
 </style>
 

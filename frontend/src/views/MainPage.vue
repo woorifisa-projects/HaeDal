@@ -178,7 +178,7 @@ const detail = (item) => {
 .recommend b {
   background-color: rgba(0, 179, 255, 0.264);
   padding: 4px;
-  border-radius: 10px;
+  border-radius: 20px;
   color: rgba(0, 68, 128, 0.826);
 }
 </style>
