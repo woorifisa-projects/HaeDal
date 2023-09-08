@@ -72,10 +72,7 @@ const onSubmit = handleSubmit(values => {
   setTimeout(() => (loading.value = false), 2000);
   console.log(values);
   axios.post("http://localhost:8080/user/login", values)
-<<<<<<< Updated upstream
-  // axios.post("https://backend.haedal.store/user/login", values)
-=======
->>>>>>> Stashed changes
+    // axios.post("https://backend.haedal.store/user/login", values)
     .then(response => {
       // POST 요청 성공 시 로직
       console.log(response.data);
@@ -83,32 +80,13 @@ const onSubmit = handleSubmit(values => {
       const username = response.data.name;
 
       localStorage.setItem('accessToken', receivedToken);
-<<<<<<< Updated upstream
-      localStorage.setItem('userName',username);
+      localStorage.setItem('userName', username);
       authStore.setUserName(username);
-=======
->>>>>>> Stashed changes
 
       // Pinia store를 이용하여 로그인 상태 업데이트
       authStore.loginSuccess(receivedToken);
 
       console.log("전역관리토큰입니다" + authStore.accessToken);
-<<<<<<< Updated upstream
-=======
-
-      axios.get("http://15.164.189.153:8080/user/alog", { // 사용자 이름 pinia에 저장하기위해
-        headers: {
-          Authorization: `Bearer ${receivedToken}`, // 토큰 포함
-        },
-      })
-        .then(response => {
-          console.log(response.data);
-          console.log(response.data.name);
-          authStore.setUserName(response.data.name)
-          // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
-          console.log("오이오이" + authStore.username);
-        })
->>>>>>> Stashed changes
 
 
       // 로그인 후 페이지 이동
