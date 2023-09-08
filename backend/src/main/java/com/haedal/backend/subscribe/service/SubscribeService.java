@@ -27,7 +27,7 @@ public interface SubscribeService extends CrudService<Subscribe, Long> {
 
     List<PortfolioResponse> findDibsAndProductsByUser(String id);
 
-    Subscribe findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
+    List <Subscribe> findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
 
 
     void deleteByUser(User user);

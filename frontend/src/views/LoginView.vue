@@ -72,7 +72,7 @@ const onSubmit = handleSubmit(values => {
   setTimeout(() => (loading.value = false), 2000);
   console.log(values);
   axios.post("http://localhost:8080/user/login", values)
-  // axios.post("https://backend.haedal.store/user/login", values)
+    // axios.post("https://backend.haedal.store/user/login", values)
     .then(response => {
       // POST 요청 성공 시 로직
 
@@ -90,7 +90,7 @@ const onSubmit = handleSubmit(values => {
       const username = response.data.name;
 
       localStorage.setItem('accessToken', receivedToken);
-      localStorage.setItem('userName',username);
+      localStorage.setItem('userName', username);
       authStore.setUserName(username);
 
       // Pinia store를 이용하여 로그인 상태 업데이트

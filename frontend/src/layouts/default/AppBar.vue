@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <v-app-bar class="bar" flat :color="scrolling ? 'rgba(255,255,255,0.6)' : 'rgba(0, 162, 255, 0.354)'">
+    <v-app-bar class="bar" flat :style="{ backgroundColor: appBarColor }">
       <v-container class="mx-auto d-flex align-center justify-center ">
         <!-- <v-btn icon
           class="me-4"
@@ -9,7 +9,8 @@
           object-fit="cover"
         ></v-btn> -->
         <a href="http://13.209.167.190/home"><img src='@/assets/img/HaeDalLogo.png' class="logo"></a>
-        <v-btn v-for="link in links" :key="link" :text="link" variant="text" :to="`/${link.toLowerCase()}`"></v-btn>
+        <v-btn class="nav-link" v-for="link in links" :key="link" :text="link" variant="text"
+          :to="`/${link.toLowerCase()}`"></v-btn>
         <!-- 해당링크 소문자로 바꿔서 라우터로 이동시켜준다 -->
         <v-spacer></v-spacer>
         <div style="white-space: nowrap;">
@@ -35,7 +36,7 @@
   </form>
 </template>
 <script setup>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, watch } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '@/store/app';
 import { ref } from 'vue';
@@ -83,10 +84,27 @@ onMounted(async () => {
     }
   }
 });
+
 const scrolling = ref(false);
-window.addEventListener('scroll', () => {
-  scrolling.value = window.scrollY > 0;
+// 스크롤 이벤트 리스너 추가
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    scrolling.value = window.scrollY > 0;
+  });
 });
+
+// 동적으로 v-app-bar의 배경색을 설정하는 계산된 속성 추가
+const appBarColor = computed(() => {
+  // 현재 라우트 경로를 가져옴
+  const currentRoute = router.currentRoute.value.path;
+  // /recommend 경로인 경우에만 다른 색상 반환
+  if ((currentRoute === '/recommend' || currentRoute.startsWith('/subscribe/')) && !scrolling.value) {
+    return 'rgba(0, 162, 255, 0.354)';
+  } else {
+    return 'rgba(255, 255, 255, 0.6)'; // 기본 색상
+  }
+});
+
 </script>
 <style>
 .logo {
@@ -96,5 +114,10 @@ window.addEventListener('scroll', () => {
 
 .bar {
   backdrop-filter: blur(6px);
+}
+
+.nav-link {
+  font-weight: bolder;
+  color: rgba(0, 68, 128, 0.826);
 }
 </style>
