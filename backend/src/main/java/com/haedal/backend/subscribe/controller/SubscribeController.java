@@ -147,7 +147,7 @@ public class SubscribeController {
         String userId = authentication.getName();
         Subscribe subscribe = subscribeService.findByUserIdAndProductId(userId,productId);
         Long refund = subscribeService.deleteBySubscribe(subscribe);
-        return ResponseEntity.ok("상품해지가 완료되었습니다" + refund+"이 환급되었습니다.");
+        return ResponseEntity.ok( refund+"원이 환급되었습니다.");
     }
 
 }
