@@ -415,7 +415,7 @@ const tema = () => {
     box-shadow:
         -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
         12px -12px 16px rgba(255, 255, 255, 0.25);
-    padding: 15px
+    padding: 15px;
 }
 
 .mx-auto button {
@@ -479,7 +479,7 @@ const tema = () => {
     width: 100px;
     border-radius: 0px;
     margin: -2px 4px;
-    border-radius: 4px;
+    border-radius: 10px;
 
 }
 

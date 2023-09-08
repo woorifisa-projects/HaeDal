@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <v-app-bar class="bar" flat :color="scrolling ? 'rgba(255,255,255,0.6)' : 'rgba(0, 162, 255, 0.354)'">
+    <v-app-bar class="bar" flat :color="scrolling ? 'rgba(255,255,255,0.5)' : 'rgba(0, 162, 255, 0.354)'">
       <v-container class="mx-auto d-flex align-center justify-center ">
         <!-- <v-btn icon
           class="me-4"
@@ -9,7 +9,8 @@
           object-fit="cover"
         ></v-btn> -->
         <a href="http://13.209.167.190/home"><img src='@/assets/img/HaeDalLogo.png' class="logo"></a>
-        <v-btn v-for="link in links" :key="link" :text="link" variant="text" :to="`/${link.toLowerCase()}`"></v-btn>
+        <v-btn class="nav-link" v-for="link in links" :key="link" :text="link" variant="text"
+          :to="`/${link.toLowerCase()}`"></v-btn>
         <!-- 해당링크 소문자로 바꿔서 라우터로 이동시켜준다 -->
         <v-spacer></v-spacer>
         <div style="white-space: nowrap;">
@@ -103,6 +104,11 @@ window.addEventListener('scroll', () => {
 }
 
 .bar {
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+}
+
+.nav-link {
+  font-weight: bolder;
+  color: rgba(0, 68, 128, 0.826);
 }
 </style>

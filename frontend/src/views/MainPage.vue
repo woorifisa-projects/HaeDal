@@ -1,6 +1,6 @@
 <template>
-  <v-carousel show-arrows="hover">
-    <v-carousel-item> <img src="@/assets/img/HaeDalLogo.png">
+  <v-carousel class="banner" show-arrows="hover">
+    <v-carousel-item> <img src="@/assets/img/banner-1.png">
     </v-carousel-item>
 
     <v-carousel-item src="https://cdn.vuetifyjs.com/images/cards/hotel.jpg" cover></v-carousel-item>
@@ -8,9 +8,10 @@
     <v-carousel-item src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" cover></v-carousel-item>
   </v-carousel>
   <div style="text-align: center;">
-    <p style="margin:30px; color:rgba(0, 179, 255, 0.826);font-size:20px; font-weight: 600;">✨ 해달의 오늘의 추천 상품 ✨</p>
+    <p style="margin:30px;margin-top:90px; color:rgba(0, 179, 255, 0.826);font-size:20px; font-weight: 600;">✨ 해달의 오늘의 추천
+      상품 ✨</p>
     <v-card class="recommend"
-      style="width:50%; height:220px; margin: auto; color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle !important;">
+      style="width:50%; height:15rem; margin: auto; color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle !important;">
       <div>
         <div class="text-h5 mb-3" style="font-weight: bolder;">
           {{ recommend.productName }}
@@ -35,6 +36,9 @@
     margin: auto;"></v-divider>
     <p style="margin: 60px; ">🐚</p>
     <p style="color:rgba(0, 179, 255, 0.826); margin-bottom: -20px;">해달과 함께, 해와 달이 뜨고 지듯 꾸준히 저축해보세요!</p>
+    <p style="margin-top:200px;margin-bottom: -150px; font-size: 16px; color:balck; font-weight: 500;">꾸준히 돈을 모으는 해달이 여러분의
+      저축을 도와드립니다!
+    </p>
     <div style=" margin:auto; display: flex; justify-content: center;;">
       <img src='@/assets/img/main-image1.png' class="first-image">
     </div>
@@ -42,7 +46,7 @@
     </p>
     <p style="margin-top:150px; color:rgba(0, 179, 255, 0.826);">지금 시작해 보세요!</p>
     <v-btn
-      style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 30px; margin-bottom: 1rem; margin-top:70px; width:400px;height: 60px;"
+      style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 30px; margin-bottom: 1rem; margin-top:80px; width:400px;height: 60px;"
       href="/products">상품 보러가기</v-btn>
   </div>
 
@@ -157,5 +161,17 @@ const detail = (item) => {
       -5px 5px 9px 0 rgba(0, 179, 255, 0.264),
       12px -12px 16px rgba(0, 179, 255, 0.046) !important;
   }
+}
+
+.banner {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
