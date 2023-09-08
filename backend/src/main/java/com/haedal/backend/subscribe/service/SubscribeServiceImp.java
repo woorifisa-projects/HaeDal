@@ -77,6 +77,20 @@ public class SubscribeServiceImp implements SubscribeService{
         subscribeRepository.deleteByUser(user);
     }
 
+    @Override
+    public Long deleteBySubscribe(Subscribe subscribe) {
+        Long startMoney = subscribe.getStartMoney();
+        User user = subscribe.getUser();
+        user.updateAsset(user.getAsset()+startMoney);
+        subscribeRepository.delete(subscribe);
+        return startMoney;
+    }
+
+    @Override
+    public Subscribe findByUserIdAndProductId(String userId, Long productId) {
+        return subscribeRepository.findByUserIdAndProductId(userId,productId);
+    }
+
     public Subscribe save(Subscribe subscribe){
         return subscribeRepository.save(subscribe);
     }

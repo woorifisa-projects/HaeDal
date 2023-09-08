@@ -4,6 +4,7 @@ package com.haedal.backend.subscribe.service;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -30,7 +31,11 @@ public interface SubscribeService extends CrudService<Subscribe, Long> {
     List <Subscribe> findSubscriptionsByProductsAndUser(@Param("userId") Long userId, @Param("productId") Long productId);
 
 
+    Subscribe findByUserIdAndProductId(@Param("userId") String userId, @Param("productId") Long productId);
+
     void deleteByUser(User user);
+
+    Long deleteBySubscribe(Subscribe subscribe);
 
     public Subscribe save(Subscribe subscribe);
 
