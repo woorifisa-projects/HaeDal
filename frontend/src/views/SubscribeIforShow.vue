@@ -27,14 +27,42 @@
                 </div>
                 <div style="margin-bottom: 60px;"></div>
 
-                <v-btn class="button-style" variant="outlined" type="submit">
+                <v-btn class="button-style" variant="outlined" @click="openModal">
                     해지하기
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn class="button-style" variant="outlined" type="submit">
-                    확인
+                <v-btn class="button-style" variant="outlined" >
+                    돌아가기
                 </v-btn>
             </div>
+
+             <!-- 모달 창 -->
+             <div v-if="showModal" class="blur-background" @click="closeModal"></div>
+                <div v-if="showModal" class="modal">
+                    <!-- 모달 내용: 계좌번호와 인증 번호 입력 -->
+                    <div class="modal-content">
+                        <h2>{{ listData.productName }} 상품 해지</h2>
+
+                    
+                        <div>
+                            <b><label for="startMoney">예상 환급액 </label>{{ listData.productAsset }}원</b>
+                        </div>
+
+                        <div>
+                            <b>인증 번호</b>
+                            <input type="text" id="authenticationNumber" v-model="formData.authenticationNumber" required>
+                        </div>
+                        
+                        <div style="margin-bottom: 30px;">
+                            <v-btn class="button-style" variant="outlined" type="submit">
+                                해지하기
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn class="button-style" @click="closeModal">취소</v-btn>
+                        </div>
+                    </div>
+                </div>
+
         </form>
     </div>
 </template>
@@ -42,7 +70,7 @@
 <script setup>
 import axios from 'axios'
 import { ref, watchEffect } from 'vue'
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import router from '../router'
 import { useAuthStore } from '@/store/app';
 
@@ -54,6 +82,7 @@ const axiosInstance = axios.create({
 
 const authStore = useAuthStore();
 const listData = ref({});
+const showModal = ref(false);
 
 const calculatedAmount = ref(null);
 
@@ -79,47 +108,68 @@ const formData = {
     startMoney: ''
 };
 
-const calculate = (money) => {
-    //     money+{(money*listData.value.interestRate)*((n-1)(n-2)….(n-(n-1))/n)}
-    // (여기서 n=listData.value.period)
-    if (money) {
-        const n = listData.value.period;
-        // n 팩토리얼 계산
-        let factorial = 1;
-        for (let i = 1; i <= n; i++) {
-            factorial *= i;
-        }
-        calculatedAmount.value = money + (money * listData.value.interestRate) * (factorial / n);
-    } else {
-        calculatedAmount.value = null;
-    }
-};
+
 
 const submitForm = () => {
-    const url = `http://15.164.189.153:8080/subscribe/${productId}/I`;
+    const url = `http://localhost:8080/subscribe/${productId}/cancle`;
 
-    // productId가 유효한 경우에만 요청을 보냅니다.
-    axios.post(url, formData,
-        {
-            headers: {
-                Authorization: `Bearer ${authStore.accessToken}`
-            }
-        })
-        .then(response => {
-            console.log(authStore.accessToken);
-            console.log('신청 성공', response);
-            router.push('/success');
-        })
-        .catch(error => {
-            console.error('에러 발생', error);
-            alert("정보가 올바르지 않습니다.");
-        });
+
+// productId가 유효한 경우에만 요청을 보냅니다.
+axios.delete(url,
+    {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+    },)
+    .then((res) => {
+    console.log(res);
+    
+}).catch((error) => {
+    router.push('/error');
+})
+};
+
+const openModal = () => {
+    showModal.value = true;
+   
+};
+
+const closeModal = () => {
+    showModal.value = false;
 };
 
 </script>
   
  
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500&display=swap');
+
+.error-icon {
+    width: 30%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.error-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.error-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.087);
+    /* 블러 색상 및 투명도 설정 */
+    backdrop-filter: blur(5px);
+    /* 블러 효과 설정 */
+    z-index: 9999;
+    /* 모달 아래에 위치하도록 설정 */
+}
+
 input {
     width: 300px;
     height: 32px;
@@ -139,7 +189,7 @@ div {
 }
 
 .button-style {
-    width: 25rem;
+    width: 20rem;
     border-radius: 10px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
@@ -163,15 +213,71 @@ div {
 
 .datas {
     font-size: 14px;
+    margin-bottom: 200px
 }
 
 h2 {
-    font-size: 38px;
+    font-size: 45px;
     margin: 2rem 0rem 2rem 0rem;
 }
 
 form {
     margin-bottom: 10rem;
+}
+
+/* 모달 스타일 */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    max-width: 80%;
+    width: 50rem;
+    overflow: hidden;
+}
+
+/* 블러 효과 스타일 */
+.blur-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 145, 255, 0.2);
+    /* 블러 색상 및 투명도 설정 */
+    backdrop-filter: blur(5px);
+    /* 블러 효과 설정 */
+    z-index: 9998;
+    /* 모달 아래에 위치하도록 설정 */
+}
+
+.modal-content .button-style {
+    width: 10rem;
+    border-radius: 10px;
+    box-shadow: none;
+    background: rgba(0, 179, 255, 0.826);
+    color: white;
+    margin: 14px 5px 0px 5px;
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+//찜 기능 관련
+.favorite {
+    width: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.favorite img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
 }
 </style>
   
