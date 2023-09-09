@@ -16,12 +16,17 @@
         <div style="white-space: nowrap;">
           <!-- 로그인 상태에 따라 다른 내용을 표시 -->
           <div v-if="authStore.isLoggedIn">
-            <p> {{ authStore.username }}고객님 환영합니다.</p>
+            <p> {{ authStore.username }}고객님 환영합니다. <v-btn> 로그인 연장 </v-btn> {{ minutesRemaining }} : {{ secondsRemaining }}</p>
+            <!--토큰 만료시간 체크-->
+            <b></b> 
+           
           </div>
           <div v-else>
             <p></p>
           </div>
         </div>
+
+
         <v-btn class="me-4" type="submit">
           <div v-if="authStore.isLoggedIn">
             <p>Logout</p>
@@ -41,6 +46,10 @@ import axios from 'axios';
 import { useAuthStore } from '@/store/app';
 import { ref } from 'vue';
 import router from '@/router';
+
+const minutesRemaining = ref(0);
+const secondsRemaining = ref(0);
+
 const username = ref(0);
 const authStore = useAuthStore();
 const links = [
@@ -51,7 +60,17 @@ const links = [
 ];
 const submit = () => {
   if (authStore.isLoggedIn) {
-    alert("로그아웃되었습니다.")
+    alert("로그아웃되었습니다.");
+    //logout 백엔드로 요청
+    const url = `http://localhost:8080/logout`;
+// productId가 유효한 경우에만 요청을 보냅니다.
+axios.post(url)
+    .then((res) => {
+    console.log(res);
+}).catch((error) => {
+    router.push('/error');
+})
+
     console.log("로그아웃되었습니다.");
     authStore.logout();
     router.push('/home'); // 예시: 로그인 후 헤더 페이지로 이동
@@ -62,6 +81,7 @@ const submit = () => {
     router.push('/login');
   }
 }
+
 onMounted(async () => {
   console.log("새로고췸");
   console.log("헤더전역관리토큰입니다" + authStore.accessToken);
@@ -104,6 +124,31 @@ const appBarColor = computed(() => {
     return 'rgba(255, 255, 255, 0.6)'; // 기본 색상
   }
 });
+
+setInterval(() => {
+    const token = localStorage.getItem('accessToken'); // JWT 토큰 문자열
+    if (token) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expirationTimestamp = payload.exp;
+    const currentTimestamp = Math.floor(Date.now() / 1000); // 현재 시간(초 단위)
+
+    if (currentTimestamp > expirationTimestamp) {
+        // 토큰이 이미 만료됨
+        console.log("토큰이 이미 만료되었습니다.");
+        alert("접속시간이 종료되어 강제 로그아웃되었습니다.")
+        console.log("로그아웃되었습니다.");
+        authStore.logout();
+
+        router.push('/home');
+    } else {
+        const timeRemaining = expirationTimestamp - currentTimestamp;
+         minutesRemaining.value = Math.floor(timeRemaining / 60); // 분 단위로 변환
+         secondsRemaining.value = timeRemaining % 60; // 초 단위로 변환
+        // console.log(`토큰 만료까지 ${minutesRemaining} 분 ${secondsRemaining} 초 남았습니다.`);
+    }
+  }
+}, 1000); // 1초마다 업데이트
+
 
 </script>
 <style>
