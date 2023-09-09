@@ -123,7 +123,7 @@ public class SubscribeController {
         return subscribeList;
     }
 
-    @GetMapping("/portfolio/days")
+    @GetMapping("/portfolio/days") // 구독일자별 정렬
     public  List<PortfolioResponse>  getUserSubscribeListOrderByDay(Authentication authentication){
         String id = authentication.getName();
         List<PortfolioResponse> subscribeList = subscribeService.findSubscriptionsAndProductsByUserSortedByDays(id);
@@ -132,7 +132,7 @@ public class SubscribeController {
         return subscribeList;
     }
 
-    @GetMapping("/portfolio/dibs")
+    @GetMapping("/portfolio/dibs") // 좋아요 누른것
     public List<PortfolioResponse> getUserDibsList(Authentication authentication){
         String id = authentication.getName();
         List<PortfolioResponse> dibsList = subscribeService.findDibsAndProductsByUser(id);
@@ -140,6 +140,14 @@ public class SubscribeController {
         System.out.println(dibsList);
 
         return dibsList;
+    }
+
+    @DeleteMapping("/{productId}/cancle")
+    public ResponseEntity<String> cancelUserSubscribeProduct(Authentication authentication, @PathVariable Long productId){
+        String userId = authentication.getName();
+        Subscribe subscribe = subscribeService.findByUserIdAndProductId(userId,productId);
+        Long refund = subscribeService.deleteBySubscribe(subscribe);
+        return ResponseEntity.ok( refund+"원이 환급되었습니다.");
     }
 
 }
