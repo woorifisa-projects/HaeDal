@@ -114,7 +114,7 @@ const showModal = ref(false);
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'https://backend.haedal.store', // 서버의 주소
     // baseURL: 'http://15.164.189.153:8080',
     // withCredentials: true // CORS 요청에 관련된 설정을 포함
 })
@@ -148,7 +148,7 @@ const goportfolio = () => {
 }
 
 const submitForm = () => {
-    const url = `http://localhost:8080/subscribe/${productId}/cancle`;
+    const url = `https://backend.haedal.store/subscribe/${productId}/cancle`;
 // productId가 유효한 경우에만 요청을 보냅니다.
 axios.delete(url,
     {

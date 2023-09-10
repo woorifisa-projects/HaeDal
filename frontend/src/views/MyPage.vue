@@ -20,7 +20,7 @@
     <v-card-actions class="d-flex justify-center align-center">
 
       <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px;  margin: 0rem 0rem 0.5rem 0.5rem; "
-        color="blue" href="http://localhost:3000/profile/edit">
+        color="blue" href="https://haedal.store/profile/edit">
         프로필 수정하기
       </v-btn>
     </v-card-actions>
@@ -52,7 +52,7 @@ onMounted(() => {
 
   if (storedToken) {
     console.log("요청전송");
-    axios.get("http://localhost:8080/profile", {
+    axios.get("https://backend.haedal.store/profile", {
       headers: {
         //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
         Authorization: `Bearer ${storedToken}`

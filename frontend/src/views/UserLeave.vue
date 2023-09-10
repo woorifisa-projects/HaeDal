@@ -45,7 +45,7 @@ const dialog = {
   closeDialog() {
     dialog.isOpen.value = false; // 다이얼로그 닫기
     authStore.logout();
-    location.href = "http://localhost:3000/home"
+    location.href = "https://haedal.store/home"
   }
 };
 
@@ -53,7 +53,7 @@ const submit = () => {
 
   axios({
     method: "delete",
-    url: "http://localhost:8080/user/leave",
+    url: "https://backend.haedal.store/user/leave",
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
     },

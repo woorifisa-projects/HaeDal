@@ -29,7 +29,7 @@
 
     <v-card-actions class="d-flex justify-center align-center">
       <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
-        color="blue" href="http://localhost:3000/profile/edit">
+        color="blue" href="https://haedal.store/profile/edit">
         계좌정보 수정하기
       </v-btn>
     </v-card-actions>
@@ -157,7 +157,7 @@ console.log("저장된 토큰값 " + authStore.accessToken);
 
 if (storedToken) {
   console.log("요청전송");
-  axios.get("http://localhost:8080/profile/edit", {
+  axios.get("https://backend.haedal.store/profile/edit", {
     headers: {
       //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
       Authorization: `Bearer ${storedToken}`
@@ -193,7 +193,7 @@ if (storedToken) {
 // Axios 인스턴스 생성
 axios({
   method: "get",
-  url: "http://localhost:8080/subscribe/portfolio",
+  url: "https://backend.haedal.store/subscribe/portfolio",
   headers: {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
   },

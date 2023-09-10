@@ -144,7 +144,7 @@ const dialog = {
   },
   closeDialog() {
     dialog.isOpen.value = false; // 다이얼로그 닫기
-    location.href = "http://localhost:3000/login"
+    location.href = "https://haedal.store/login"
   }
 };
 
@@ -164,7 +164,7 @@ defineRule('customIdRule', async () => {
   if (id(value)?.length >= 2) {
     console.log(id.value.value);
     // 서버에 아이디 중복 체크 요청 보내기
-    const response = await axios.get(`http://localhost:8080/user/idcheck?id=${value}`);
+    const response = await axios.get(`https://backend.haedal.store/user/idcheck?id=${value}`);
 
     if (response.data.exists) {
       return 'Id already exists'; // 아이디가 이미 존재하는 경우 오류 메시지 반환
@@ -260,7 +260,7 @@ const authNumber = useField('authNumber')
 const checkId = () => {
   const idcheck = id.value.value;
   console.log(idcheck);
-  axios.get(`http://localhost:8080/user/idcheck?id=${idcheck}`)
+  axios.get(`https://backend.haedal.store/user/idcheck?id=${idcheck}`)
     .then(response => {
       console.log(response.data);
       dialogId.openDialog();
@@ -283,7 +283,7 @@ const submit = handleSubmit(values => {
   const dataToSend = { ...values, userAgeGroup: ageEnum, servicePurpose: purposeEnum };
 
   console.log(dataToSend);
-  axios.post("http://localhost:8080/user/register", dataToSend)
+  axios.post("https://backend.haedal.store/user/register", dataToSend)
     .then(response => {
       // POST 요청 성공 시 로직
       console.log(response.data);

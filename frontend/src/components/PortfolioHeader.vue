@@ -29,7 +29,7 @@
         Share
       </v-btn>
 
-      <v-btn color="orange" href="http://localhost:3000/profile/edit">
+      <v-btn color="orange" href="https://haedal.store/profile/edit">
         계좌정보 수정하기
       </v-btn>
     </v-card-actions>
@@ -86,7 +86,7 @@ console.log("새로고췸");
 
   if (storedToken) {
     console.log("요청전송");
-    axios.get("http://localhost:8080/profile/edit", {
+    axios.get("https://backend.haedal.store/profile/edit", {
       headers: {
         //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
         Authorization: `Bearer ${storedToken}`

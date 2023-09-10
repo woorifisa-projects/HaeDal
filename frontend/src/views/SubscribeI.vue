@@ -125,7 +125,7 @@ import { useAuthStore } from '@/store/app';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 서버의 주소
+    baseURL: 'https://backend.haedal.store', // 서버의 주소
     // baseURL: 'http://15.164.189.153:8080',
 })
 
@@ -166,7 +166,7 @@ const dibs = (productId) => {
         console.log("찜!")
         axios({
             method: "post",
-            url: `http://localhost:8080/dibs/${productId}/add`,
+            url: `https://backend.haedal.store/dibs/${productId}/add`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
             },
@@ -176,7 +176,7 @@ const dibs = (productId) => {
         console.log("찜 취소")
         axios({
             method: "delete",
-            url: `http://localhost:8080/dibs/${productId}/delete`,
+            url: `https://backend.haedal.store/dibs/${productId}/delete`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
             },
@@ -228,7 +228,7 @@ const calculate = () => {
 };
 
 const submitForm = () => {
-    const url = `http://localhost:8080/subscribe/${productId}/final`;
+    const url = `https://backend.haedal.store/subscribe/${productId}/final`;
 
     // productId가 유효한 경우에만 요청을 보냅니다.
     axios.post(url, formData,

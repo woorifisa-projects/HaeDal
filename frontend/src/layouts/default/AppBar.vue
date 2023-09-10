@@ -8,7 +8,7 @@
           width="30000px"
           object-fit="cover"
         ></v-btn> -->
-        <a href="http://13.209.167.190/home"><img src='@/assets/img/HaeDalLogo.png' class="logo"></a>
+        <a href="https://backend.haedal.store/home"><img src='@/assets/img/HaeDalLogo.png' class="logo"></a>
         <v-btn class="nav-link" v-for="link in links" :key="link" :text="link" variant="text"
           :to="`/${link.toLowerCase()}`"></v-btn>
         <!-- 해당링크 소문자로 바꿔서 라우터로 이동시켜준다 -->
@@ -32,7 +32,7 @@
             <p>Logout</p>
           </div>
           <div v-else>
-            <a href="http://localhost:3000/login"></a>
+            <a href="https://haedal.store/login"></a>
             <p>Login</p>
           </div>
         </v-btn>
@@ -61,9 +61,6 @@ const links = [
 const submit = () => {
   if (authStore.isLoggedIn) {
     alert("로그아웃되었습니다.");
-    //logout 백엔드로 요청
-    const url = `http://localhost:8080/logout`;
-// productId가 유효한 경우에만 요청을 보냅니다.
 axios.post(url)
     .then((res) => {
     console.log(res);
