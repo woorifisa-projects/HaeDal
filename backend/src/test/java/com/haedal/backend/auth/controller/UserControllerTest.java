@@ -17,19 +17,31 @@ import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.nio.charset.StandardCharsets;
+
+
 
 class UserControllerTest extends ControllerTest {
 
+    @InjectMocks
+    private UserController userController;
 
     @DisplayName("아이디 중복체크 - 아이디 존재할 경우")
     @Test
+    @WithMockUser
     public void testIdCheckExists() throws Exception {
         //given
         String existingId = "existingUserId"; // 이미 존재하는 ID
@@ -72,6 +84,7 @@ class UserControllerTest extends ControllerTest {
 
     @DisplayName("아이디 중복체크 - 아이디 존재하지않을경우")
     @Test
+    @WithMockUser
     public void testIdCheckExists2() throws Exception {
         //given
 
@@ -97,6 +110,7 @@ class UserControllerTest extends ControllerTest {
 
     @DisplayName("회원가입 - 회원가입완료")
     @Test
+    @WithMockUser
     void signUp() throws Exception {
         // given
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest("qwert"
@@ -142,5 +156,45 @@ class UserControllerTest extends ControllerTest {
     }
 
 
-
+//    @DisplayName("회원탈퇴 - 휴면계정으로 변환")
+//    @Test
+//    @WithMockUser(username = "testUserId",roles = "USER")
+//    public void testDeleteUser() throws Exception {
+//        // 사용자 ID와 User 객체 생성
+//
+//        String id = "testUserId";
+//        User user = new User(1L, "testUserId");
+//
+//        // userService.findbyId() 메서드가 호출될 때 예상 결과 설정
+//        when(userService.findbyId(id)).thenReturn(user);
+//
+//        // 로그인 유저 설정(withMockUser로 대체) 로그인 후 토큰 발급 처리를 미리 설정해주어야할듯
+//
+//        // MockMvc를 사용하여 컨트롤러 엔드포인트 호출
+//        Authentication authentication = mock(Authentication.class);
+//        when(authentication.getName()).thenReturn(id);
+//
+//        // SecurityContextHolder에 설정
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//
+//
+//        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.patch("/user/leave")
+//                .with(csrf())
+//                .with(authentication(authentication))
+//                .contentType(MediaType.APPLICATION_JSON));
+//
+//        // 테스트 결과 검증
+//        result.andExpect(status().isOk())
+//                .andExpect(content().string(id + "휴면계정되었습니다"));
+//
+//        // userService.findbyId()가 한 번 호출되었는지 확인
+//        verify(userService, times(1)).findbyId(id);
+//
+//        // user.updateUserStatus()와 subscribeService.deleteByUser()가 각각 한 번 호출되었는지 확인
+//        verify(user, times(1)).updateUserStatus(false);
+//        verify(subscribeService, times(1)).deleteByUser(user);
+//    }
 }
+
+
