@@ -8,7 +8,7 @@
           width="30000px"
           object-fit="cover"
         ></v-btn> -->
-        <a href="https://backend.haedal.store/home"><img src='@/assets/img/HaeDalLogo.png' class="logo"></a>
+        <a href="https://haedal.store/home"><img src='@/assets/img/HaeDalLogo.png' class="logo"></a>
         <v-btn class="nav-link" v-for="link in links" :key="link" :text="link" variant="text"
           :to="`/${link.toLowerCase()}`"></v-btn>
         <!-- 해당링크 소문자로 바꿔서 라우터로 이동시켜준다 -->
@@ -61,13 +61,6 @@ const links = [
 const submit = () => {
   if (authStore.isLoggedIn) {
     alert("로그아웃되었습니다.");
-axios.post(url)
-    .then((res) => {
-    console.log(res);
-}).catch((error) => {
-    router.push('/error');
-})
-
     console.log("로그아웃되었습니다.");
     authStore.logout();
     router.push('/home'); // 예시: 로그인 후 헤더 페이지로 이동
