@@ -31,6 +31,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
+
+@Slf4j
 @RestController
 @CrossOrigin("http://localhost:3000/")
 @RequestMapping("/user")
@@ -94,10 +96,12 @@ public class UserController {
     @PatchMapping("/leave")
     public ResponseEntity<String> deleteUser(Authentication authentication){
         String id = authentication.getName();
+//        String id  = userService.getUserId(authentication);
         User user = userService.findbyId(id);
-        user.updateUserStatus(false);
+//        user.updateUserStatus(false);
+        userService.updateUserStatus(user);
         //구독삭제도 추가하기
         subscribeService.deleteByUser(user);
-        return ResponseEntity.status(HttpStatus.OK).body(id + "휴면계정되었습니다");
+        return ResponseEntity.status(HttpStatus.OK).body(id + " 휴면계정되었습니다");
     }
 }

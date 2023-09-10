@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -86,4 +87,14 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+
+    public String getUserId(Authentication authentication)
+    {
+        return authentication.getName();
+    }
+
+    public void updateUserStatus(User user)
+    {
+        user.updateUserStatus(false);
+    }
 }
