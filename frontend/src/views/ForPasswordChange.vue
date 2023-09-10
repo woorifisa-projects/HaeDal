@@ -52,7 +52,7 @@ const dialog = {
   closeDialog() {
     dialog.isOpen.value = false; // 다이얼로그 닫기
     authStore.logout();
-    location.href = "http://localhost:3000/home"
+    router.push('/home');
   }
 };
 
@@ -63,7 +63,7 @@ const submit = () => {
 
   axios({
     method: "patch",
-    url: "http://localhost:8080/changePW",
+    url: "https://backend.haedal.store/changePW",
     data: requestData,
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함

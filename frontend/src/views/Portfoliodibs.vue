@@ -31,7 +31,7 @@
 
             <v-btn
                 style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
-                color="blue" href="http://localhost:3000/profile/edit">
+                color="blue" href="https://haedal.store/profile/edit">
                 계좌정보 수정하기
             </v-btn>
         </v-card-actions>
@@ -133,7 +133,7 @@ console.log("저장된 토큰값 " + authStore.accessToken);
 
 if (storedToken) {
     console.log("요청전송");
-    axios.get("http://localhost:8080/profile/edit", {
+    axios.get("https://backend.haedal.store/profile/edit", {
         headers: {
             //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
             Authorization: `Bearer ${storedToken}`
@@ -166,7 +166,7 @@ if (storedToken) {
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://backend.haedal.store',
     // baseURL: 'http://15.164.189.153:8080', // 서버의 주소
 
 })
@@ -210,7 +210,7 @@ const dibs = (item) => {
         console.log("찜!");
         axios({
             method: "post",
-            url: `http://localhost:8080/dibs/${item.productId}/add`,
+            url: `https://backend.haedal.store/dibs/${item.productId}/add`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
@@ -223,7 +223,7 @@ const dibs = (item) => {
         console.log("찜 취소");
         axios({
             method: "delete",
-            url: `http://localhost:8080/dibs/${item.productId}/delete`,
+            url: `https://backend.haedal.store/dibs/${item.productId}/delete`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
@@ -270,7 +270,7 @@ const subscribeProduct = (item) => {
 
 axios({
     method: "get",
-    url: "http://localhost:8080/subscribe/portfolio",
+    url: "https://backend.haedal.store/subscribe/portfolio",
     headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
     },

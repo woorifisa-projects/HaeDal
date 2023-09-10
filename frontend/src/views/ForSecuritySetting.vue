@@ -74,25 +74,6 @@ const password = ref();
 const step = ref(1);
 const checkResult = false;
 
-// onMounted(() => {
-// console.log("비밀번호받아오기");
-// // Local Storage에서 토큰을 가져와서 store에 저장
-// const storedToken = localStorage.getItem('accessToken');
-// console.log("저장된 토큰값 " + storedToken);
-
-// if(storedToken){
-//   axios.post("http://localhost:8080/security",value,{
-//     headers: {
-//     Authorization: `Bearer ${storedToken}`
-//     },
-//   })
-//     .then (response => {
-//       console.log(response.data);
-//     })
-// }
-
-// });
-
 const onSubmit = ()=>{
   if(step.value<2)
   {
@@ -104,7 +85,7 @@ const onSubmit = ()=>{
 
       axios({
         method:"post",
-        url:"http://localhost:8080/security",
+        url:"https://backend.haedal.store/security",
         data : requestData,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함

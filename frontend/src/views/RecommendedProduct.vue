@@ -80,7 +80,7 @@ const authStore = useAuthStore();
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://backend.haedal.store',
     // baseURL: 'http://15.164.189.153:8080', // 서버의 주소
 
 })
@@ -127,7 +127,7 @@ const dibs = (item) => {
         console.log("찜!");
         axios({
             method: "post",
-            url: `http://localhost:8080/dibs/${item.productId}/add`,
+            url: `https://backend.haedal.store/dibs/${item.productId}/add`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
@@ -140,7 +140,7 @@ const dibs = (item) => {
         console.log("찜 취소");
         axios({
             method: "delete",
-            url: `http://localhost:8080/dibs/${item.productId}/delete`,
+            url: `https://backend.haedal.store/dibs/${item.productId}/delete`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },

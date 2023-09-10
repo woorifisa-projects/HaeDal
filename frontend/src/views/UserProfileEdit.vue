@@ -99,7 +99,7 @@ const dialog = {
   },
   closeDialog() {
     dialog.isOpen.value = false; // 다이얼로그 닫기
-    location.href = "http://localhost:3000/mypage"
+    location.href = "https://haedal.store/mypage"
   }
 };
 
@@ -177,7 +177,7 @@ const submit = handleSubmit(values => {
 
   console.log(dataToSend);
   console.log(authStore.accessToken + "여기 토큰값이다");
-  axios.patch("http://localhost:8080/profile/edit/save", dataToSend, {
+  axios.patch("https://backend.haedal.store/profile/edit/save", dataToSend, {
     headers: {
       Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
     }
@@ -209,7 +209,7 @@ onMounted(() => {
     // 페이지 로딩 시 사용자 정보 요청 로직 추가
   }
   if (storedToken) {
-    axios.get("http://localhost:8080/profile/edit", {
+    axios.get("https://backend.haedal.store/profile/edit", {
       headers: {
         Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
       },

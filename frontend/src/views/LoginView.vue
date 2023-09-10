@@ -30,7 +30,7 @@
         </v-btn>
 
         <v-card-text class="text-center">
-          <a class="text-blue text-decoration-none" href="http://localhost:3000/signup">
+          <a class="text-blue text-decoration-none" href="https://haedal.store/signup">
             Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
           </a>
         </v-card-text>
