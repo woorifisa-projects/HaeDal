@@ -52,7 +52,7 @@ const dialog = {
 const submit = () => {
 
   axios({
-    method: "delete",
+    method: "patch",
     url: "https://backend.haedal.store/user/leave",
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
