@@ -24,11 +24,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/SignUpView.vue'),
       },
       {
-        path: "afterl",
-        name: "AfterLogin",
-        component: () => import(/* webpackChunkName: "home" */ '@/views/AfterLogin.vue'),
-      },
-      {
         path: '/products',
         name: 'product_list',
         component: () => import('@/views/ProductList.vue'),
