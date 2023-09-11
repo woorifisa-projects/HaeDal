@@ -143,12 +143,8 @@ const redirectToPortfoliodibs = () => {
   router.push('/portfoliodibs');
 };
 
-
-
-
 // 서버에서 받아오는 정보
 const listData = ref([]);
-
 
 console.log("새로고췸");
 // Local Storage에서 토큰을 가져와서 store에 저장
@@ -187,8 +183,6 @@ if (storedToken) {
       totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
     })
 }
-
-
 
 // Axios 인스턴스 생성
 axios({
@@ -318,8 +312,6 @@ const subscribeProduct = (item) => {
 }
 
 
-
-
 // onBeforeMount(async() => {
 // //     instance({
 // //     method:"get",
@@ -334,8 +326,6 @@ const subscribeProduct = (item) => {
 // console.log(data);
 // listData.value = [...data];
 // })
-
-
 
 </script>
 

@@ -34,7 +34,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("https://haedal.store")
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
@@ -79,7 +79,6 @@ public class UserController {
             String userName = userService.findbyId(userLoginRequest.getId()).getName();
 
             return new ResponseEntity<>(new UserLoginResponse(token, userName), HttpStatus.OK);
-
     }
 
 
