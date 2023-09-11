@@ -74,21 +74,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
 
-        try {
+
             String token = userService.login(userLoginRequest.getId(), userLoginRequest.getPassword());
             String userName = userService.findbyId(userLoginRequest.getId()).getName();
 
-            return new ResponseEntity<>(new UserLoginResponse(token,userName), HttpStatus.OK);
-        } catch (InvalidPasswordException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); // 비밀번호가 일치하지 않는 경우 400 Bad Request 응답
-        } catch (InactiveUserException e) {
-            System.out.println("비활성화유저");
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT); // 휴면처리된 아이디인 경우 409 Conflict 응답
-        } catch (InvalidIdException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); // 가입되지 않은 ID인 경우 400 Bad Request 응답
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // 기타 예외의 경우 500 Internal Server Error 응답
-        }
+            return new ResponseEntity<>(new UserLoginResponse(token, userName), HttpStatus.OK);
+
     }
 
 
