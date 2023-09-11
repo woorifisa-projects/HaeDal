@@ -9,8 +9,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedMethods("*")
+                .allowedOrigins("https://haedal.store") // 허용할 Origin 설정
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
                 .allowedOriginPatterns("*")
+                .allowCredentials(true)
                 .maxAge(3000);
         ;
     }
