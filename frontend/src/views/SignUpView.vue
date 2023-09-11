@@ -16,6 +16,10 @@
             prepend-inner-icon="mdi-lock-outline" variant="outlined" label="비밀번호">
           </v-text-field>
 
+          <v-text-field v-model="confirmPassword.value.value" :counter="10"
+            :error-messages="confirmPassword.errorMessage.value" prepend-inner-icon="mdi-lock-outline" variant="outlined"
+            label="비밀번호확인">
+          </v-text-field>
 
           <v-text-field v-model="name.value.value" :counter="10" :error-messages="name.errorMessage.value"
             prepend-inner-icon="mdi-account-outline" variant="outlined" label="이름">
@@ -186,6 +190,10 @@ const { handleSubmit, handleReset } = useForm({
       if (value?.length >= 2) return true
       return 'password needs to be at least 2 characters.'
     },
+    confirmPassword(value) {
+      if (value === password.value.value) return true;
+      return 'Passwords do not match.';
+    },
     name(value) {
       if (value?.length >= 2) return true
       return 'Name needs to be at least 2 characters.'
@@ -214,6 +222,7 @@ const { handleSubmit, handleReset } = useForm({
 })
 const id = useField('id')
 const password = useField('password')
+const confirmPassword = useField('confirmPassword')
 const name = useField('name')
 const phoneNumber = useField('phoneNumber')
 // const email = useField('email')

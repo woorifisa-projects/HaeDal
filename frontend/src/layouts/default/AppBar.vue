@@ -15,13 +15,12 @@
         <v-spacer></v-spacer>
         <div style="white-space: nowrap;">
           <!-- 로그인 상태에 따라 다른 내용을 표시 -->
-          <div v-if="authStore.isLoggedIn">
-            <p> {{ authStore.username }}고객님 환영합니다. <v-btn> 로그인 연장 </v-btn> {{ minutesRemaining }} : {{ secondsRemaining
-            }}
-            </p>
+          <div v-if="authStore.isLoggedIn" style=" color: rgba(0, 68, 128, 0.826);">
+            <span style="margin-right: 20px;"> {{ authStore.username }}고객님 환영합니다.</span>
+            <span>{{ minutesRemaining }} : {{ secondsRemaining }}</span>
+
             <!--토큰 만료시간 체크-->
             <b></b>
-
           </div>
           <div v-else>
             <p></p>
@@ -29,7 +28,8 @@
         </div>
 
 
-        <v-btn class="me-4" type="submit">
+        <v-btn class="me-4" type="submit"
+          style=" color: rgba(0, 68, 128, 0.826); background-color:  rgba(0, 179, 255, 0.062); margin-left: 20px;">
           <div v-if="authStore.isLoggedIn">
             <p>Logout</p>
           </div>
