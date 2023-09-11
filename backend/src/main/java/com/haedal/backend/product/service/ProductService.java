@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public interface ProductService extends CrudService<Product, Long> {
 
     List<Product> findAll();
@@ -30,4 +30,6 @@ public interface ProductService extends CrudService<Product, Long> {
 //
 //    List<Product> filterByAsset(List<Product> products);
     Product findById(Long userId);
+
+    String getProductName(Product foundProduct);
 }

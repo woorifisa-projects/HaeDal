@@ -4,6 +4,8 @@ import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.Dibs.repository.DibsRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DibsServiceImp implements DibsService{
     private DibsRepository dibsRepository;
@@ -24,7 +26,12 @@ public class DibsServiceImp implements DibsService{
     }
 
     @Override
-    public Dibs findDibsByUserIDProductID(Long userId, Long productId) {
+    public List<Dibs> findDibsByUserIDProductID(Long userId, Long productId) {
         return dibsRepository.findDibsByUserIDProductID(userId,productId);
+    }
+
+    @Override
+    public Dibs getFirstDibs(List<Dibs> dibs) {
+        return dibs.get(0);
     }
 }

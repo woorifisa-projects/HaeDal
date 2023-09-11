@@ -13,4 +13,6 @@ public interface ProfileService extends CrudService<User,Long>{
     User findById(String id);
 
     User save(User user);
+
+    Long getUserId(User user);
 }

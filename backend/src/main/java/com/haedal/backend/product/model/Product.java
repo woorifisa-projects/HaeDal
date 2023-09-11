@@ -4,13 +4,16 @@ import com.haedal.backend.Dibs.model.Dibs;
 import com.haedal.backend.profile.model.ServicePurpose;
 import com.haedal.backend.profile.model.UserAgeGroup;
 import com.haedal.backend.subscribe.model.Subscribe;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 @Getter
 @Table
 @Entity
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +63,30 @@ public class Product {
     @Column(name="product_status",columnDefinition = "BOOLEAN DEFAULT true")
     private boolean productStatus;
 
+    public Product(Long productId) {
+        this.productId=productId;
+    }
+
     public boolean getProductStatus() {
         return this.productStatus;
+    }
+
+    @Builder
+    public Product(Long productId, Long maxProductMoney, ServicePurpose servicePurpose, UserAgeGroup userAgeGroup, Tag tag, String productName, String shortInfo, String longInfo, int period, int requiredStartMoney, double interestRate, List<Subscribe> subscribers, boolean isDeposit, List<Dibs> dibs, boolean productStatus) {
+        this.productId = productId;
+        this.maxProductMoney = maxProductMoney;
+        this.servicePurpose = servicePurpose;
+        this.userAgeGroup = userAgeGroup;
+        this.tag = tag;
+        this.productName = productName;
+        this.shortInfo = shortInfo;
+        this.longInfo = longInfo;
+        this.period = period;
+        this.requiredStartMoney = requiredStartMoney;
+        this.interestRate = interestRate;
+        this.subscribers = subscribers;
+        this.isDeposit = isDeposit;
+        this.dibs = dibs;
+        this.productStatus = productStatus;
     }
 }

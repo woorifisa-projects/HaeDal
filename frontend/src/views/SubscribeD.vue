@@ -39,7 +39,7 @@
                         @click="calculate" type="button">만기시 금액 예상하기
                     </v-btn>
                     <p
-                        v-show="calculatedAmount !== null && calculatedAmount !== 0 && startMoney <= listData.maxProductMoney || startMoney >= listData.maxProductMone">
+                        v-show="calculatedAmount !== null && calculatedAmount !== 0 && startMoney <= listData.maxProductMoney && startMoney >= listData.requiredStartMoney">
                         만기시 예상 금액은 {{ calculatedAmount }}원
                         입니다!
                     </p>

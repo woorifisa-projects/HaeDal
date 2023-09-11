@@ -170,13 +170,6 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
     // numberOfSubscribers 계산
     // Product의 product_id를 기준으로, Subscribe에 subscribe_id가 몇 개인지 세기
 
-
-
-
-
-
-
-
 }
 
 
