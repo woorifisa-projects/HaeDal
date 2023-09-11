@@ -81,6 +81,4 @@ public class ProfileController {
         return new ResponseEntity<>(ProfileResponse.userProfileUpdateFrom(user),HttpStatus.OK);
     }
 
-
-
 }
