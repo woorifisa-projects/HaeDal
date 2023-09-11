@@ -32,7 +32,7 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Value("${jwt.token.secret}")
     private String key;
-    private final long expireTimeMs = 1000 * 60 * 10;
+    private final long expireTimeMs = 1000 * 60 * 30;
 
     @Transactional
     public UserDto register(UserRegisterRequest request) {
@@ -67,7 +67,7 @@ public class UserService {
         // 휴면유저체크
         if(!user.isUserStatus())
         {
-            System.out.println("후면유저");
+            System.out.println("휴면유저");
             throw new InactiveUserException("휴면처리된 아이디입니다.");
         }
 
@@ -81,12 +81,6 @@ public class UserService {
 
 
     public User findbyId(String id) {return userRepository.findById(id).orElse(null);}
-
-    @Transactional
-    public void deleteById(String id){
-        userRepository.deleteById(id);
-    }
-
 
     public String getUserId(Authentication authentication)
     {

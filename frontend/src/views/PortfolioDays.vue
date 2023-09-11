@@ -265,7 +265,7 @@ axios({
 
       const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
       item.totalMoney = totalMoney;
-      totalPresentAsset.value += totalMoney;
+      totalPresentAsset.value += item.cleanplusMoney;
       console.log(item.cleanplusMoney);
     }
     else { // 적금일때
@@ -282,7 +282,7 @@ axios({
 
       const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
       item.totalMoney = totalMoney;
-      totalPresentAsset.value += totalMoney;
+      totalPresentAsset.value += item.cleanplusMoney;
       console.log(item.cleanplusMoney);
       console.log(totalAmount + " 적금 " + money);
     }

@@ -10,6 +10,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 
 import com.haedal.backend.auth.dto.UserDto;
 import com.haedal.backend.auth.dto.request.UserIdCheckRequest;
+import com.haedal.backend.auth.dto.request.UserLoginRequest;
 import com.haedal.backend.auth.dto.request.UserRegisterRequest;
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.common.ControllerTest;
@@ -53,14 +54,11 @@ class UserControllerTest extends ControllerTest {
     public void testIdCheckExists() throws Exception {
         //given
         String existingId = "existingUserId"; // 이미 존재하는 ID
-        String nonExistingId = "nonExistingUserId"; // 존재하지 않는 ID
 
         User existuser = new User(
                 1L,
-                "nonExistingUserId"
+                "existingUserId"
         );
-
-        User nonexistuser = null;
 
         given(userService.findbyId(existingId)).willReturn(existuser);
 
@@ -74,28 +72,13 @@ class UserControllerTest extends ControllerTest {
                         Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
                         Preprocessors.preprocessResponse(Preprocessors.prettyPrint())));
 
-//        given(userService.findbyId(nonExistingId)).willReturn(nonexistuser);
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/user/idcheck")
-//                        .param("id", nonExistingId)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.content().string("ID available"))
-//                .andDo(print())
-//                .andDo(MockMvcRestDocumentation.document("idCheckExists",
-//                        Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
-//                        Preprocessors.preprocessResponse(Preprocessors.prettyPrint())));
-
     }
-
-
 
     @DisplayName("아이디 중복체크 - 아이디 존재하지않을경우")
     @Test
     @WithMockUser
     public void testIdCheckExists2() throws Exception {
         //given
-
         String nonExistingId = "nonExistingUserId"; // 존재하지 않는 ID
 
         User nonexistuser = null;
@@ -113,13 +96,10 @@ class UserControllerTest extends ControllerTest {
 
     }
 
-
-
-
     @DisplayName("회원가입 - 회원가입완료")
     @Test
     @WithMockUser
-    void signUp() throws Exception {
+    public void signUp() throws Exception {
         // given
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest("qwert"
                 , "asdfasdf"
@@ -163,10 +143,31 @@ class UserControllerTest extends ControllerTest {
                 .andReturn();
     }
 
+    @DisplayName("회원로그인")
+    @Test
+    @WithMockUser
+    public void testUserLogin() throws Exception {
+        //given
+        User user = User.builder().userId(1L).id("qwert").password("asdfasdf").name("테스트용이름").build();
+        UserLoginRequest userLoginRequest = new UserLoginRequest("qwert","asdfasdf");
+        String token = "테스트용토큰";
+        String userName = "테스트용이름";
+        given(userService.login(userLoginRequest.getId(),userLoginRequest.getPassword())).willReturn(token);
+        given(userService.findbyId(userLoginRequest.getId())).willReturn(user);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/login").with(csrf())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userLoginRequest)))
+                .andDo(print());
+    }
+
+
+
 
     @DisplayName("회원탈퇴 - 휴면계정으로 변환")
     @Test
-
     public void testDeleteUser() throws Exception {
         // 가상 사용자 정보 생성
         String username = "testuser";
