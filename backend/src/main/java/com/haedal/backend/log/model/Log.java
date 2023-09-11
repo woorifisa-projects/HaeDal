@@ -3,6 +3,7 @@ package com.haedal.backend.log.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.haedal.backend.auth.model.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="log")
 public class Log {
     @Id
@@ -33,6 +34,7 @@ public class Log {
     @Column(name="log_desc")
     private String logDesc;
 
+    @Builder
     public Log(User user, LogType logType, LocalDateTime logTime, String logDesc) {
         this.user = user;
         this.logType = logType;

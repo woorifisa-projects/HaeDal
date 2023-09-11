@@ -50,4 +50,9 @@ public class ProductServiceImpl implements ProductService {
     {
         return productRepository.findById(userId).orElse(null);
     }
+
+    @Override
+    public String getProductName(Product foundProduct) {
+        return foundProduct.getProductName();
+    }
 }

@@ -2,6 +2,7 @@ package com.haedal.backend.Dibs.model;
 
 import com.haedal.backend.auth.model.User;
 import com.haedal.backend.product.model.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,6 +30,7 @@ public class Dibs {
     @Column(name="dibs_date")
     private LocalDate dibsDate;
 
+    @Builder
     public Dibs(User user, Product product, LocalDate dibsDate) {
         this.user = user;
         this.product = product;

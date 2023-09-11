@@ -6,9 +6,10 @@ import com.haedal.backend.subscribe.dto.response.PortfolioResponse;
 import com.haedal.backend.subscribe.model.Subscribe;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface SubscribeService extends CrudService<Subscribe, Long> {
 //    List<Product> filterProductsByAsset(Long userId);
 //

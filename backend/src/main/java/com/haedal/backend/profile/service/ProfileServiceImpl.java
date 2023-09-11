@@ -32,4 +32,6 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public User save(User user) { return profileRepository.save(user); }
+
+    public Long getUserId(User user){return user.getUserId();}
 }

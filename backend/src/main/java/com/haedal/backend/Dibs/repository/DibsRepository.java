@@ -6,6 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DibsRepository extends CrudRepository<Dibs,Long> {
     Dibs save(Dibs newDibs);
@@ -16,5 +18,5 @@ public interface DibsRepository extends CrudRepository<Dibs,Long> {
             "FROM Dibs d " +
             "WHERE d.user.userId = :userId "+
             "AND d.product.productId = :productId ")
-    Dibs findDibsByUserIDProductID(@Param("userId") Long userId,@Param("productId")Long productId);
+    List<Dibs> findDibsByUserIDProductID(@Param("userId") Long userId, @Param("productId")Long productId);
 }
