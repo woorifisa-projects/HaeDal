@@ -3,6 +3,7 @@
 # 🌇 HaeDal 🌆
 자산에 따른 금융 상품을 추천해주는 서비스 입니다.
 <Br><Br>
+[해달 바로가기](https://haedal.store)
 ![image](https://github.com/woorifisa-projects/HaeDal/assets/131724311/a833f5f1-7ad9-44b6-8916-53f0e9ccf1c2)
 
 ## Members
