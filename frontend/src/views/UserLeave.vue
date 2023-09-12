@@ -89,12 +89,13 @@ const submit = () => {
 }
 
 .success-card {
-  box-shadow: -4px 4px 10px 0 rgba(51, 96, 133, 0.252);
+  box-shadow: -4px 4px 10px 0 rgba(51, 96, 133, 0.12);
   width: 60%;
   text-align: center;
   padding: 40px;
   margin: auto;
   z-index: 2;
+  border-radius: 10px;
 }
 
 .btn {

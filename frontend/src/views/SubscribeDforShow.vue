@@ -33,7 +33,7 @@
                     해지하기
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn class=" button-style" variant="outlined">
+                <v-btn class=" button-style" variant="outlined" @click="goBack">
                     돌아가기
                 </v-btn>
 
@@ -179,6 +179,10 @@ const openModal = () => {
 const closeModal = () => {
     showModal.value = false;
 };
+
+const goBack = () => {
+    router.go(-1);
+}
 
 </script>
   

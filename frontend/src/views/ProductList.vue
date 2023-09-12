@@ -1,15 +1,16 @@
 <template>
-    <div style=" background-color: rgba(0, 179, 255, 0.056); padding: 10px;">
-        <form @submit.prevent="searchForm">
-            <div class="search">
+    <div style="background-color: rgba(84, 180, 224, 0.06); padding: 10px;">
+        <h1 style="text-align: center; margin-top: 50px">해달의 다양한 상품들을 검색해보세요</h1>
+        <div style="padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <form @submit.prevent="searchForm" class="search">
                 <input type="text" v-model="searchTerm" class="searchProduct" placeholder="원하시는 상품명을 검색해 주세요">
                 <v-btn class="searchButton" @click="searchForm">
                     검색
                 </v-btn>
-            </div>
-        </form>
-
+            </form>
+        </div>
         <div>
+
             <v-layout class="overflow-visible" style="height: 56px; box-shadow: none; margin-bottom:30px;">
                 <v-bottom-navigation v-model="value" color="teal" grow>
                     <v-btn @click="viewAll">
@@ -25,8 +26,7 @@
                     </v-btn>
                 </v-bottom-navigation>
             </v-layout>
-            <v-divider :thickness="3" color="info" style="width:60%;     border-style: double;
-    margin: auto;"></v-divider>
+
         </div>
         <div v-if="showNoDataMessage"
             style="font-size:20px; width:500px; font-weight: bold; color:rgba(0, 179, 255, 0.826); text-align: center; margin:auto; margin-top:80px">
@@ -34,31 +34,26 @@
         </div>
         <div class="container">
 
-            <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="( item, index ) in  listData "
-                :key="index">
+            <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="( item, index ) in   listData  "
+                :key="index" @click=subscribeProduct(item)>
 
                 <v-card-item class="products">
                     <div style="display: flex;flex-direction: column;align-items: center; ">
                         <div style="font-size: 20px; font-weight: bold; margin: 1rem 0rem 1.3rem 0rem;">
                             {{ item.productName }}
                         </div>
-                        <div style="font-size: 12px; margin-bottom: 1rem; text-align: left;">
+                        <div style="font-size: 13px; margin-bottom: 2rem; text-align: left;">
                             {{ item.shortInfo }}
                         </div>
-                        <div class="text-caption"
-                            style="background-color: rgba(0, 162, 255, 0.225); width:4rem; padding:2px; border-radius: 15px; color:rgb(0, 111, 186); font-size:6px; margin-top: 0.3rem;">
-                            {{ item.tag }}
-                        </div>
+                        <span>
+                            <v-chip v-show="item.deposit === false" class="mr-1" color="green"
+                                text-color=" white">예금</v-chip>
+                            <v-chip v-show="item.deposit === true" class="mr-1" color="red" text-color=" white">적금</v-chip>
+                            <v-chip class="mr-1" color="blue" text-color="white"> {{ item.interestRate }}%</v-chip>
+                            <v-chip class="mr-1" color="orange" text-color="white"> {{ item.period }}개월</v-chip>
+                        </span>
                     </div>
                 </v-card-item>
-                <v-card-actions>
-
-                    <v-btn
-                        style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 0.6rem;"
-                        @click=subscribeProduct(item)>
-                        정보 보기
-                    </v-btn>
-                </v-card-actions>
 
                 <span class="favorite" @click="dibs(item)" style="cursor:pointer;">
                     <img v-if="item.isDibs === true" src='@/assets/img/favorite.png'>
@@ -116,6 +111,8 @@ watchEffect(() => {
                     item.tag = '금융'
                     break;
             }
+
+
             // 데이터를 받아온 후에 listData에 추가
             listData.value.push(item);
             console.log(item.tag);
@@ -202,6 +199,8 @@ const searchForm = () => {
                         item.tag = '금융'
                         break;
                 }
+
+
                 listData.value.push(item)
             })
 
@@ -239,6 +238,7 @@ const searchForm = () => {
                         item.tag = '금융'
                         break;
                 }
+
                 listData.value.push(item)
             })
 
@@ -308,6 +308,7 @@ const viewAll = () => {
                     item.tag = '금융'
                     break;
             }
+
             listData.value.push(item)
         })
 
@@ -417,10 +418,19 @@ const tema = () => {
     text-align: center;
     justify-content: center;
     box-shadow:
-        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+        -4px 4px 10px 0 rgba(51, 96, 133, 0.044),
         12px -12px 16px rgba(255, 255, 255, 0.25);
     padding: 15px;
     border-radius: 15px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    outline: 1px solid rgba(0, 153, 248, 0.091);
+    height: 250px;
+
+    &:hover {
+        box-shadow:
+            -1px 5px 10px 0 rgba(51, 96, 133, 0.138);
+        transform: translateY(-5px);
+    }
 }
 
 .mx-auto button {
@@ -431,24 +441,43 @@ const tema = () => {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(3, minmax(100px, auto));
-    grid-gap: 30px;
+    grid-gap: 20px;
     margin: 10px 20rem 10rem 20rem;
     padding: 1rem;
     justify-content: center;
 }
 
-
-.searchProduct {
-    width: 40%;
-    height: 100%;
-    box-shadow: 2px 4px 10px 0px rgba(0, 140, 200, 0.219);
-    background-color: rgb(255, 255, 255);
-    border-radius: 30px;
-    margin: 2rem 0.6rem 1rem 0rem;
-    padding: 10px 1rem;
-    outline: none;
+.products {
+    margin-bottom: 20px;
 }
 
+.searchProduct {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    box-shadow: 2px 4px 10px 0px rgba(0, 140, 200, 0.115);
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    padding: 10px 1rem;
+    outline: none;
+    margin: auto;
+}
+
+
+.search {
+    padding: 10px;
+    text-align: center;
+    margin-top: 0rem;
+    position: relative;
+    flex-direction: column;
+    margin: 2rem 0.6rem 1rem 0rem;
+    width: 600px;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 .searchButton {
     width: 6rem;
@@ -459,16 +488,18 @@ const tema = () => {
     color: white;
     font-weight: bolder;
     font-size: 16px;
-    height: 40px !important;
+    position: absolute;
+    top: 12.6px;
+    left: 30.6em;
+    height: 37px !important;
+    box-shadow: none;
+
+    &:hover {
+        box-shadow: none;
+    }
+
 }
 
-
-.search {
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 2rem;
-    margin-top: 0rem;
-}
 
 .v-bottom-navigation {
     background: none;
@@ -477,20 +508,23 @@ const tema = () => {
 }
 
 .v-bottom-navigation .v-bottom-navigation__content>.v-btn {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 14px;
     transition: inherit;
-    background-color: rgba(0, 179, 255, 0.176);
-
-    width: 100px;
-    margin: -2px 4px;
-    border-radius: 20px;
+    background-color: rgba(0, 179, 255, 0.158);
+    outline: 1px solid rgba(0, 153, 248, 0.14);
+    width: 1px !important;
+    margin: 6px;
+    height: 40px;
+    border-radius: 15px;
+    max-width: 100px;
+    font-weight: 400;
 }
+
 
 .favorite {
     width: 10px;
     margin: auto;
-
+    margin-top: 30px;
 }
 
 .favorite img {

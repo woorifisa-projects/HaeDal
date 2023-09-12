@@ -26,4 +26,8 @@ export default {
   padding-left: 2rem;
   padding-top: 1rem
 }
+
+.v-list-item-title {
+  font-family: 'Noto Sans KR', sans-serif !important;
+}
 </style>

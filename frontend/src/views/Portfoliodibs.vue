@@ -60,17 +60,17 @@
             <v-card class="mx-auto" max-width="70%" min-width="300px">
                 <v-card-item style="padding: 20px;">
                     <div>
-                        <div class="text-h5 mb-3" style="font-weight: bolder;">
+                        <div class="mb-3" style="font-weight: bolder;font-size:20px;">
                             {{ item.productName }}
                         </div>
-                        <div class="text-overline mb-3">
+                        <div class=" mb-3" style="font-size:14px">
                             <span>
                                 <b>상품 기간 :</b> {{ item.period }}개월,
                                 <b>금리 :</b> {{ item.interestRate }}%,
                                 <b>최소 가입 금액 :</b> {{ item.requiredStartMoney }}원
                             </span>
                         </div>
-                        <div class="text-caption">{{ item.longInfo }}</div>
+                        <div style="font-size:13px">{{ item.longInfo }}</div>
                     </div>
                 </v-card-item>
                 <div class="d-flex justify-end align-center ">

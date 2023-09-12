@@ -399,4 +399,9 @@ const subscribeProduct = (item) => {
   width: 118px;
   border-radius: 24px;
 }
+
+
+* {
+  font-family: 'Noto Sans KR', sans-serif !important;
+}
 </style>

@@ -14,45 +14,69 @@
                     <br>
                     {{ listData.longInfo }}
                 </div>
-                <div style="margin-bottom:1rem">
-                    <b>상품 가입 최소 금액</b>
-                    {{ listData.requiredStartMoney }} 원
-                    <br>
-                    <b>상품 가입 최대 금액</b>
-                    {{ listData.maxProductMoney }} 원
-                    <br>
-                    <b>금리</b>
-                    {{ listData.interestRate }} %
-                    <br>
-                    <b>가입기간</b>
-                    {{ listData.period }} 개월
+                <div class="desc" style="display: flex; justify-content: center;">
+                    <span class="box" style="display:flex;  justify-content: center;align-items: center;">
+                        <div style="margin-bottom:1rem; text-align:left;">
+                            <h3 style="text-align: center;">상품 정보</h3>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="text-align:left; margin-right:20px">
+                                    <b>상품 가입 최소 금액</b>
+                                    <br>
+                                    <b>상품 가입 최대 금액</b>
+                                    <br>
+                                    <b>금리</b>
+                                    <br>
+                                    <b>가입기간</b>
+                                </span>
+                                <span style="text-align: left;">
+                                    {{ listData.requiredStartMoney }} 원
+                                    <br>
+                                    {{ listData.maxProductMoney }} 원
+                                    <br>
+                                    {{ listData.interestRate }} %
+                                    <br>
+                                    {{ listData.period }} 개월
+                                </span>
+                            </div>
+                        </div>
+                        <br>
+                    </span>
+                    <span class="box" style="display:flex;justify-content: center;align-items: center;">
+                        <div>
+                            <h3>가입 후 얼마가 될지 예상해보세요!</h3>
+                            <div>
+                                <b><label for="startMoney">시작 구독료</label></b><br>
+                                <input type="number" id="startMoney" v-model="startMoney">
+                            </div>
+                            <p style="font-size: 13px; font-weight: 400; margin-bottom: -7px;">입력한 시작금액을 바탕으로</p>
+                            <v-btn
+                                style=" font-size: 15px; font-weight: 600; color: rgb(0, 162, 255);  margin-bottom: 0rem; box-shadow: none; background-color:rgba(0, 179, 255, 0.093) ;"
+                                @click="calculate" type="button">만기시 금액 예상하기
+                            </v-btn>
+                            <div style="height: 10px; color:rgb(0, 162, 255); ">
+                                <p
+                                    v-show="calculatedAmount !== null && calculatedAmount !== 0 && startMoney !== null && startMoney !== 0 && startMoney <= listData.maxProductMoney && startMoney >= listData.requiredStartMoney">
+                                    만기시 예상 금액은 {{ calculatedAmount }}원
+                                    입니다!
+                                </p>
+                                <p v-show="startMoney > listData.maxProductMoney">입력하신 금액이 최대 금액을 초과하였습니다.</p>
+                                <p v-show="startMoney < listData.requiredStartMoney">입력하신 금액이 최소 금액 미만입니다.</p>
+                            </div>
+                        </div>
+                    </span>
                 </div>
-                <br>
-                <div>
-                    <b><label for="startMoney">시작 구독료</label></b>
-                    <input type="number" id="startMoney" v-model="startMoney">
-                </div>
-                <div style="margin: 2rem;">
-                    <p style="font-size: 12px;font-weight: 300; margin-bottom: 0;">입력한 시작금액을 바탕으로</p>
-                    <v-btn
-                        style=" font-size: 18px; font-weight: 600; color: rgb(0, 162, 255); padding: 0.4rem 2rem; margin-bottom: 1rem; box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.066) ;"
-                        @click="calculate" type="button">만기시 금액 예상하기
-                    </v-btn>
-                    <p
-                        v-show="calculatedAmount !== null && calculatedAmount !== 0 && startMoney <= listData.maxProductMoney && startMoney >= listData.requiredStartMoney">
-                        만기시 예상 금액은 {{ calculatedAmount }}원
-                        입니다!
-                    </p>
-                    <p v-show="startMoney > listData.maxProductMoney">입력하신 금액이 최대 금액을 초과하였습니다.</p>
-                    <p v-show="startMoney < listData.requiredStartMoney">입력하신 금액이 최소 금액 미만입니다.</p>
-
-                </div>
-                <div>
-                    <div class="favorite" @click="dibs(listData.productId)" style="cursor:pointer;">
-                        <img v-if="isDibs === true" src='@/assets/img/favorite.png'>
-                        <img v-else src='@/assets/img/favorite_border.png'>
+                <v-btn @click="dibs(listData.productId)" style="margin-top: 14px; margin-right:10px; border-radius: 10px; box-shadow: none !important; padding:4px;box-shadow:
+        0px 0px 3px rgba(0, 162, 255, 0.578);justify-content: center; ">
+                    <div
+                        style="text-align: center; margin:auto; margin-top:1px; display: flex;align-items: center; justify-content: center;">
+                        <div class="favorite"
+                            style=" cursor:pointer; display: flex; align-items: center; justify-content: center;">
+                            <img v-if="isDibs === true" src='@/assets/img/favorite.png'>
+                            <img v-else src='@/assets/img/favorite_border.png'>
+                        </div>
                     </div>
-                </div>
+                </v-btn>
+
                 <v-btn class=" button-style" @click="openModal" type="button">
                     신청하기
                 </v-btn>
@@ -314,7 +338,7 @@ div {
 }
 
 .button-style {
-    width: 20rem;
+    width: 10rem;
     border-radius: 10px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
@@ -325,15 +349,50 @@ div {
 }
 
 
+
 .datas b {
     color: rgba(0, 0, 0, 0.712);
     background-color: rgba(0, 162, 255, 0.225);
-    padding: 1px;
-    border-radius: 2px;
+    padding: 0px 4px 2px 4px;
+    border-radius: 5px;
     font-weight: 550;
     font-size: 15px;
     margin-bottom: 4rem;
     line-height: 40px;
+}
+
+.desc {
+    margin: auto;
+    padding-top: 10px;
+    margin-bottom: 70px;
+    height: 400px;
+}
+
+.desc .box {
+    box-shadow:
+        -2px 2px 10px 0 rgba(51, 96, 133, 0.118);
+    margin-bottom: 10px;
+    width: 400px;
+    margin: 10px 20px 5px 20px;
+    padding: 40px;
+    border-radius: 30px;
+    line-height: 300%;
+}
+
+.desc span h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+
+.desc input {
+    width: 200px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .datas {

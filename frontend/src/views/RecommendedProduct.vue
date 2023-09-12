@@ -2,7 +2,7 @@
 <template>
     <div class="top">
         <h2 style="  font-size: 35px;">고객님 맞춤형 상품 추천</h2>
-        <p style="font-size: 13px; margin-bottom: 30px;">고객님께서 제공해주신 정보를 바탕으로 추천해드리는 TOP 3 상품들입니다.</p>
+        <p style="font-size: 13px; margin-bottom: 40px;">고객님께서 제공해주신 정보를 바탕으로 추천해드리는 TOP 3 상품들입니다.</p>
         <div class="chooseButton">
             <v-layout class="overflow-visible" style="height: 56px; margin-bottom: 40px;">
                 <v-bottom-navigation v-model="value">
@@ -28,23 +28,23 @@
         <div id="products" v-bind:class="item.productName" v-for="(item, index) in listData" :key="index">
 
             <p
-                style="background-color: rgba(0, 179, 255, 0.362); width: 80px; font-weight: bolder; border-radius: 10px; color:rgb(0, 75, 121);; text-align: center;">
+                style="background-color: rgba(0, 162, 255, 0.354); width: 60px;padding:1px; font-weight: bolder; border-radius: 10px; color:rgba(0, 68, 128, 0.826); text-align: center;font-size: 13px;">
                 TOP {{ index + 1 }} </p>
 
             <v-card class="mx-auto" max-width="70%" min-width="300px">
                 <v-card-item style="padding: 20px;">
                     <div>
-                        <div class="text-h5 mb-3" style="font-weight: bolder;">
+                        <div class="mb-3" style="font-weight: bolder;font-size:20px;">
                             {{ item.productName }}
                         </div>
-                        <div class="text-overline mb-3">
+                        <div class=" mb-3" style="font-size:14px">
                             <span>
                                 <b>상품 기간 :</b> {{ item.period }}개월,
                                 <b>금리 :</b> {{ item.interestRate }}%,
                                 <b>최소 가입 금액 :</b> {{ item.requiredStartMoney }}원
                             </span>
                         </div>
-                        <div class="text-caption">{{ item.longInfo }}</div>
+                        <div style="font-size:13px">{{ item.longInfo }}</div>
                     </div>
                 </v-card-item>
                 <div class="d-flex justify-end align-center">
@@ -281,7 +281,7 @@ const subscribeProduct = (item) => {
 <style lang="scss" scoped>
 h2 {
     text-align: center;
-    padding: 100px 0px 4px 0px;
+    padding: 100px 0px 20px 0px;
 }
 
 p {
@@ -301,9 +301,19 @@ p {
 .mx-auto {
     padding: 1rem;
     margin: 1rem 0rem 4rem 0rem;
+    background-color: rgba(238, 249, 255, 0.061);
     box-shadow:
-        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
-        12px -12px 16px rgba(255, 255, 255, 0.25);
+        -2px 2px 10px 0 rgba(51, 96, 133, 0.065) inset;
+    // box-shadow: none;
+    border-radius: 20px;
+    border: solid 1px rgba(0, 149, 255, 0.133);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+        box-shadow:
+            -1px 5px 10px 0 rgba(51, 96, 133, 0.057);
+        transform: translateY(-5px);
+    }
 }
 
 .v-bottom-navigation {
@@ -315,8 +325,7 @@ p {
 .v-bottom-navigation button {
     background: rgba(255, 255, 255, 0.264);
     box-shadow:
-        -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
-        12px -12px 16px rgba(255, 255, 255, 0.25);
+        -3px 3px 10px 0 rgba(51, 96, 133, 0.129);
     margin-left: 16px;
     border-radius: 10px;
     height: 2px;
@@ -335,13 +344,13 @@ p {
 }
 
 .button-style {
-    width: 10rem;
+    width: 8rem;
     border-radius: 10px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
     color: white;
     font-weight: bolder;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .favorite {

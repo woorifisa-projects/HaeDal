@@ -4,54 +4,60 @@
       <h1 style="margin-bottom: 40px; text-align: center;">
         개인정보 수정
       </h1>
-      <v-text-field class="name" v-model="name.value.value" :counter="10" :error-messages="name.errorMessage.value"
-        label="Name">
-        <template v-slot:prepend>
-          <div>이름</div>
-        </template>
-      </v-text-field>
+      <div class="flex-container">
+        <span class="left-column">
+          이름<br>
+          전화번호<br>
+          연령대<br>
+          이용목적<br>
+          계좌번호<br>
+          자산<br>
+          계좌 인증번호<br>
+        </span>
+        <span class="right-column">
+          <v-text-field class="name" v-model="name.value.value" :counter="10" :error-messages="name.errorMessage.value"
+            label="Name" variant="outlined">
+            <template v-slot:prepend>
+            </template>
+          </v-text-field>
 
-      <v-text-field v-model="phoneNumber.value.value" :counter="7" :error-messages="phoneNumber.errorMessage.value"
-        label="Phone Number">
-        <template v-slot:prepend>
-          <div>전화번호</div>
-        </template>
-      </v-text-field>
+          <v-text-field v-model="phoneNumber.value.value" :counter="7" :error-messages="phoneNumber.errorMessage.value"
+            label="Phone Number" variant="outlined">
+            <template v-slot:prepend>
+            </template>
+          </v-text-field>
 
-      <v-select v-model="userAgeGroup.value.value" :items="ageitems" :error-messages="userAgeGroup.errorMessage.value"
-        label="Age">
-        <template v-slot:prepend>
-          <div>연령대</div>
-        </template>
-      </v-select>
+          <v-select v-model="userAgeGroup.value.value" :items="ageitems" :error-messages="userAgeGroup.errorMessage.value"
+            label="Age" variant="outlined">
+            <template v-slot:prepend>
+            </template>
+          </v-select>
 
-      <v-select v-model="servicePurpose.value.value" :items="purposeitems"
-        :error-messages="servicePurpose.errorMessage.value" label="purpose">
-        <template v-slot:prepend>
-          <div>이용목적</div>
-        </template>
-      </v-select>
+          <v-select v-model="servicePurpose.value.value" :items="purposeitems"
+            :error-messages="servicePurpose.errorMessage.value" label="purpose" variant="outlined">
+            <template v-slot:prepend>
+            </template>
+          </v-select>
 
-      <v-text-field v-model="accountNumber.value.value" :counter="7" :error-messages="accountNumber.errorMessage.value"
-        label="Account Number">
-        <template v-slot:prepend>
-          <div>계좌번호</div>
-        </template>
-      </v-text-field>
+          <v-text-field v-model="accountNumber.value.value" :counter="7"
+            :error-messages="accountNumber.errorMessage.value" label="Account Number" variant="outlined">
+            <template v-slot:prepend>
+            </template>
+          </v-text-field>
 
-      <v-text-field v-model="asset.value.value" :counter="13" :error-messages="asset.errorMessage.value" label="Asset">
-        <template v-slot:prepend>
-          <div>자산</div>
-        </template>
-      </v-text-field>
+          <v-text-field v-model="asset.value.value" :counter="13" :error-messages="asset.errorMessage.value" label="Asset"
+            variant="outlined">
+            <template v-slot:prepend>
+            </template>
+          </v-text-field>
 
-      <v-text-field v-model="authNumber.value.value" :counter="4" :error-messages="authNumber.errorMessage.value"
-        label="Account Number">
-        <template v-slot:prepend>
-          <div>계좌 인증번호</div>
-        </template>
-      </v-text-field>
-
+          <v-text-field v-model="authNumber.value.value" :counter="4" :error-messages="authNumber.errorMessage.value"
+            label="Account Number" variant="outlined">
+            <template v-slot:prepend>
+            </template>
+          </v-text-field>
+        </span>
+      </div>
       <v-btn class="button-style" type="submit">
         수정
       </v-btn>
@@ -266,6 +272,28 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.flex-container {
+  display: flex;
+  /* Flexbox를 사용하여 가로 배치 설정 */
+  justify-content: space-between;
+  /* 두 열을 가로로 최대한 넓게 배치 */
+}
+
+.left-column {
+  flex: 0.5;
+  text-align: left;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 77px;
+  margin-top: -5px;
+
+}
+
+.right-column {
+  flex: 2;
+  /* 오른쪽 열이 왼쪽 열의 2배 넓게 설정 */
+}
+
 .title {
   display: flex;
   flex-direction: column;
@@ -281,7 +309,7 @@ onMounted(() => {
   width: 40%;
   margin: auto;
   margin-top: 5rem;
-  margin-bottom: 10rem;
+  margin-bottom: 20rem;
   text-align: center;
 }
 
