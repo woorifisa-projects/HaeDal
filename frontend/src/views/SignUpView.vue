@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit">
     <v-container class="register">
-      <v-card class="mx" min-width="450" max-width="900" title="User Registration">
+      <v-card min-width="450" max-width="900" title="사용자 정보 입력">
         <v-container>
           <v-text-field class="center-text-field" v-model="id.value.value" :counter="10" variant="outlined"
             prepend-inner-icon="mdi-account-outline" :error-messages="id.errorMessage.value" label="아이디">
@@ -35,12 +35,12 @@
       </v-card>
 
 
-      <v-card class="mx" min-width="450" max-width="900" title="account Registration">
+      <v-card class="mx" min-width="450" max-width="900" title="추가 정보 입력">
         <v-container>
 
 
           <v-select v-model="userAgeGroup.value.value" :items="ageitems" :error-messages="userAgeGroup.errorMessage.value"
-            label="Age">
+            label="Age" variant="outlined">
 
             <template v-slot:prepend>
               <div>연령대</div>
@@ -48,28 +48,28 @@
           </v-select>
 
           <v-select v-model="servicePurpose.value.value" :items="purposeitems"
-            :error-messages="servicePurpose.errorMessage.value" label="purpose">
+            :error-messages="servicePurpose.errorMessage.value" label="purpose" variant="outlined">
             <template v-slot:prepend>
               <div>이용목적</div>
             </template>
           </v-select>
 
           <v-text-field v-model="accountNumber.value.value" :counter="7"
-            :error-messages="accountNumber.errorMessage.value" label="Account Number">
+            :error-messages="accountNumber.errorMessage.value" label="Account Number" variant="outlined">
             <template v-slot:prepend>
               <div>계좌번호</div>
             </template>
           </v-text-field>
 
-          <v-text-field v-model="asset.value.value" :counter="13" :error-messages="asset.errorMessage.value"
-            label="Asset">
+          <v-text-field v-model="asset.value.value" :counter="13" :error-messages="asset.errorMessage.value" label="Asset"
+            variant="outlined">
             <template v-slot:prepend>
               <div>자산</div>
             </template>
           </v-text-field>
 
           <v-text-field v-model="authNumber.value.value" :counter="4" :error-messages="authNumber.errorMessage.value"
-            label="Account Number">
+            label="Account Number" variant="outlined">
             <template v-slot:prepend>
               <div>계좌 인증번호</div>
             </template>
@@ -89,15 +89,6 @@
 
         <v-divider></v-divider>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn color="success">
-            Complete Registration
-
-            <v-icon icon="mdi-chevron-right" end></v-icon>
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-container>
 
@@ -314,5 +305,11 @@ const submit = handleSubmit(values => {
 .register {
   display: flex;
   flex-direction: row;
+  margin-bottom: 100px;
+  text-align: center;
+}
+
+.v-card-title {
+  font-family: 'Noto Sans KR', sans-serif !important;
 }
 </style>

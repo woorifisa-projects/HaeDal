@@ -1,35 +1,30 @@
 <template>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="onSubmit">
     <div>
-      <v-img class="mx-auto my-6" max-width="228" src='@/assets/img/HaeDalLogo.png'></v-img>
+      <v-img class="mx-auto my-6" max-width="200" src='@/assets/img/HaeDalLogo.png'></v-img>
 
-      <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg" style="margin-bottom:50px;">
-        <div class="text-subtitle-1 text-medium-emphasis">Account</div>
+      <v-card class="mx-auto pa-12 pb-8" max-width="448" rounded="lg" style="margin-bottom:100px;">
+        <div class="text-subtitle-1 text-medium-emphasis"><b>아이디</b></div>
 
-        <v-text-field v-model="id.value.value" density="compact" placeholder="Email address"
+        <v-text-field v-model="id.value.value" density="compact" placeholder="Enter your Id"
           prepend-inner-icon="mdi-account-outline" variant="outlined"
           :error-messages="id.errorMessage.value"></v-text-field>
 
         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-          Password
+          <b>비밀번호</b>
         </div>
 
         <v-text-field v-model="password.value.value" :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'" density="compact" placeholder="Enter your password"
-          prepend-inner-icon="mdi-lock-outline" variant="outlined"
-          @click:append-inner="visible = !visible"></v-text-field>
-
-        <v-card class="mb-12" color="surface-variant" variant="tonal">
-
-        </v-card>
-
+          prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="visible = !visible"
+          class="mb-8"></v-text-field>
         <v-btn :loading="loading" block class="mb-8" color="blue" size="large" variant="tonal" @click="onSubmit">
-          Log In
+          로그인
         </v-btn>
 
         <v-card-text class="text-center">
           <a class="text-blue text-decoration-none" href="https://haedal.store/signup">
-            Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
+            회원가입 하기 <v-icon icon="mdi-chevron-right"></v-icon>
           </a>
         </v-card-text>
       </v-card>
@@ -124,4 +119,10 @@ const onSubmit = handleSubmit(values => {
 
 
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.v-card {
+  background-color: white;
+  outline: solid 2px rgba(0, 139, 219, 0.469);
+  box-shadow: none;
+}
+</style>

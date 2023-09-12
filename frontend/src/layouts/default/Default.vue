@@ -13,5 +13,15 @@ import DefaultBar from './AppBar.vue'
 import DefaultView from './View.vue'
 import DefaultBottomBar from './Footer.vue'
 </script>
-<style></style>
+<style>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif !important;
+}
+</style>
   

@@ -8,10 +8,13 @@
     <v-carousel-item src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" cover></v-carousel-item>
   </v-carousel>
   <div style="text-align: center;">
-    <p style="margin:30px;margin-top:90px; color:rgba(0, 179, 255, 0.826);font-size:20px; font-weight: 600;">✨ 해달의 오늘의 추천
+    <v-divider :thickness="3" color="info" style="width:30%;     border-style: double;
+    margin: auto; margin-top:100px;"></v-divider>
+    <p style="margin-top:100px; margin-bottom:40px; color:rgba(0, 179, 255, 0.826);font-size:30px; font-weight: 600;">
+      ✨ 해달의 오늘의 추천
       상품 ✨</p>
     <v-card class="recommend"
-      style="width:50%; height:15rem; margin: auto; color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle !important;">
+      style="width:50%; height:15rem; margin: auto; margin-bottom: 180px;color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle !important;">
       <div>
         <div class="text-h5 mb-3" style="font-weight: bolder;">
           {{ recommend.productName }}
@@ -22,7 +25,8 @@
             <b>금리</b> {{ recommend.interestRate }}%,
             <b>최소 가입 금액</b> {{ recommend.requiredStartMoney }}원
           </span>
-          <div class="text-caption" style="margin-top: 8px;">{{ recommend.shortInfo }}</div>
+          <div style=" font-size: 14px;font-weight: bold;">"{{ recommend.shortInfo }}상품"
+          </div>
         </div>
         <v-btn @click="detail(recommend)"
           style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 15px; width:200px;height: 40px;">추천
@@ -31,25 +35,40 @@
     </v-card>
 
   </div>
-  <div style=" height: 60rem; text-align: center; margin:60px 0rem -10px 0rem; font-size:40px; font-weight: 600; ">
-    <v-divider :thickness="3" color="info" style="width:30%;     border-style: double;
-    margin: auto;"></v-divider>
-    <p style="margin: 60px; ">🐚</p>
-    <p style="color:rgba(0, 179, 255, 0.826); margin-bottom: -20px;">해달과 함께, 해와 달이 뜨고 지듯 꾸준히 저축해보세요!</p>
-    <p style="margin-top:200px;margin-bottom: -150px; font-size: 16px; color:balck; font-weight: 500;">꾸준히 돈을 모으는 해달이 여러분의
-      저축을 도와드립니다!
-    </p>
-    <div style=" margin:auto; display: flex; justify-content: center;;">
-      <img src='@/assets/img/main-image1.png' class="first-image">
+  <div style="text-align: center; margin:60px 0rem -10px 0rem; font-weight: 600; height: 200vh;">
+    <div
+      style="display: flex; justify-content: center; align-items: center; margin-bottom: -50px; background-color: rgba(0, 179, 255, 0.158); height: 100vh; margin-top: 90px;">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div
+          style="margin-bottom: 40px; margin-top:-80px;background-color: white; border-radius: 100%; text-align: center;font-size: 50px;width: 100px; height: 100px; padding: 10px;">
+          🐚</div>
+        <p style="color: rgba(0, 179, 255, 0.826); line-height: 150%;font-size:50px; ">해달과 함께<br>해와 달이 뜨고 지듯 꾸준히 저축해보세요!
+        </p>
+      </div>
     </div>
-    <p style="margin-top:100px; font-size: 18px; color:balck; font-weight: 500;">해달이 추천해드리는 여러분에게 딱 맞는 상품을 만나보세요.
-    </p>
-    <p style="margin-top:150px; color:rgba(0, 179, 255, 0.826);">지금 시작해 보세요!</p>
-    <v-btn
-      style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 30px; margin-bottom: 1rem; margin-top:80px; width:400px;height: 60px;"
-      href="/products">상품 보러가기</v-btn>
-  </div>
+    <div style="height: 100vh;">
+      <p style=" font-size: 24px; font-weight: 500;margin-top: 160px;">
+        꾸준히 조개를 모으는 해달이
+        여러분의
+        저축을 도와드릴게요!
+      </p>
+      <div style=" margin:auto; display: flex; justify-content: center;width: 70%;">
+        <img src='@/assets/img/main-image1.png' class="first-image">
+      </div>
+      <p style=" font-size: 18px; color:balck; font-weight: 500;line-height: 200%; margin-bottom: 200px;">해달이 추천해드리는<br>
+        <span
+          style="font-size: 20px;color:rgb(0, 179, 255);background-color: rgba(0, 179, 255, 0.158);font-weight: bolder; padding:3px;">"여러분에게
+          딱 맞는
+          상품"</span>을
+        만나보세요.
+      </p>
 
+      <p style="margin:200px 0px 60px 0px; color:rgba(0, 179, 255, 0.826); font-size:40px; ">지금부터 시작해 보세요!</p>
+      <v-btn
+        style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 30px; margin-bottom: 1rem; width:400px;height: 60px; font-size: 20px;"
+        href="/products">상품 보러가기</v-btn>
+    </div>
+  </div>
   <div
     style="background: linear-gradient(to top, rgba(0, 162, 255, 0.354), rgba(255, 255, 255, 0)); height: 180px;margin-top:500px;display: block;">
   </div>
@@ -144,12 +163,11 @@ const detail = (item) => {
   height: 100%;
   object-fit: cover;
   box-shadow: none !important;
-  margin-top: 10rem
 }
 
 .recommend {
   box-shadow:
-    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+    -4px 5px 20px 0 rgba(51, 96, 133, 0.122),
     12px -12px 16px rgba(255, 255, 255, 0.25) !important;
   padding: 40px !important;
   justify-content: center;
@@ -158,7 +176,7 @@ const detail = (item) => {
     transition: transform 0.5s ease;
     transform: scale(1.05);
     box-shadow:
-      -5px 5px 9px 0 rgba(0, 179, 255, 0.264),
+      -5px 5px 20px 0 rgba(0, 179, 255, 0.264),
       12px -12px 16px rgba(0, 179, 255, 0.046) !important;
   }
 }

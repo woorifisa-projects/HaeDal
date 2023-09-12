@@ -67,6 +67,8 @@ public class ProductResponse {
     public static ProductResponse recommendedFrom(Product product) {
         ProductResponse productResponse = ProductResponse.builder()
                 .productId(product.getProductId())
+                .requiredStartMoney(product.getRequiredStartMoney())
+                .period(product.getPeriod())
                 .productAsset(product.getMaxProductMoney())
                 .servicePurpose(product.getServicePurpose())
                 .userAgeGroup(product.getUserAgeGroup())
