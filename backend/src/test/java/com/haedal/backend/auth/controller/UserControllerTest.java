@@ -170,18 +170,18 @@ class UserControllerTest extends ControllerTest {
     @Test
     public void testDeleteUser() throws Exception {
         // 가상 사용자 정보 생성
-        String username = "testuser";
-        Authentication authentication =new TestingAuthenticationToken(username, null,"ROLE_USER");
+        String id = "testuser";
+        Authentication authentication =new TestingAuthenticationToken(id, null,"ROLE_USER");
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // userService.getUserId() 메서드의 Mock 설정
-        given(userService.getUserId(authentication)).willReturn(username);
+//        given(userService.getUserId(authentication)).willReturn(id);
 
         // userService.findbyId() 메서드의 Mock 설정
-//        User user = new User(1L,username);
+//        User user = new User(1L,id);
 //        List<Subscribe> subscribeList =;
 
-        User user = User.builder().userId(1L).id(username).password("1234").userStatus(true).build();
-        given(userService.findbyId(username)).willReturn(user);
+        User user = User.builder().userId(1L).id(id).password("1234").userStatus(true).build();
+        given(userService.findbyId(id)).willReturn(user);
 
         // 컨트롤러 호출
         mockMvc.perform(MockMvcRequestBuilders.patch("/user/leave")
@@ -190,7 +190,7 @@ class UserControllerTest extends ControllerTest {
                         .with(SecurityMockMvcRequestPostProcessors.authentication(authentication)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(username + " 휴면계정되었습니다"));
+                .andExpect(content().string(id + " 휴면계정되었습니다"));
 
         // userService.updateUserStatus() 및 subscribeService.deleteByUser() 메서드 호출 여부 검증
         verify(userService, times(1)).updateUserStatus(user);

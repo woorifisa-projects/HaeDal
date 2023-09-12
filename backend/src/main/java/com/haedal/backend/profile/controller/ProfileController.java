@@ -27,33 +27,31 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-//    @GetMapping("/{userId}/profile")
-//    public ResponseEntity<ProfileResponse> showUserProfile(@PathVariable Long userId){
-//        System.out.println(userId + "의 아이디 값을 조회합니다");
-//        User user = profileService.findById(userId);
-//        return new ResponseEntity<>(ProfileResponse.userNameInfoFrom(user), HttpStatus.OK);
-//    }
-
     @PostMapping ("/security")
     public ResponseEntity<ProfileResponse> getUserPassword(Authentication authentication, @RequestBody UserPasswordCheckRequest userPasswordCheckRequest){
         log.info("비밀번호변경요청들어옴");
         String password = userPasswordCheckRequest.getPassword();
         String id = authentication.getName();
         User user = profileService.findById(id);
-        if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
+        String userPassword = profileService.getUserPasswordById(id);
+        log.info(id);
+        log.info(user.toString());
+        log.info(userPassword);
+        if (!bCryptPasswordEncoder.matches(password, userPassword)) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
         return new ResponseEntity<>(ProfileResponse.userCheckPwFrom(user),HttpStatus.OK);
     }
 
+    @Transactional
     @PatchMapping("/changePW")
     public ResponseEntity<ProfileResponse> changePassword(Authentication authentication, @RequestBody UserPasswordCheckRequest userPasswordCheckRequest){
         String password = bCryptPasswordEncoder.encode(userPasswordCheckRequest.getPassword());
         String id = authentication.getName();
         User user = profileService.findById(id);
-        user.updatePassword(password);
-        profileService.save(user);
-        return new ResponseEntity<>(ProfileResponse.userCheckPwFrom(user),HttpStatus.OK);
+        User updateUser = profileService.updatePassword(user,password);
+        profileService.save(updateUser);
+        return new ResponseEntity<>(ProfileResponse.userCheckPwFrom(updateUser),HttpStatus.OK);
     }
 
     @GetMapping("/profile")
@@ -76,9 +74,12 @@ public class ProfileController {
         log.info("요청들어왔다");
         String id = authentication.getName();
         User user = profileService.findById(id);
-        user.updateProfile(userUpdateRequest);
-        profileService.save(user);
-        return new ResponseEntity<>(ProfileResponse.userProfileUpdateFrom(user),HttpStatus.OK);
+
+        ProfileResponse profileResponse = profileService.userUpdateProfile(user,userUpdateRequest);
+
+//        user.updateProfile(userUpdateRequest);
+//        profileService.save(updateUser);
+        return new ResponseEntity<>(profileResponse,HttpStatus.OK);
     }
 
 }

@@ -65,16 +65,12 @@ public class ProfileResponse {
     }
 
 
-    public static ProfileResponse userNameInfoFrom(User user){
-        return new ProfileResponse(user.getName());
-    }
-
     public static ProfileResponse profileInfoFrom(User user) {
         return new ProfileResponse(user.getName(), user.getPhoneNumber(), user.getServicePurpose(), user.getUserAgeGroup());
     }
 
     public static ProfileResponse allUserInfoFrom(User user){
-        return new ProfileResponse(user.getId(), user.getPassword(),user.getName(),user.getPhoneNumber(),user.getServicePurpose(),user.getUserAgeGroup(),user.getAccountNumber(),user.getAsset(),user.getAuthNumber());
+        return new ProfileResponse(user.getName(),user.getPhoneNumber(),user.getServicePurpose(),user.getUserAgeGroup(),user.getAccountNumber(),user.getAsset(),user.getAuthNumber());
     }
 
     public static ProfileResponse userProfileUpdateFrom(User user){
