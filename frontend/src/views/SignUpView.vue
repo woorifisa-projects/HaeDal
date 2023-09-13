@@ -6,24 +6,24 @@
           <v-text-field class="center-text-field" v-model="id.value.value" :counter="10" variant="outlined"
             prepend-inner-icon="mdi-account-outline" :error-messages="id.errorMessage.value" label="아이디">
             <template v-slot:append-inner>
-              <v-btn @click="checkId">
-                <div v-if="checkIdResult==2">확인</div>
+              <v-btn @click="checkId" class="check">
+                <div v-if="checkIdResult == 2">확인</div>
                 <div v-else>
-                중복체크
-              </div>
+                  중복체크
+                </div>
               </v-btn>
             </template>
           </v-text-field>
 
           <v-text-field v-model="password.value.value" :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'" :counter="15" :error-messages="password.errorMessage.value"
-            prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="visible = !visible" label="비밀번호">
+            :type="visible ? 'text' : 'password'" :counter="15" :error-messages="password.errorMessage.value"
+            prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="visible = !visible"
+            label="비밀번호">
           </v-text-field>
 
-          <v-text-field v-model="confirmPassword.value.value" 
-          :type="visible ? 'text' : 'password'" :counter="15"
+          <v-text-field v-model="confirmPassword.value.value" :type="visible ? 'text' : 'password'" :counter="15"
             :error-messages="confirmPassword.errorMessage.value" prepend-inner-icon="mdi-lock-outline" variant="outlined"
-             label="비밀번호확인">
+            label="비밀번호확인">
           </v-text-field>
 
           <v-text-field v-model="name.value.value" :counter="10" :error-messages="name.errorMessage.value"
@@ -53,11 +53,12 @@
           </v-select>
 
           <v-text-field v-model="accountNumber.value.value" :counter="7"
-            :error-messages="accountNumber.errorMessage.value" prepend-inner-icon="mdi-credit-card-outline" label="계좌번호" variant="outlined">
+            :error-messages="accountNumber.errorMessage.value" prepend-inner-icon="mdi-credit-card-outline" label="계좌번호"
+            variant="outlined">
           </v-text-field>
 
           <v-text-field v-model="asset.value.value" :counter="13" :error-messages="asset.errorMessage.value" label="자산"
-          prepend-inner-icon="mdi-currency-usd" variant="outlined">
+            prepend-inner-icon="mdi-currency-usd" variant="outlined">
           </v-text-field>
 
           <v-text-field v-model="authNumber.value.value" :counter="4" :error-messages="authNumber.errorMessage.value"
@@ -76,13 +77,11 @@
           </v-btn>
         </v-container>
 
-        <v-divider></v-divider>
-
       </v-card>
     </v-container>
 
     <div class="text-center">
-      
+
       <v-dialog v-model="dialog.isOpen.value" width="auto">
         <v-card>
           <v-card-text>
@@ -275,30 +274,30 @@ const checkId = () => {
 }
 
 const submit = handleSubmit(values => {
-  if(checkIdResult == 0){
+  if (checkIdResult == 0) {
     alert("아이디중복체크를 진행해주세요");
-  }else if(checkIdResult == 1){
+  } else if (checkIdResult == 1) {
     alert("이미 사용중인 아이디입니다")
-  }else{
+  } else {
 
-  const ageEnum = mapToAgeEnum(values.userAgeGroup);
-  const purposeEnum = mapToPurposeEnum(values.servicePurpose);
+    const ageEnum = mapToAgeEnum(values.userAgeGroup);
+    const purposeEnum = mapToPurposeEnum(values.servicePurpose);
 
-  const dataToSend = { ...values, userAgeGroup: ageEnum, servicePurpose: purposeEnum };
+    const dataToSend = { ...values, userAgeGroup: ageEnum, servicePurpose: purposeEnum };
 
-  console.log(dataToSend);
-  axios.post("https://backend.haedal.store/user/register", dataToSend)
-    .then(response => {
-      // POST 요청 성공 시 로직
-      console.log(response.data);
-      dialog.openDialog();
-      console.log("모달창띄웟다");
+    console.log(dataToSend);
+    axios.post("https://backend.haedal.store/user/register", dataToSend)
+      .then(response => {
+        // POST 요청 성공 시 로직
+        console.log(response.data);
+        dialog.openDialog();
+        console.log("모달창띄웟다");
 
-    })
-    // POST 요청 실패 시 로직
-    .catch(error => {
-      console.error(error);
-    });
+      })
+      // POST 요청 실패 시 로직
+      .catch(error => {
+        console.error(error);
+      });
   }
 }
 )
@@ -341,5 +340,12 @@ const submit = handleSubmit(values => {
   &:hover {
     box-shadow: none;
   }
+}
+
+.register .check {
+  color: rgba(0, 68, 128, 0.826);
+  background-color: rgba(0, 179, 255, 0.133);
+  outline: solid 2px rgba(0, 162, 255, 0.129);
+  font-weight: 400;
 }
 </style>

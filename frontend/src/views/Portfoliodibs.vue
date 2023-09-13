@@ -5,28 +5,28 @@
         <v-img class="align-end text-black" height="200" src='@/assets/img/profile.png' cover>
             <v-card-title style="font-weight: bolder; color:rgba(0, 179, 255, 0.826);">{{ username }}님 의 계좌</v-card-title>
         </v-img>
+        <div style="width: 100%;text-align: left;">
+            <v-card-text>
+                <div> 계좌번호 : {{ accountNumber }} </div>
+            </v-card-text>
 
-        <v-card-text>
-            <div> 계좌번호 : {{ accountNumber }} </div>
-        </v-card-text>
+            <v-card-text>
+                <div>계좌 잔고 : {{ asset }}원</div>
+            </v-card-text>
 
-        <v-card-text>
-            <div>계좌 잔고 : {{ asset }}원</div>
-        </v-card-text>
+            <v-card-text>
+                <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
+            </v-card-text>
 
-        <v-card-text>
-            <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
-        </v-card-text>
+            <v-card-text>
+                <div>총 수익율 : <b class="text-red-lighten-1">
+                        +{{ (parseFloat(((totalPresentAsset - asset) / asset) * 100)).toFixed(2) }}%</b></div>
+            </v-card-text>
 
-        <v-card-text>
-            <div>총 수익율 : <b class="text-red-lighten-1">
-                    +{{ (parseFloat(((totalPresentAsset - asset) / asset) * 100)).toFixed(2) }}%</b></div>
-        </v-card-text>
-
-        <v-card-text>
-            <div>이용 목적 : {{ servicePurpose }}</div>
-        </v-card-text>
-
+            <v-card-text>
+                <div>이용 목적 : {{ servicePurpose }}</div>
+            </v-card-text>
+        </div>
         <v-card-actions class="d-flex justify-center align-center">
 
             <v-btn

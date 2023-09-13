@@ -1,39 +1,87 @@
 <template>
   <navigation-bar> </navigation-bar>
-  <v-card class="mx-auto" max-width="400">
-    <v-img class="align-end text-black" height="200" src='@/assets/img/profile.png' cover>
-      <v-card-title style="font-weight: bolder; color:rgba(0, 179, 255, 0.826);">{{ username }}님 의 계좌</v-card-title>
-    </v-img>
+  <div class="cards-container">
+    <div class="card-wrapper">
+      <v-card class="mx-auto">
+        <v-img class="align-end text-black" height="200" src='@/assets/img/profile.png' cover>
+          <v-card-title style="font-weight: bolder; color:rgba(0, 179, 255, 0.826);">{{ username }}님 의 계좌</v-card-title>
+        </v-img>
+        <div style="width: 100%;text-align: left;">
+          <v-card-text>
+            <div> 계좌번호 : {{ accountNumber }} </div>
+          </v-card-text>
 
-    <v-card-text>
-      <div> 계좌번호 : {{ accountNumber }} </div>
-    </v-card-text>
+          <v-card-text>
+            <div>계좌 잔고 : {{ asset }}원</div>
+          </v-card-text>
 
-    <v-card-text>
-      <div>계좌 잔고 : {{ asset }}원</div>
-    </v-card-text>
+          <v-card-text>
+            <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
+          </v-card-text>
 
-    <v-card-text>
-      <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
-    </v-card-text>
+          <v-card-text>
+            <div>총 수익율 : <b class="text-red-lighten-1"> +{{ (parseFloat(((totalPresentAsset - asset) / asset) *
+              100)).toFixed(2)
+            }}%</b>
+            </div>
+          </v-card-text>
 
-    <v-card-text>
-      <div>총 수익율 : <b class="text-red-lighten-1"> +{{ (parseFloat(((totalPresentAsset - asset) / asset) * 100)).toFixed(2)
-      }}%</b>
-      </div>
-    </v-card-text>
+          <v-card-text>
+            <div>이용 목적 : {{ servicePurpose }}</div>
+          </v-card-text>
+        </div>
 
-    <v-card-text>
-      <div>이용 목적 : {{ servicePurpose }}</div>
-    </v-card-text>
+        <v-card-actions class="d-flex justify-center align-center">
+          <v-btn
+            style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
+            color="blue" href="https://haedal.store/profile/edit">
+            계좌정보 수정하기
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
+    <div class="card-wrapper">
+      <v-card class="mx-auto">
+        <v-img class="align-end text-black" height="200" src='@/assets/img/profile.png' cover>
+          <v-card-title style="font-weight: bolder; color:rgba(0, 179, 255, 0.826);">{{ username }}님 의 계좌</v-card-title>
+        </v-img>
+        <div style="width: 100%;text-align: left;">
+          <v-card-text>
+            <div> 계좌번호 : {{ accountNumber }} </div>
+          </v-card-text>
 
-    <v-card-actions class="d-flex justify-center align-center">
-      <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
-        color="blue" href="https://haedal.store/profile/edit">
-        계좌정보 수정하기
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+          <v-card-text>
+            <div>계좌 잔고 : {{ asset }}원</div>
+          </v-card-text>
+
+          <v-card-text>
+            <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
+          </v-card-text>
+
+          <v-card-text>
+            <div>총 수익율 : <b class="text-red-lighten-1"> +{{ (parseFloat(((totalPresentAsset - asset) / asset) *
+              100)).toFixed(2)
+            }}%</b>
+            </div>
+          </v-card-text>
+
+          <v-card-text>
+            <div>이용 목적 : {{ servicePurpose }}</div>
+          </v-card-text>
+        </div>
+        <v-card-actions class="d-flex justify-center align-center">
+          <v-btn
+            style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
+            color="blue" href="https://haedal.store/profile/edit">
+            계좌정보 수정하기
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
+  </div>
+
+
+
 
   <div>
     <v-layout class="overflow-visible" style="height: 56px; box-shadow: none;">
@@ -63,12 +111,12 @@
                 TOP {{ index + 1 }} </p> -->
 
       <v-card class="mx-auto" max-width="70%" min-width="300px">
-        <v-card-item @click=subscribeProduct(item) style="padding: 20px;">
+        <v-card-item @click=subscribeProduct(item) style="padding: 30px;">
           <div>
             <div class="text-h5 mb-3" style="font-weight: bolder;text-align: left;">
               {{ item.productName }}
             </div>
-            <div class="text-overline mb-3" style="font-weight: bolder;text-align: left;">
+            <div class="text-overline mb-3" style="text-align: left;">
               <span>
                 <v-chip class="mr-1" color="green" text-color="white">
                   {{ item.period }}개월
@@ -79,34 +127,34 @@
                 <v-chip class="ma-1" color="primary" text-color="white">
                   {{ item.userAgeGroup }}
                 </v-chip>
-                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
-                  만난지 {{ item.progressdate }}일째!
-                </div>
-                <b>상품 기간 :</b> {{ item.period }}개월,
-                <b>금리 :</b> {{ item.interestRate }}%,
-                <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
-                  {{ item.presentMoney + item.cleanplusMoney }}원
-                  <div class="text-overline mb-3 text-grey-darken-1" style="font-weight: bolder;text-align: right;;">
-                    +{{ item.cleanplusMoney }}원
-                    <b class="text-red-lighten-1">+{{ item.plusPercentage }}%</b>
+                <div class="info">
+                  <div class="small-info">
+                    <b>상품 기간 :</b> {{ item.period }}개월,
+                    <b>금리 :</b> {{ item.interestRate }}%,
+
+
+                    <b>초기 금액 :</b> {{ item.startMoney }}원
+                    <br>
+                    <b>종료 일자 :</b> {{ item.endSubscribeDate }}
+                  </div>
+                  <div class="big-info">
+                    <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
+                      만난지 {{ item.progressdate }}일째!
+                    </div>
+                    <div class="text-h5 mb-3" style="font-weight: bolder;text-align: right;;">
+                      {{ item.presentMoney + item.cleanplusMoney }}원
+                      <div class="text-overline mb-3 text-grey-darken-1" style="font-weight: bolder;text-align: right;;">
+                        +{{ item.cleanplusMoney }}원
+                        <b class="text-red-lighten-1">+{{ item.plusPercentage }}%</b>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <b>초기 금액 :</b> {{ item.startMoney }}원
-
-
-                <b> </b>
-                <b>종료 일자 :</b> {{ item.endSubscribeDate }}
-
               </span>
             </div>
             <div class="text-caption">{{ item.longInfo }}</div>
           </div>
         </v-card-item>
-        <div class="d-flex justify-end align-center">
-          <v-card-actions>
-          </v-card-actions>
-        </div>
       </v-card>
     </div>
   </div>
@@ -331,11 +379,50 @@ const subscribeProduct = (item) => {
 
 
 <style lang="scss" scoped>
+.info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.big-info {
+  width: 30%;
+  text-align: right;
+}
+
+.small-info {
+  margin-top: 3rem;
+  width: 70%;
+  text-align: left;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  width: 60rem;
+}
+
+.card-wrapper {
+  flex-basis: calc(50% - 0.5rem);
+  margin: none;
+  box-sizing: border-box;
+  /* 마진을 포함한 너비 설정 */
+  max-width: 360px;
+}
+
 .overflow-visible {
   margin-bottom: 4rem;
 }
 
 .mx-auto {
+  padding: 1rem;
+  margin: 1rem 0rem 4rem 0rem;
+  margin-right: 0px;
+  box-shadow:
+    0px 4px 10px 0 rgba(51, 96, 133, 0.252),
+    12px -12px 16px rgba(255, 255, 255, 0.25);
   text-align: center;
   justify-content: center;
 }
@@ -366,13 +453,6 @@ const subscribeProduct = (item) => {
   font-size: 18px;
 }
 
-.mx-auto {
-  padding: 1rem;
-  margin: 1rem 0rem 4rem 0rem;
-  box-shadow:
-    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
-    12px -12px 16px rgba(255, 255, 255, 0.25);
-}
 
 #products:hover {
   transition: transform 0.5s ease;

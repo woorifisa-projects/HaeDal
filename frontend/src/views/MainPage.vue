@@ -8,9 +8,9 @@
     <v-carousel-item><img src="@/assets/img/banner-3.png"></v-carousel-item>
   </v-carousel>
   <div style="text-align: center;">
-    <v-divider :thickness="3" color="info" style="width:30%;     border-style: double;
-    margin: auto; margin-top:100px;"></v-divider>
-    <p style="margin-top:100px; margin-bottom:40px; color:rgba(0, 179, 255, 0.826);font-size:30px; font-weight: 600;">
+    <!-- <v-divider :thickness="3" color="info" style="width:30%;     border-style: double;
+    margin: auto; margin-top:100px;"></v-divider> -->
+    <p style="margin-top:170px; margin-bottom:40px; color:rgba(0, 179, 255, 0.826);font-size:30px; font-weight: 600;">
       ✨ 해달의 오늘의 추천
       상품 ✨</p>
     <v-card class="recommend"
