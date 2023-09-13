@@ -126,6 +126,7 @@ import axios from 'axios'
 import { useField, useForm } from 'vee-validate'
 
 let checkIdResult = 0;
+const visible = ref(false);
 
 const dialog = {
   isOpen: ref(false),

@@ -18,6 +18,7 @@
           :type="visible ? 'text' : 'password'" density="compact" placeholder="Enter your password"
           prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="visible = !visible"
           class="mb-8"></v-text-field>
+
         <v-btn :loading="loading" block class="mb-8" color="blue" size="large" variant="tonal" @click="onSubmit">
           로그인
         </v-btn>
@@ -40,16 +41,18 @@ import axios from 'axios'
 import { useField, useForm } from 'vee-validate'
 import { useAuthStore } from '@/store/app';
 
+const visible = ref(false);
+
 const { handleSubmit } = useForm({
   validationSchema: {
     id(value) {
       if (value?.length >= 1) return true
       return 'Id는 최소 2글자 이상입니다'
     },
-    password(value) {
-      if (value?.length >= 1) return true
-      return '비밀번호는 최소 2글자 이상입니다'
-    },
+    // password(value) {
+    //   if (value?.length >= 1) return true
+    //   return '비밀번호는 최소 2글자 이상입니다'
+    // },
   },
 })
 
@@ -115,7 +118,6 @@ const onSubmit = handleSubmit(values => {
     }
     )
 });
-
 
 
 </script>
