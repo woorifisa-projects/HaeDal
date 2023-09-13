@@ -1,11 +1,11 @@
 <template>
-  <v-carousel class="banner" show-arrows="hover">
+  <v-carousel class="banner" delimiter-icon="mdi-minus" show-arrows="hover" cycle interval="3000">
     <v-carousel-item> <img src="@/assets/img/banner-1.png">
     </v-carousel-item>
 
-    <v-carousel-item src="https://cdn.vuetifyjs.com/images/cards/hotel.jpg" cover></v-carousel-item>
+    <v-carousel-item><img src="@/assets/img/banner-2.png"></v-carousel-item>
 
-    <v-carousel-item src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" cover></v-carousel-item>
+    <v-carousel-item><img src="@/assets/img/banner-3.png"></v-carousel-item>
   </v-carousel>
   <div style="text-align: center;">
     <v-divider :thickness="3" color="info" style="width:30%;     border-style: double;
@@ -14,7 +14,7 @@
       ✨ 해달의 오늘의 추천
       상품 ✨</p>
     <v-card class="recommend"
-      style="width:50%; height:15rem; margin: auto; margin-bottom: 180px;color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle !important;">
+      style="width:50%; height:10%; margin: auto; margin-bottom: 180px;color:rgb(0, 63, 90); border-radius: 30px;vertical-align:middle !important;">
       <div>
         <div class="text-h5 mb-3" style="font-weight: bolder;">
           {{ recommend.productName }}
@@ -198,5 +198,11 @@ const detail = (item) => {
   padding: 4px;
   border-radius: 20px;
   color: rgba(0, 68, 128, 0.826);
+}
+
+.v-btn--size-x-small {
+  color: rgba(0, 179, 255, 0.696) !important;
+  margin-top: 20px;
+  font-size: 20px !important;
 }
 </style>
