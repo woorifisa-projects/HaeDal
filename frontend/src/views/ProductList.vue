@@ -461,8 +461,12 @@ const tema = () => {
     padding: 10px 1rem;
     outline: none;
     margin: auto;
+    transition: box-shadow 0.3s ease;
 }
 
+.searchProduct:focus {
+    box-shadow: 2px 4px 10px 0px rgba(56, 149, 188, 0.301);
+}
 
 .search {
     padding: 10px;

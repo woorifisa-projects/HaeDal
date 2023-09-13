@@ -311,10 +311,35 @@ const submit = handleSubmit(values => {
   display: flex;
   flex-direction: row;
   margin-bottom: 100px;
+  margin-top: 20px;
   text-align: center;
+  justify-content: center;
+
 }
 
 .v-card-title {
   font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+
+.register .v-card {
+  outline: solid 2px rgba(0, 139, 219, 0.469);
+  padding: 20px;
+  margin: 1px;
+  box-shadow: none;
+}
+
+.register .v-btn {
+  width: 6rem;
+  border-radius: 10px;
+  box-shadow: none;
+  background: rgba(0, 179, 255, 0.826);
+  color: white;
+  font-weight: bolder;
+  font-size: 16px;
+
+  &:hover {
+    box-shadow: none;
+  }
 }
 </style>
