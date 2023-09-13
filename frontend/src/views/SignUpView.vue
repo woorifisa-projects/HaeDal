@@ -5,20 +5,25 @@
         <v-container>
           <v-text-field class="center-text-field" v-model="id.value.value" :counter="10" variant="outlined"
             prepend-inner-icon="mdi-account-outline" :error-messages="id.errorMessage.value" label="아이디">
-            <template v-slot:append>
+            <template v-slot:append-inner>
               <v-btn @click="checkId">
+                <div v-if="checkIdResult==2">확인</div>
+                <div v-else>
                 중복체크
+              </div>
               </v-btn>
             </template>
           </v-text-field>
 
-          <v-text-field v-model="password.value.value" :counter="10" :error-messages="password.errorMessage.value"
-            prepend-inner-icon="mdi-lock-outline" variant="outlined" label="비밀번호">
+          <v-text-field v-model="password.value.value" :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'" :counter="15" :error-messages="password.errorMessage.value"
+            prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="visible = !visible" label="비밀번호">
           </v-text-field>
 
-          <v-text-field v-model="confirmPassword.value.value" :counter="10"
+          <v-text-field v-model="confirmPassword.value.value" 
+          :type="visible ? 'text' : 'password'" :counter="15"
             :error-messages="confirmPassword.errorMessage.value" prepend-inner-icon="mdi-lock-outline" variant="outlined"
-            label="비밀번호확인">
+             label="비밀번호확인">
           </v-text-field>
 
           <v-text-field v-model="name.value.value" :counter="10" :error-messages="name.errorMessage.value"
@@ -40,39 +45,23 @@
 
 
           <v-select v-model="userAgeGroup.value.value" :items="ageitems" :error-messages="userAgeGroup.errorMessage.value"
-            label="Age" variant="outlined">
-
-            <template v-slot:prepend>
-              <div>연령대</div>
-            </template>
+            label="연령대" variant="outlined">
           </v-select>
 
           <v-select v-model="servicePurpose.value.value" :items="purposeitems"
-            :error-messages="servicePurpose.errorMessage.value" label="purpose" variant="outlined">
-            <template v-slot:prepend>
-              <div>이용목적</div>
-            </template>
+            :error-messages="servicePurpose.errorMessage.value" label="이용목적" variant="outlined">
           </v-select>
 
           <v-text-field v-model="accountNumber.value.value" :counter="7"
-            :error-messages="accountNumber.errorMessage.value" label="Account Number" variant="outlined">
-            <template v-slot:prepend>
-              <div>계좌번호</div>
-            </template>
+            :error-messages="accountNumber.errorMessage.value" prepend-inner-icon="mdi-credit-card-outline" label="계좌번호" variant="outlined">
           </v-text-field>
 
-          <v-text-field v-model="asset.value.value" :counter="13" :error-messages="asset.errorMessage.value" label="Asset"
-            variant="outlined">
-            <template v-slot:prepend>
-              <div>자산</div>
-            </template>
+          <v-text-field v-model="asset.value.value" :counter="13" :error-messages="asset.errorMessage.value" label="자산"
+          prepend-inner-icon="mdi-currency-usd" variant="outlined">
           </v-text-field>
 
           <v-text-field v-model="authNumber.value.value" :counter="4" :error-messages="authNumber.errorMessage.value"
-            label="Account Number" variant="outlined">
-            <template v-slot:prepend>
-              <div>계좌 인증번호</div>
-            </template>
+            label="계좌 인증번호" prepend-inner-icon="mdi-credit-card-lock-outline" variant="outlined">
           </v-text-field>
 
           <v-checkbox v-model="checkbox.value.value" :error-messages="checkbox.errorMessage.value" value="1"
@@ -93,13 +82,7 @@
     </v-container>
 
     <div class="text-center">
-      <!-- <v-btn
-      color="primary"
-      @click="dialog.openDialog"
-    >
-      Open Dialog
-    </v-btn> -->
-
+      
       <v-dialog v-model="dialog.isOpen.value" width="auto">
         <v-card>
           <v-card-text>
@@ -123,14 +106,26 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="dialogalreadyId.isOpen.value" width="auto">
+      <v-card>
+        <v-card-text>
+          이미 사용중인 아이디입니다.
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="dialogalreadyId.closeDialog">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </form>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-import { defineRule } from 'vee-validate';
 import { useField, useForm } from 'vee-validate'
+
+let checkIdResult = 0;
 
 const dialog = {
   isOpen: ref(false),
@@ -144,70 +139,74 @@ const dialog = {
 };
 
 
-const dialogId = {
+const dialogId = { // 중복되지않은 아이디 - 성공일때
   isOpen: ref(false),
   openDialog() {
     dialogId.isOpen.value = true; // 다이얼로그 열기
   },
   closeDialog() {
+    checkIdResult = 2;
     dialogId.isOpen.value = false; // 다이얼로그 닫기
   }
 };
 
-
-defineRule('customIdRule', async () => {
-  if (id(value)?.length >= 2) {
-    console.log(id.value.value);
-    // 서버에 아이디 중복 체크 요청 보내기
-    const response = await axios.get(`https://backend.haedal.store/user/idcheck?id=${value}`);
-
-    if (response.data.exists) {
-      return 'Id already exists'; // 아이디가 이미 존재하는 경우 오류 메시지 반환
-    } else {
-      return true; // 아이디가 존재하지 않는 경우 유효성 통과
-    }
+const dialogalreadyId = { // 중복된 아이디일때 - 실패일때
+  isOpen: ref(false),
+  openDialog() {
+    dialogalreadyId.isOpen.value = true; // 다이얼로그 열기
+  },
+  closeDialog() {
+    checkIdResult = 1;
+    dialogalreadyId.isOpen.value = false; // 다이얼로그 닫기
   }
-
-  return 'Id needs to be at least 2 characters.';
-});
-
+};
 
 const { handleSubmit, handleReset } = useForm({
   validationSchema: {
-    id: [{
-      customIdRule: true
-    }],
+    id(value) {
+      if (value?.length >= 2) return true
+      return '아이디는 최소 2글자 이상이어야합니다.'
+    },
     password(value) {
       if (value?.length >= 2) return true
-      return 'password needs to be at least 2 characters.'
+      return '비밀번호는 최소 2글자 이상이어야합니다.'
     },
     confirmPassword(value) {
       if (value === password.value.value) return true;
-      return 'Passwords do not match.';
+      return '비밀번호가 일치하지않습니다.';
     },
     name(value) {
-      if (value?.length >= 2) return true
-      return 'Name needs to be at least 2 characters.'
+      if (value?.length >= 1) return true
+      return '필수입력항목입니다.'
     },
     phoneNumber(value) {
       if (value?.length > 9 && /[0-9-]+/.test(value)) return true
-      return 'Phone number needs to be at least 9 digits.'
+      return '전화번호는 최소 9자리 이상이어야합니다.'
     },
-    // email (value) {
-    //   if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
-    //   return 'Must be a valid e-mail.'
-    // },
     userAgeGroup(value) {
       if (value) return true
-      return 'userAgeGroup an item.'
+      return '필수입력항목입니다.'
     },
     servicePurpose(value) {
       if (value) return true
-      return 'servicePurpose an item.'
+      return '필수입력항목입니다.'
     },
+    accountNumber(value) {
+      if (value) return true
+      return '필수입력항목입니다.'
+    },
+    asset(value) {
+      if (value) return true
+      return '필수입력항목입니다.'
+    },
+    authNumber(value) {
+      if (value) return true
+      return '필수입력항목입니다.'
+    },
+
     checkbox(value) {
       if (value === '1') return true
-      return 'Must be checked.'
+      return '항목에 동의해주세요.'
     },
   },
 })
@@ -216,7 +215,6 @@ const password = useField('password')
 const confirmPassword = useField('confirmPassword')
 const name = useField('name')
 const phoneNumber = useField('phoneNumber')
-// const email = useField('email')
 const userAgeGroup = useField('userAgeGroup')
 const servicePurpose = useField('servicePurpose')
 const checkbox = useField('checkbox')
@@ -270,12 +268,17 @@ const checkId = () => {
       console.log("아이디이미있단");
       //  console.error(error);
       const serverErrorMessage = '아이디가 이미 존재합니다.'; // 서버 오류 메시지 설정
-      id.setErrors({ id: serverErrorMessage });
+      dialogalreadyId.openDialog();
 
     });
 }
 
 const submit = handleSubmit(values => {
+  if(checkIdResult == 0){
+    alert("아이디중복체크를 진행해주세요");
+  }else if(checkIdResult == 1){
+    alert("이미 사용중인 아이디입니다")
+  }else{
 
   const ageEnum = mapToAgeEnum(values.userAgeGroup);
   const purposeEnum = mapToPurposeEnum(values.servicePurpose);
@@ -295,6 +298,7 @@ const submit = handleSubmit(values => {
     .catch(error => {
       console.error(error);
     });
+  }
 }
 )
 

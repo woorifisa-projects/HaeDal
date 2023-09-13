@@ -99,6 +99,7 @@ const onSubmit = ()=>{
       // POST 요청 실패 시 로직
       .catch(error => {
         console.error(error);
+        alert("비밀번호 인증에 실패했습니다");
       });
     }
     else
