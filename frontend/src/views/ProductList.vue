@@ -493,7 +493,7 @@ const tema = () => {
     font-weight: bolder;
     font-size: 16px;
     position: absolute;
-    top: 12.6px;
+    top: 12.9px;
     left: 30.6em;
     height: 37px !important;
     box-shadow: none;
