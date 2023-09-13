@@ -44,11 +44,11 @@ const { handleSubmit } = useForm({
   validationSchema: {
     id(value) {
       if (value?.length >= 1) return true
-      return 'Id needs to be at least 1 characters.'
+      return 'Id는 최소 2글자 이상입니다'
     },
     password(value) {
       if (value?.length >= 1) return true
-      return 'password needs to be at least 1 characters.'
+      return '비밀번호는 최소 2글자 이상입니다'
     },
   },
 })

@@ -39,6 +39,7 @@
 import NavigationBar from '@/components/ProfileNavigationBar.vue';
 import axios from 'axios'
 import { ref } from 'vue'
+import router from '@/router';
 import { useAuthStore } from '@/store/app';
 
 const authStore = useAuthStore();

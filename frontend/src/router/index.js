@@ -11,7 +11,7 @@ const routes = [
         redirect: '/home'
       },
       {
-        path: 'home',
+        path: '/home',
         name: 'Home',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -19,7 +19,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/MainPage.vue'),
       },
       {
-        path: "signup",
+        path: "/signup",
         name: "Signup",
         component: () => import(/* webpackChunkName: "home" */ '@/views/SignUpView.vue'),
       },
