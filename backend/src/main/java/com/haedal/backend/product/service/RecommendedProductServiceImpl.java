@@ -26,7 +26,6 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
     private final ProductRepository productRepository;
     private final SubscribeService subscribeService;
     private final SubscribeRepository subscribeRepository;
-
     @Autowired
     public RecommendedProductServiceImpl(ProfileService profileService, ProductRepository productRepository, SubscribeService subscribeService, SubscribeRepository subscribeRepository) {
         this.profileService = profileService;

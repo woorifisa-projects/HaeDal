@@ -19,7 +19,6 @@ public interface RecommendedProductService extends CrudService<Product, Long> {
 //
 
 
-
     List<Product> orderByAsset(List<Long> recommendedProductIdsByAsset);
 
 

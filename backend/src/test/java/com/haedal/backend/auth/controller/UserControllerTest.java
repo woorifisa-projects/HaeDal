@@ -142,7 +142,6 @@ class UserControllerTest extends ControllerTest {
                         )))
                 .andReturn();
     }
-
     @DisplayName("회원로그인")
     @Test
     @WithMockUser
