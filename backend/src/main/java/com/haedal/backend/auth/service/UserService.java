@@ -72,7 +72,7 @@ public class UserService {
         }
 
         LogType logType = LogType.valueOf("LOGIN");
-        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         String logLogIn = user.getName()+" 고객님 로그인";
         Log savelog = logService.save( new Log(user, logType, logDateTime,logLogIn));
 

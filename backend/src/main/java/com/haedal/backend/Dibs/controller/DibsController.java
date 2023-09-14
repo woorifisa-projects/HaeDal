@@ -51,7 +51,7 @@ public class DibsController {
             Product foundProduct = productService.findByProductId(productId);
 
             LogType logType = LogType.valueOf("DIB");
-            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9) ;
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
             String logDib = "id"+" "+productId+" "+productService.getProductName(foundProduct)+" 찜";
 
             Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));
@@ -81,7 +81,7 @@ public class DibsController {
         dibsService.delete(deleteDib);
 
         LogType logType = LogType.valueOf("CANCELDIB");
-        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+        LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         String logDib = "id"+" "+productId+" "+productService.getProductName(foundProduct)+" 찜 취소";
 
         Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));

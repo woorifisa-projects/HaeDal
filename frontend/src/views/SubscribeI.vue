@@ -12,7 +12,8 @@
                         style="font-size: 20px; color:rgb(0, 162, 255); margin-top: 1.6rem; margin-bottom :0.3rem; font-weight: 700; font-family: 'Noto Serif KR', serif;">
                         "{{ listData.shortInfo }}"</p>
                     <br>
-                    {{ listData.longInfo }}
+                    <p style="max-width: 40%; margin: auto;word-break: keep-all;">{{ listData.longInfo }}
+                    </p>
                 </div>
                 <div class="desc" style="display: flex; justify-content: center;">
                     <span class="box" style="display:flex;  justify-content: center;align-items: center;">
@@ -195,8 +196,10 @@ const dibs = (productId) => {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
             },
-        }).catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"))
-        isDibs.value = true;
+        })
+            .then(() => {
+                isDibs.value = true; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+            }).catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"))
     } else if (isDibs.value === true) {
         console.log("찜 취소")
         axios({
@@ -206,7 +209,10 @@ const dibs = (productId) => {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 토큰 포함
             },
         })
-        isDibs.value = false;
+            .then(() => {
+                isDibs.value = false; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+            })
+            .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
     }
 }
 

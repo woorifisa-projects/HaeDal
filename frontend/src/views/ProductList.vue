@@ -173,6 +173,11 @@ const searchForm = () => {
     //기존 데이터 제거
     listData.value.splice(0, listData.value.length);
 
+    if (searchTerm.value.trim() === '') {
+        showNoDataMessage.value = true;
+        return;
+    }
+
     console.log("로그인한 검색기록 로그 저장 요청 보냄");
     console.log(authStore.accessToken);
     showNoDataMessage.value = false;
@@ -488,7 +493,7 @@ const tema = () => {
     border-radius: 20px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
-    box-shadow: -2px 4px 10px 0px rgba(0, 39, 62, 0.089);
+    box-shadow: none !important;
     color: white;
     font-weight: bolder;
     font-size: 16px;
@@ -499,7 +504,7 @@ const tema = () => {
     box-shadow: none;
 
     &:hover {
-        box-shadow: none;
+        box-shadow: none !important;
     }
 
 }
