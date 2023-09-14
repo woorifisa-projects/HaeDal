@@ -192,32 +192,34 @@ watchEffect(() => {
 console.log(listData)
 
 // 찜하기 버튼 누를 시
-const dibs = (item) => {
-    if (!item.isDibs) {
+const dibs = (productId) => {
+    if (isDibs.value === false) {
         console.log("찜!");
+        console.log(productId);
         axios({
             method: "post",
-            url: `https://backend.haedal.store/dibs/${item.productId}/add`,
+            url: `https://backend.haedal.store/dibs/${productId}/add`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         })
             .then(() => {
-                item.isDibs = true; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+                isDibs.value = true; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
             })
             .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
 
-    } else {
+    } else if (isDibs.value === true) {
         console.log("찜 취소");
+        console.log(productId);
         axios({
             method: "delete",
-            url: `https://backend.haedal.store/dibs/${item.productId}/delete`,
+            url: `https://backend.haedal.store/dibs/${productId}/delete`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         })
             .then(() => {
-                item.isDibs = false; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
+                isDibs.value = false; // Vue 3에서는 ref를 사용하므로 .value 없이 값 변경
             })
             .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
     }

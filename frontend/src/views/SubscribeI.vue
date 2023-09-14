@@ -187,7 +187,8 @@ watchEffect(() => {
 //찜하기 버튼 누를 시
 const dibs = (productId) => {
     if (isDibs.value === false) {
-        console.log("찜!")
+        console.log("찜!");
+        console.log(productId);
         axios({
             method: "post",
             url: `https://backend.haedal.store/dibs/${productId}/add`,
