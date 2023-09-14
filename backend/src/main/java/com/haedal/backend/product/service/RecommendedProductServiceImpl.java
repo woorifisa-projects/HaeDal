@@ -1,6 +1,7 @@
 package com.haedal.backend.product.service;
 
 import com.haedal.backend.auth.model.User;
+import com.haedal.backend.auth.service.UserService;
 import com.haedal.backend.product.model.Product;
 import com.haedal.backend.product.repository.ProductRepository;
 import com.haedal.backend.profile.model.ServicePurpose;
@@ -11,7 +12,6 @@ import com.haedal.backend.subscribe.service.SubscribeService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,12 +26,14 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
     private final ProductRepository productRepository;
     private final SubscribeService subscribeService;
     private final SubscribeRepository subscribeRepository;
+
     @Autowired
-    public RecommendedProductServiceImpl(ProfileService profileService, ProductRepository productRepository, SubscribeService subscribeService, SubscribeRepository subscribeRepository) {
+    public RecommendedProductServiceImpl(ProfileService profileService, ProductRepository productRepository, SubscribeService subscribeService, SubscribeRepository subscribeRepository, UserService userService ) {
         this.profileService = profileService;
         this.productRepository = productRepository;
         this.subscribeService = subscribeService;
         this.subscribeRepository = subscribeRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -42,8 +44,35 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
 
     //Long userId = 3L;
 
+//    // 사용자의 자산에 따라, 상품을 추천(상위 랭킹 반영 전) -> 추천된 상품 id 값 뽑아내기
+//    public List<Long> filterProductsByAsset(Long userId) {
+//        // TODO: 충분한 공부 후, 로그인 로직 구현하기
+//        // 로그인한 사용자의 자산정보 가져오기
+//        User user = profileService.findById(userId);
+//        Long userAsset = user.getAsset();
+//
+//        // 조건에 맞는, 추천 상품의 ID값 list 만들기
+//        List<Product> products = productRepository.findAll();
+//        List<Long> recommendedProductsIdsByAsset = new ArrayList<>();
+//
+//        // requiredStartMoney <= User의 Asset인 경우에만 추천상품을 나타나도록
+//        for (Product product : products) {
+//            int requiredStartMoney = product.getRequiredStartMoney();
+//
+//            if (requiredStartMoney <= userAsset) {
+//                recommendedProductsIdsByAsset.add(product.getProductId());
+//            } else {
+//                // 프론트에서 alert창 띄우기
+//                System.out.println("자산이 충분하지 않습니다.");
+//            }
+//        }
+//        return recommendedProductsIdsByAsset;
+//    }
+
+
+//    @Override
     // 사용자의 자산에 따라, 상품을 추천(상위 랭킹 반영 전) -> 추천된 상품 id 값 뽑아내기
-    public List<Long> filterProductsByAsset(Long userId) {
+    public List<Product> filterProductsByAsset(Long userId) {
         // TODO: 충분한 공부 후, 로그인 로직 구현하기
         // 로그인한 사용자의 자산정보 가져오기
         User user = profileService.findById(userId);
@@ -64,12 +93,53 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
                 System.out.println("자산이 충분하지 않습니다.");
             }
         }
-        return recommendedProductsIdsByAsset;
+//        return recommendedProductsIdsByAsset;
+
+        // filterByAsset() : ProductRepository에서 선언한 JPQL 쿼리가 담겨있음
+        List<Product> sortedAssets = productRepository.orderByAsset(recommendedProductsIdsByAsset);
+
+        //상품 중 금리가 높은 것으로 정렬
+        List<Product> highInterests = orderByInterestRate(sortedAssets); //service단에서만 정렬
+
+        //status가 true인 것들만 저장
+        List<Product> sellProducts = new ArrayList<>();
+        for(int i =0;i<highInterests.size();i++){
+            if(highInterests.get(i).getProductStatus() == true){
+                sellProducts.add(sortedAssets.get(i));
+            }
+        }
+
+        List<Product> rankingAssets = new ArrayList<>();
+
+
+        // 상위 3개의 상품을 선택
+//        int maxRankingCount = Math.max(sortedAssets.size(), 3);
+        if (sellProducts.size()>=3) {
+            for (int i = 0; i < 3 ; i++) {
+                Product product = sellProducts.get(i);
+                rankingAssets.add(product);
+                System.out.println(rankingAssets);
+            }
+        } else if(sellProducts.size()<3) {
+            for (int i = 0;  i < sellProducts.size(); i++) {
+                Product product = sellProducts.get(i);
+                rankingAssets.add(product);
+            }
+        }
+        else if(sellProducts.size()==0) {
+            System.out.println("추천상품이 없습니다");
+        }
+
+        return rankingAssets;
+
     }
 
 
+
+
+
     // 사용자의 이용목적에 따라, 상품을 추천(상위 랭킹 반영 전) -> 추천된 상품 id 값 뽑아내기
-    public List<Long> filterProductsByServicePurpose(Long userId) {
+    public List<Product> filterProductsByServicePurpose(Long userId) {
 
         // 로그인한 사용자의 이용목적 가져오기
         User user = profileService.findById(userId);
@@ -88,20 +158,62 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
             // 사용자 이용목적과 상품의 이용목적이 같다면, 추천상품 조회
             if (userServicePurpose == productServicePurpose) {
                 recommendedProductIdsByServicePurpose.add(product.getProductId());
+            }}
+
+
+            // 기준 충족 상품을 정렬
+            // filterByServicePurpose() : ProductRepository에서 선언한 JPQL 쿼리가 담겨있음
+            List<Product> sortedServicePurpose = productRepository.orderByServicePurpose(recommendedProductIdsByServicePurpose);
+            System.out.println("목록들 정렬 : " + sortedServicePurpose);
+
+            //상품 중 금리가 높은 것으로 정렬
+            List<Product> highInterests = orderByInterestRate(sortedServicePurpose); //service단에서만 정렬
+
+            //status가 true인 것들만 저장
+            List<Product> sellProducts = new ArrayList<>();
+
+            for (int i = 0; i < highInterests.size(); i++) {
+                if (sortedServicePurpose.get(i).getProductStatus() == true) {
+                    sellProducts.add(sortedServicePurpose.get(i));
+                }
             }
+
+            // 인기 순위 상위 3개의 상품 저장
+            List<Product> rankingServicePurpose = new ArrayList<>();
+
+            if (sellProducts.size() >= 3) {
+                for (int i = 0; i < 3; i++) {
+                    Product product = sellProducts.get(i);
+                    rankingServicePurpose.add(product);
+                }
+            } else if (sellProducts.size() < 3) {
+                for (int i = 0; i < sellProducts.size(); i++) {
+                    Product product = sellProducts.get(i);
+                    rankingServicePurpose.add(product);
+                }
+            } else if (sellProducts.size() == 0) {
+                System.out.println("추천상품이 없습니다");
+            }
+
+            return rankingServicePurpose;
         }
-        return recommendedProductIdsByServicePurpose;
-    }
+
+
+
+
+//        return recommendedProductIdsByServicePurpose;
+
+
 
 
 
     // 사용자의 연령대에 따라, 상품을 추천(상위 랭킹 반영 전) -> 추천된 상품 id 값 뽑아내기
-    public List<Long> filterProductsByUserAgeGroup(Long userId) {
+    public List<Product> filterProductsByUserAgeGroup(Long userId) {
 
 
         // 로그인한 사용자의 연령대 정보 가져오기
         User user = profileService.findById(userId);
-//        UserAgeGroup userUserAgeGroup = user.getUserAgeGroup();
+        UserAgeGroup userUserAgeGroup = user.getUserAgeGroup();
 //        System.out.println("사용자의 연령대는? " + userUserAgeGroup);
 
         // 조건에 맞는, 추천 상품의 ID값 list 만들기
@@ -128,21 +240,60 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
 //            if (userUserAgeGroup == productUserAgeGroup) {
 //                recommendedProductsIdsByUserAgeGroup.add(product.getProductId());
 
-
                 // 상품의 연령대에 사용자의 연령대가 포함되어 있다면 추천상품에 추가
                 if (productUserAgeGroup.contains(userAgeGroupString)) {
                     recommendedProductsIdsByUserAgeGroup.add(product.getProductId());
                     System.out.println("추가가 잘 됐을까? " + recommendedProductsIdsByUserAgeGroup.add(product.getProductId()));
 
             } else {
+            }}
+
+            // 기준 충족 상품을 정렬
+            List<Product> sortedUserAgeGroup = productRepository.orderByUserAgeGroup(recommendedProductsIdsByUserAgeGroup);
+            System.out.println("목록들 정렬 : " + sortedUserAgeGroup);
+
+            //상품 중 금리가 높은 것으로 정렬
+            List<Product> highInterests = orderByInterestRate(sortedUserAgeGroup); //service단에서만 정렬
+
+
+            //status가 true인 것들만 저장
+            List<Product> sellProducts = new ArrayList<>();
+            for(int i =0;i<highInterests.size();i++){
+                if(sortedUserAgeGroup.get(i).getProductStatus()== true){
+                    sellProducts.add(sortedUserAgeGroup.get(i));
+                }
             }
+
+
+            // 인기 순위 상위 3개의 상품 저장
+            List<Product> rankingUserAgeGroup = new ArrayList<>();
+            if (sellProducts.size()>=3) {
+                for (int i = 0; i < 3 ; i++) {
+                   Product product = sellProducts.get(i);
+                    rankingUserAgeGroup.add(product);
+                }
+            } else if(sellProducts.size()<3) {
+                for (int i = 0;  i < sellProducts.size(); i++) {
+                  Product product = sellProducts.get(i);
+                    rankingUserAgeGroup.add(product);
+                }
+            }
+            else if(sellProducts.size()==0) {
+                System.out.println("추천상품이 없습니다");
+            }
+
+
+            return rankingUserAgeGroup;
+
+
         }
 
-        return recommendedProductsIdsByUserAgeGroup;
-    }
+//        return recommendedProductsIdsByUserAgeGroup;
+
 
 
 //------------- 상위 랭킹 반영 쿼리 -------
+//    @Override
     public List<Product> orderByAsset(List<Long> productIdsInAsset) {
         return productRepository.orderByAsset(productIdsInAsset);
     }

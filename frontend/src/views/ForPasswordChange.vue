@@ -41,9 +41,11 @@ import axios from 'axios'
 import { ref } from 'vue'
 import router from '@/router';
 import { useAuthStore } from '@/store/app';
+import router from '@/router';
 
 const authStore = useAuthStore();
 const password = ref();
+
 
 const dialog = {
   isOpen: ref(false),
@@ -53,7 +55,7 @@ const dialog = {
   closeDialog() {
     dialog.isOpen.value = false; // 다이얼로그 닫기
     authStore.logout();
-    router.push('/home');
+    router.push('/login');
   }
 };
 
