@@ -12,10 +12,11 @@
                         style="font-size: 20px; color:rgb(0, 162, 255); margin-top: 1.6rem; margin-bottom :0.3rem; font-weight: 700; font-family: 'Noto Serif KR', serif;">
                         "{{ listData.shortInfo }}"</p>
                     <br>
-                    {{ listData.longInfo }}
+                    <p style="max-width: 40%; margin: auto; word-break: keep-all;">{{ listData.longInfo }}
+                    </p>
                 </div>
                 <div class="desc" style="display: flex; justify-content: center;">
-                    <span class="box" style="display:flex;  justify-content: center;align-items: center;">
+                    <span class="box" style="display:flex;  justify-content: center;align-items: center; min-width: 240px;">
                         <div style="margin-bottom:1rem; text-align:left;">
                             <h3 style="text-align: center;">상품 정보</h3>
                             <div style="display: flex; justify-content: space-between;">
