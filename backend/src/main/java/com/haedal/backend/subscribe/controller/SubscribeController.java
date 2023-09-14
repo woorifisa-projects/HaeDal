@@ -100,7 +100,7 @@ public class SubscribeController {
             //로그 저장
             LogType logType = LogType.valueOf("SUBSCRIBE");
 
-            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(9);
+            LocalDateTime logDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
             String logDib = "id"+" "+productId+" "+productService.findByProductId(productId).getProductName()+" 구독";
 
             Log savelog = logService.save( new Log(user, logType, logDateTime,logDib));

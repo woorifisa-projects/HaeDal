@@ -35,9 +35,9 @@
         <div class="container">
 
             <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="( item, index ) in   listData  "
-                :key="index" @click=subscribeProduct(item)>
+                :key="index">
 
-                <v-card-item class="products">
+                <v-card-item class="products" @click=subscribeProduct(item)>
                     <div style="display: flex;flex-direction: column;align-items: center; ">
                         <div style="font-size: 20px; font-weight: bold; margin: 1rem 0rem 1.3rem 0rem;">
                             {{ item.productName }}
@@ -172,6 +172,11 @@ const dibs = (item) => {
 const searchForm = () => {
     //기존 데이터 제거
     listData.value.splice(0, listData.value.length);
+
+    if (searchTerm.value.trim() === '') {
+        showNoDataMessage.value = true;
+        return;
+    }
 
     console.log("로그인한 검색기록 로그 저장 요청 보냄");
     console.log(authStore.accessToken);
@@ -430,6 +435,7 @@ const tema = () => {
         box-shadow:
             -1px 5px 10px 0 rgba(51, 96, 133, 0.138);
         transform: translateY(-5px);
+        cursor: pointer;
     }
 }
 
@@ -488,7 +494,7 @@ const tema = () => {
     border-radius: 20px;
     box-shadow: none;
     background: rgba(0, 179, 255, 0.826);
-    box-shadow: -2px 4px 10px 0px rgba(0, 39, 62, 0.089);
+    box-shadow: none !important;
     color: white;
     font-weight: bolder;
     font-size: 16px;
@@ -499,7 +505,7 @@ const tema = () => {
     box-shadow: none;
 
     &:hover {
-        box-shadow: none;
+        box-shadow: none !important;
     }
 
 }

@@ -1,3 +1,4 @@
+
 //package com.haedal.backend.product;
 //
 //import com.fasterxml.jackson.databind.JsonNode;
@@ -221,6 +222,7 @@
 //
 //
 //        // when & then
+
 //        mockMvc.perform(MockMvcRequestBuilders.get("/products", searchKeyword)
 //                        .with(csrf())
 //                        .accept(MediaType.APPLICATION_JSON)
@@ -228,27 +230,11 @@
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(objectMapper.writeValueAsString(searchKeyword)))
 //                .andDo(print())
+
 //                .andExpect(status().isOk());
 //
 //
 //
-//
-//        // when & then
-////        mockMvc.perform(MockMvcRequestBuilders.get("/products", searchKeyword)
-////                        .with(csrf())
-////                        .accept(MediaType.APPLICATION_JSON)
-////                        .characterEncoding(StandardCharsets.UTF_8)
-////                        .contentType(MediaType.APPLICATION_JSON)
-////                        .content(objectMapper.writeValueAsString(searchKeyword)))
-////                .andDo(print())
-////                .andExpect(status().isOk())
-//////                .andExpect(jsonPath("$[0].productStatus").value(true)) // 첫 번째 상품은 true 여야 함
-////                .andDo(document("/{search}",
-////                        responseFields(
-////                                fieldWithPath("id").description("해당 검색 내역입니다.")
-////                        )))
-////                .andReturn();
-//    }
 //
 //
 //
@@ -298,3 +284,16 @@
 //
 //
 //
+
+//                .andExpect(status().isOk())
+////                .andExpect(jsonPath("$[0].productStatus").value(true)) // 첫 번째 상품은 true 여야 함
+//                .andDo(document("/{search}",
+//                        responseFields(
+//                                fieldWithPath("id").description("해당 검색 내역입니다.")
+//                        )))
+//                .andReturn();
+//     }
+
+
+
+
