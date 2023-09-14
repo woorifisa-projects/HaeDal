@@ -17,7 +17,7 @@
                 </div>
                 <div class="desc" style="display: flex; justify-content: center;">
                     <span class="box" style="display:flex;  justify-content: center;align-items: center;">
-                        <div style="margin-bottom:1rem; text-align:left;">
+                        <div style="margin-bottom:1rem; text-align:left;min-width: 240px;">
                             <h3 style="text-align: center;">상품 정보</h3>
                             <div style="display: flex; justify-content: space-between;">
                                 <span style="text-align:left; margin-right:20px">

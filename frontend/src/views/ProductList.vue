@@ -35,9 +35,9 @@
         <div class="container">
 
             <v-card class="mx-auto" width="20rem" v-bind:class="item.productName" v-for="( item, index ) in   listData  "
-                :key="index" @click=subscribeProduct(item)>
+                :key="index">
 
-                <v-card-item class="products">
+                <v-card-item class="products" @click=subscribeProduct(item)>
                     <div style="display: flex;flex-direction: column;align-items: center; ">
                         <div style="font-size: 20px; font-weight: bold; margin: 1rem 0rem 1.3rem 0rem;">
                             {{ item.productName }}
@@ -435,6 +435,7 @@ const tema = () => {
         box-shadow:
             -1px 5px 10px 0 rgba(51, 96, 133, 0.138);
         transform: translateY(-5px);
+        cursor: pointer;
     }
 }
 
