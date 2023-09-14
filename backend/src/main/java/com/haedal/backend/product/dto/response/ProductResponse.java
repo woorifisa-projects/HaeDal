@@ -100,6 +100,7 @@ public class ProductResponse {
 
 
 
+
     public static ProductResponse recommendedFrom(Product product) {
         ProductResponse productResponse = ProductResponse.builder()
                 .productId(product.getProductId())
