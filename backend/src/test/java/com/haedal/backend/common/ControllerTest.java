@@ -27,8 +27,6 @@ import org.springframework.data.jpa.util.JpaMetamodel;
 @WebMvcTest({
         UserController.class,
         DibsController.class,
-        ProductController.class,
-        RecommendedProductController.class
 })
 //@TestPropertySource(properties = "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration")
 public abstract class ControllerTest {
