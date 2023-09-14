@@ -116,6 +116,7 @@ public class ProductResponse {
         return productResponse;
     }
 
+
     public static ProductResponse mapProductToResponse(Product foundProduct, User user) {
         ProductResponse productResponse = ProductResponse.builder()
         .productId(foundProduct.getProductId())

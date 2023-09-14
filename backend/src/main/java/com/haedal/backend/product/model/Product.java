@@ -45,7 +45,6 @@ public class Product {
     private int period; // 저축 기간
     @Column(name = "required_start_money")
     private int requiredStartMoney; // 시작 금액
-
     @Column(name = "interest_rate")
     private double interestRate; // 금리
 

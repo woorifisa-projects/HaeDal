@@ -453,6 +453,18 @@ const tema = () => {
     justify-content: center;
 }
 
+@media screen and (max-width: 768px),
+(min-width: 300px) {
+    .container {
+        width: 1048px;
+        justify-content: center;
+        margin: auto;
+        margin-bottom: 10rem;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 20px;
+    }
+}
+
 .products {
     margin-bottom: 20px;
 }

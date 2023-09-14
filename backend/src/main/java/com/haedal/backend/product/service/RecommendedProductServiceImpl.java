@@ -26,8 +26,6 @@ public class RecommendedProductServiceImpl implements RecommendedProductService 
     private final ProductRepository productRepository;
     private final SubscribeService subscribeService;
     private final SubscribeRepository subscribeRepository;
-    private final UserService userService;
-
 
     @Autowired
     public RecommendedProductServiceImpl(ProfileService profileService, ProductRepository productRepository, SubscribeService subscribeService, SubscribeRepository subscribeRepository, UserService userService ) {

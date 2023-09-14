@@ -52,7 +52,8 @@ public class RecommendedProductController {
     2. 로그인한 사용에 한해
     3. '자산별'추천상품이 1,2,3 순위별로 나타나도록 조회
      */
-    
+
+
     // 자산정보에 따라 상품을 추천해주는 서비스 구현
     //TODO : 인증 기능 구현 후 @RequestParam("userId") Long userId 추가
     @GetMapping
@@ -123,6 +124,7 @@ public class RecommendedProductController {
 //
 //        return productResponses;
     }
+
 
 
     // 사용자의 이용목적에 따라, 추천상품을 조회

@@ -35,6 +35,7 @@ public class ProductController {
         this.logService = logService;
     }
 
+
     //상품 전체 리스트 조회
     @GetMapping
     public List<ProductResponse> getAllproducts( ) {
