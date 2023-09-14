@@ -84,13 +84,13 @@ public class UserService {
 
     public static String getUserId(Authentication authentication)
     {
-        if (authentication != null && authentication.isAuthenticated()) {
-            return authentication.getName();
-        } else {
-            return null;
-        }
+//        if (authentication != null && authentication.isAuthenticated()) {
+//            return authentication.getName();
+//        } else {
+//            return null;
+//        }
 
-//        return authentication.getName();
+        return authentication.getName();
     }
 
     public void updateUserStatus(User user)

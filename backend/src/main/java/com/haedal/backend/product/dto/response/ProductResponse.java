@@ -68,36 +68,6 @@ public class ProductResponse {
     }
 
 
-    public static ProductResponse expectedResponse(
-            Long productId,
-            Tag tag,
-            String productName,
-            String shortInfo,
-            String longInfo,
-            int period,
-            int requiredStartMoney,
-            double interestRate,
-            boolean productStatus,
-            boolean isDeposit,
-            Long maxProductMoney) {
-        return ProductResponse.builder()
-                .productId(productId)
-//            .productAsset(product.getMaxProductMoney())
-                .tag(tag)
-                .productName(productName)
-                .shortInfo(shortInfo)
-                .longInfo(longInfo)
-                .period(period)
-                .interestRate(interestRate)
-                .isDeposit(isDeposit)
-                .productStatus(productStatus)
-                .requiredStartMoney(requiredStartMoney)
-                .maxProductMoney(maxProductMoney)
-                .build();
-    }
-
-
-
 
 
     public static ProductResponse recommendedFrom(Product product) {

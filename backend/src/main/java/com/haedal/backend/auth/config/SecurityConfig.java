@@ -67,15 +67,6 @@ public class SecurityConfig {
     }
 
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("yeji")
-                .password("{noop}1234") // {noop}는 패스워드 암호화를 비활성화합니다.
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
 
 }
 

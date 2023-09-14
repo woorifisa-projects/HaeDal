@@ -67,8 +67,8 @@ public class Product {
         this.productId=productId;
     }
 
-    public Product(long productId, String productName, boolean isDeposit) {
-    }
+//    public Product(long productId, String productName, boolean isDeposit) {
+//    }
 
 
     public boolean getProductStatus() {
