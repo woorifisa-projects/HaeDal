@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Comparator;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -24,6 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //상품 id로 상품 검색
     Product findByProductId(Long productId);
+
 
 
     // 사용자 자산별로 조회된 추천상품들을, 사용자가 많은 수에 따라 내림차순

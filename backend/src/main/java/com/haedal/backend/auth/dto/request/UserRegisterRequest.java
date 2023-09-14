@@ -21,6 +21,7 @@ public class UserRegisterRequest {
     private int authNumber;
 
 
+
     public User toEntity(String password) {
         return User.builder()
                 .id(this.id)

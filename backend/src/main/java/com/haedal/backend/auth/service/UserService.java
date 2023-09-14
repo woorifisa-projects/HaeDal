@@ -82,9 +82,15 @@ public class UserService {
 
     public User findbyId(String id) {return userRepository.findById(id).orElse(null);}
 
-    public String getUserId(Authentication authentication)
+    public static String getUserId(Authentication authentication)
     {
-        return authentication.getName();
+        if (authentication != null && authentication.isAuthenticated()) {
+            return authentication.getName();
+        } else {
+            return null;
+        }
+
+//        return authentication.getName();
     }
 
     public void updateUserStatus(User user)

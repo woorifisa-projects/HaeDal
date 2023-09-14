@@ -95,6 +95,8 @@ public class ProductController {
         }
     }
 
+
+
     // 로그인 하지 않은 유저가 키워드 검색
     @PostMapping("/{search}")
     public List<ProductResponse> searchProduct(@PathVariable String search){
@@ -110,7 +112,6 @@ public class ProductController {
             }
         } else {
             System.out.println("검색어가 없습니다.");
-            System.out.println("테스트용");
         }
 
         List<ProductResponse> productResponse = sellProducts.stream()
@@ -118,6 +119,10 @@ public class ProductController {
                 .collect(Collectors.toList());
         return productResponse;
     }
+
+
+
+
 
     //로그인한 유저가 키워드 검색
     @PostMapping("/{search}/login")
@@ -143,6 +148,7 @@ public class ProductController {
                 }
             }
         } else {
+
             System.out.println("검색어가 없습니다.");
             System.out.println("테스트용");
         }
@@ -152,5 +158,9 @@ public class ProductController {
                 .collect(Collectors.toList());
         return productResponse;
     }
+
+
+
+
 }
 

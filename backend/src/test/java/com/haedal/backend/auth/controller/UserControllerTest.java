@@ -71,7 +71,6 @@ class UserControllerTest extends ControllerTest {
                 .andDo(MockMvcRestDocumentation.document("idCheckExists",
                         Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
                         Preprocessors.preprocessResponse(Preprocessors.prettyPrint())));
-
     }
 
     @DisplayName("아이디 중복체크 - 아이디 존재하지않을경우")
