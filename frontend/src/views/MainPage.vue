@@ -1,5 +1,5 @@
 <template>
-  <v-carousel class="banner" delimiter-icon="mdi-minus" show-arrows="hover" cycle interval="3000" height="70vh">
+  <v-carousel class="banner" delimiter-icon="mdi-minus" show-arrows="hover" cycle interval="3000" height="60vh">
     <v-carousel-item> <img src="@/assets/img/banner-1.png" alt="해달 홍보 배너">
     </v-carousel-item>
 
@@ -35,7 +35,7 @@
     </v-card>
 
   </div>
-  <div style="text-align: center; margin:60px 0rem -10px 0rem; font-weight: 600; height: 2300px;">
+  <div style="text-align: center; margin:60px 0rem -10px 0rem; font-weight: 600; height:300vh;">
     <div
       style="display: flex; justify-content: center; align-items: center; margin-bottom: -50px; background-color: rgba(0, 179, 255, 0.158); height: 100vh; margin-top: 90px;">
       <div style="display: flex; flex-direction: column; align-items: center;">
