@@ -46,9 +46,9 @@
                             {{ item.shortInfo }}
                         </div>
                         <span>
-                            <v-chip v-show="item.deposit === false" class="mr-1" color="green"
+                            <v-chip v-show="item.deposit === true" class="mr-1" color="green"
                                 text-color=" white">예금</v-chip>
-                            <v-chip v-show="item.deposit === true" class="mr-1" color="red" text-color=" white">적금</v-chip>
+                            <v-chip v-show="item.deposit === false" class="mr-1" color="red" text-color=" white">적금</v-chip>
                             <v-chip class="mr-1" color="blue" text-color="white"> {{ item.interestRate }}%</v-chip>
                             <v-chip class="mr-1" color="orange" text-color="white"> {{ item.period }}개월</v-chip>
                         </span>
