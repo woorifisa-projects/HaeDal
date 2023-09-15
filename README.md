@@ -30,7 +30,7 @@
 |<img src="https://avatars.githubusercontent.com/u/131724311?v=4" width=150px>|<img src="https://avatars.githubusercontent.com/u/126961013?v=4" width=150px>|<img src="https://avatars.githubusercontent.com/u/119517146?v=4" width=150px>|
 |:---:|:---:|:---:|
 [이준희](https://github.com/juneheel)|[정경연](https://github.com/Cloudyee)|[임예지](https://github.com/image00)
-|인증/인가, 마이페이지, SMS|구독, SMS, UI|상품, 추천상품|
+|인증/인가, 마이페이지, 포트폴리오, SMS|구독, SMS, UI|상품, 추천상품|
 <br>
 
 <br>
