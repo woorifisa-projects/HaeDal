@@ -1,37 +1,26 @@
 <template>
   <navigation-bar> </navigation-bar>
-  <v-card class="mx-auto" max-width="400">
-    <v-img class="align-end text-black" height="200" src='@/assets/img/profile.png' cover>
-      <v-card-title style="font-weight: bolder; color:rgba(0, 179, 255, 0.826);">{{ username }}님 의 계좌</v-card-title>
-    </v-img>
-    <div style="width: 100%;text-align: left;">
-      <v-card-text>
-        <div> 계좌번호 : {{ accountNumber }} </div>
-      </v-card-text>
-
-      <v-card-text>
-        <div>계좌 잔고 : {{ asset }}원</div>
-      </v-card-text>
-
-      <v-card-text>
-        <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
-      </v-card-text>
-
-      <v-card-text>
-        <div>총 수익율 : <b class="text-red-lighten-1"> +{{ (parseFloat(((totalPresentAsset - asset) / asset) *
-          100)).toFixed(2)
-        }}%</b>
-        </div>
-      </v-card-text>
-
-      <v-card-text>
-        <div>이용 목적 : {{ servicePurpose }}</div>
-      </v-card-text>
+  <v-card class="mx-auto" id="account" max-width="600">
+    <v-card-title style="font-weight: bolder; color:rgba(0, 179, 255, 0.826);">{{ username }}님 의 계좌</v-card-title>
+    <div style="display: flex; flex-direction: row; margin-bottom: 20px; align-items: center;">
+      <v-img class="text-black" height="150" src='@/assets/img/profile.png' alt="프로필 이미지" contain
+        style="display: block; margin:0px;">
+      </v-img>
+      <div class="account-info" style="text-align: left; margin-left: -20px;">
+        <v-card-text>
+          <div> 계좌번호 : {{ accountNumber }} </div>
+          <div>계좌 잔고 : {{ asset }}원</div>
+          <div>계좌 총합금액 : {{ totalPresentAsset }}원</div>
+          <div>총 수익율 : <b class="text-red-lighten-1"> +{{ (parseFloat(((totalPresentAsset - asset) / asset) *
+            100)).toFixed(2) }}%</b></div>
+          <div>이용 목적 : {{ servicePurpose }}</div>
+        </v-card-text>
+      </div>
     </div>
     <v-card-actions class="d-flex justify-center align-center">
-
-      <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px; margin: 0rem 0rem 0.5rem 0.5rem;"
-        color="blue" href="https://haedal.store/profile/edit">
+      <!-- 버튼은 아래쪽 가운데에 위치 -->
+      <v-btn style=" background-color: rgba(0, 179, 255, 0.062); border-radius: 10px;" color="blue"
+        href="https://haedal.store/profile/edit">
         계좌정보 수정하기
       </v-btn>
     </v-card-actions>
@@ -41,10 +30,6 @@
       <v-bottom-navigation v-model="value" color="teal" grow>
         <v-btn @click="redirectToPortfolio">
           자산별 가입 상품
-        </v-btn>
-
-        <v-btn @click="redirectToPortfoliodibs">
-          찜해둔 상품
         </v-btn>
 
         <v-btn @click="redirectToPortfolioDays">
@@ -104,7 +89,7 @@
                 </div>
               </span>
             </div>
-            <div class="text-caption">{{ item.longInfo }}</div>
+            <div style="font-size: 14px;">{{ item.longInfo }}</div>
           </div>
         </v-card-item>
       </v-card>
@@ -323,6 +308,17 @@ const subscribeProduct = (item) => {
 
 
 <style lang="scss" scoped>
+#account {
+  width: 40rem;
+  border-radius: 30px;
+  box-shadow: none;
+  border: solid 1px rgba(0, 149, 255, 0.133);
+  background-color: rgba(238, 249, 255, 0.061);
+  box-shadow:
+    -2px 2px 10px 0 rgba(51, 96, 133, 0.065) inset;
+  margin-top: 40px;
+}
+
 .overflow-visible {
   margin-bottom: 4rem;
 }
@@ -348,11 +344,15 @@ const subscribeProduct = (item) => {
   padding: 1rem;
   margin: 1rem 0rem 4rem 0rem;
   margin-right: 0px;
-  box-shadow:
-    0px 4px 10px 0 rgba(51, 96, 133, 0.252),
+  box-shadow: 0px 4px 10px 0 rgba(51, 96, 133, 0.252),
     12px -12px 16px rgba(255, 255, 255, 0.25);
   text-align: center;
   justify-content: center;
+}
+
+.account-info .v-card-text div {
+  margin: 13px;
+  margin-right: 30px;
 }
 
 .mx-auto button {
@@ -388,26 +388,24 @@ const subscribeProduct = (item) => {
   cursor: pointer;
 }
 
-
 .v-bottom-navigation {
   background: none;
   color: rgb(0, 149, 255);
   box-shadow: none;
+  padding: 1px;
 }
 
 .v-bottom-navigation button {
   background: rgba(255, 255, 255, 0.264);
-  box-shadow:
-    -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
+  box-shadow: -3px 2px 9px 0 rgba(51, 96, 133, 0.252),
     12px -12px 16px rgba(255, 255, 255, 0.25);
   margin-left: 16px;
   border-radius: 10px;
-  height: 2px;
 }
 
 .v-bottom-navigation .v-bottom-navigation__content>.v-btn {
-  font-size: inherit;
-  font-weight: bolder;
+  font-size: 14px;
+  font-weight: 500;
   height: 3rem;
   max-width: 168px;
   min-width: 80px;
@@ -416,7 +414,6 @@ const subscribeProduct = (item) => {
   width: 118px;
   border-radius: 24px;
 }
-
 
 * {
   font-family: 'Noto Sans KR', sans-serif !important;

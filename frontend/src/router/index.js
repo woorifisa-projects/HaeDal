@@ -61,27 +61,48 @@ const routes = [
         component: () => import("@/views/RecommendedProduct.vue"),
         props: true,
       },
-      {
-        path: "/mypage",
-        name: "Mypage",
-        component: () => import("@/views/MyPage.vue"),
-      },
+
       {
         path: "/profile/edit",
         name: "profile",
         component: () => import("@/views/UserProfileEdit.vue"),
       },
-      {
-        path: "/security",
-        name: "security",
-        component: () => import("@/views/SecuritySetting.vue"),
-      },
+
       {
         path: "/login",
         name: "login",
         component: () => import("@/views/LoginView.vue"),
       },
+
       {
+        path: "/leave",
+        name: "leave",
+        component: () => import("@/views/UserLeave"),
+      },
+      {
+        path: "/error",
+        name: "error",
+        component: () => import("@/views/Error"),
+      },
+    ],
+  },
+  {
+    path: "/success",
+    name: "success",
+    component: () => import("@/views/SubscribeSuccess"),
+  }, {
+    path: "/",
+    component: () => import("@/layouts/default/NoFooter.vue"),
+    children: [
+      {
+        path: "/mypage",
+        name: "Mypage",
+        component: () => import("@/views/MyPage.vue"),
+      }, {
+        path: "/security",
+        name: "security",
+        component: () => import("@/views/SecuritySetting.vue"),
+      }, {
         path: "/securitysetting",
         name: "securitySetting",
         component: () => import("@/views/ForSecuritySetting.vue"),
@@ -116,23 +137,8 @@ const routes = [
         name: "test",
         component: () => import("@/views/Test"),
       },
-      {
-        path: "/leave",
-        name: "leave",
-        component: () => import("@/views/UserLeave"),
-      },
-      {
-        path: "/error",
-        name: "error",
-        component: () => import("@/views/Error"),
-      },
-    ],
-  },
-  {
-    path: "/success",
-    name: "success",
-    component: () => import("@/views/SubscribeSuccess"),
-  },
+    ]
+  }
 ];
 
 const router = createRouter({

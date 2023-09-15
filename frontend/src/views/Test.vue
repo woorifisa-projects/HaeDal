@@ -3,9 +3,10 @@
   <div class="cards-container">
     <div class="card-wrapper">
       <v-card class="mx-auto">
-        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)">{{ username }}님 의 계좌현황입니다.</v-card-title>
-        <div>
-          <Doughnut v-if="chartData.data" :data="chartData.data" :options="chartData.options" width="200" height="250" />
+        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)">{{ username }}님의
+          <span style="color:rgba(0, 179, 255, 0.826);">계좌현황</span>입니다.</v-card-title>
+        <div class="chart">
+          <Doughnut v-if="chartData.data" :data="chartData.data" :options="chartData.options" width="200" />
         </div>
 
 
@@ -41,8 +42,9 @@
 
     <div class="card-wrapper">
       <v-card class="mx-auto">
-        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)">{{ username }}님 의 투자현황입니다.</v-card-title>
-        <div>
+        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)">{{ username }}님의
+          <span style="color:rgba(0, 179, 255, 0.826);">투자현황</span>입니다.</v-card-title>
+        <div class="chart">
           <Bar v-if="chartDataForInvest.data" :data="chartDataForInvest.data" :options="chartDataForInvest.options"
             width="50" height="250" />
         </div>
@@ -70,15 +72,6 @@
             </div>
           </v-card-text>
         </div>
-        <v-card-actions class="d-flex justify-center align-center">
-          <v-btn style="
-              background-color: rgba(0, 179, 255, 0.062);
-              border-radius: 10px;
-              margin: 0rem 0rem 0.5rem 0.5rem;
-            " color="blue" href="https://haedal.store/profile/edit">
-            계좌정보 수정하기
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </div>
   </div>
@@ -121,6 +114,7 @@ let count = 0;
 
 let totalinvestment = ref(0);
 let totalinvestgain = ref(0);
+
 
 const chartData = ref({});
 const chartDataForInvest = ref({});
@@ -322,7 +316,7 @@ axios({
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: "bottom",
+            position: "right",
             align: "start",
             // 범례 스타일링
             labels: {
@@ -344,7 +338,7 @@ axios({
         labels: labelDataForInvest.value,
         datasets: [
           {
-            label: "투자금액",
+            label: "현재금액",
             // backgroundColor: getRandomColors(30),
             backgroundColor: [
               "rgba(255,26,104,0.2)",
@@ -407,3 +401,33 @@ const getRandomColors = (length) => {
   return colors;
 };
 </script>
+<style lang="scss" scoped>
+.cards-container {
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+
+.card-wrapper {
+  width: 50rem;
+  margin: auto;
+}
+
+.mx-auto {
+  padding: 30px;
+  margin: 30px 0px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow:
+    -4px 4px 10px 0 rgba(51, 96, 133, 0.129),
+    12px -12px 16px rgba(255, 255, 255, 0.25);
+}
+
+.v-card-title {
+  margin-bottom: 30px;
+}
+
+.chart {
+  margin: 30px;
+}
+</style>

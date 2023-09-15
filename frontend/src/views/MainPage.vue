@@ -1,11 +1,11 @@
 <template>
-  <v-carousel class="banner" delimiter-icon="mdi-minus" show-arrows="hover" cycle interval="3000">
-    <v-carousel-item> <img src="@/assets/img/banner-1.png">
+  <v-carousel class="banner" delimiter-icon="mdi-minus" show-arrows="hover" cycle interval="3000" height="70vh">
+    <v-carousel-item> <img src="@/assets/img/banner-1.png" alt="해달 홍보 배너">
     </v-carousel-item>
 
-    <v-carousel-item><img src="@/assets/img/banner-2.png"></v-carousel-item>
+    <v-carousel-item><img src="@/assets/img/banner-2.png" alt="해달 상품 홍보 배너"></v-carousel-item>
 
-    <v-carousel-item><img src="@/assets/img/banner-3.png"></v-carousel-item>
+    <v-carousel-item><img src="@/assets/img/banner-3.png" alt="해달 포트폴리오 홍보 배너"></v-carousel-item>
   </v-carousel>
   <div style="text-align: center;">
     <!-- <v-divider :thickness="3" color="info" style="width:30%;     border-style: double;
@@ -35,10 +35,11 @@
     </v-card>
 
   </div>
-  <div style="text-align: center; margin:60px 0rem -10px 0rem; font-weight: 600; height: 200vh;">
+  <div style="text-align: center; margin:60px 0rem -10px 0rem; font-weight: 600; height: 2300px;">
     <div
       style="display: flex; justify-content: center; align-items: center; margin-bottom: -50px; background-color: rgba(0, 179, 255, 0.158); height: 100vh; margin-top: 90px;">
       <div style="display: flex; flex-direction: column; align-items: center;">
+
         <div
           style="margin-bottom: 40px; margin-top:-80px;background-color: white; border-radius: 100%; text-align: center;font-size: 50px;width: 100px; height: 100px; padding: 10px;">
           🐚</div>
@@ -46,6 +47,7 @@
         </p>
       </div>
     </div>
+
     <div style="height: 100vh;">
       <p style=" font-size: 24px; font-weight: 500;margin-top: 160px;">
         꾸준히 조개를 모으는 해달이
@@ -53,20 +55,24 @@
         저축을 도와드릴게요!
       </p>
       <div style=" margin:auto; display: flex; justify-content: center;width: 70%;">
-        <img src='@/assets/img/main-image1.png' class="first-image">
+        <img src='@/assets/img/main-image1.png' class="first-image" alt="해달 추천상품 기능 홍보 이미지">
       </div>
-      <p style=" font-size: 18px; color:balck; font-weight: 500;line-height: 200%; margin-bottom: 200px;">해달이 추천해드리는<br>
+      <p style=" font-size: 18px; color:balck; font-weight: 500;line-height: 200%; margin-bottom: 100px;">해달이 추천해드리는<br>
         <span
           style="font-size: 20px;color:rgb(0, 179, 255);background-color: rgba(0, 179, 255, 0.158);font-weight: bolder; padding:3px;">"여러분에게
           딱 맞는
           상품"</span>을
         만나보세요.
       </p>
-
-      <p style="margin:200px 0px 60px 0px; color:rgba(0, 179, 255, 0.826); font-size:40px; ">지금부터 시작해 보세요!</p>
-      <v-btn
-        style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 30px; margin-bottom: 1rem; width:400px;height: 60px; font-size: 20px;"
-        href="/products">상품 보러가기</v-btn>
+      <div style="background: rgba(238, 244, 248, 0.457);">
+        <img src='@/assets/img/haedal-mockup.png' class="mockup" alt="해달 목업 이미지">
+      </div>
+      <div>
+        <p style="margin:150px 0px 60px 0px; color:rgba(0, 179, 255, 0.826); font-size:40px; ">지금 시작해 보세요!</p>
+        <v-btn
+          style="background: rgba(0, 179, 255, 0.826); color:white; font-weight: bold; border-radius: 30px; margin-bottom: 1rem; width:400px;height: 60px; font-size: 20px;"
+          href="/products">상품 보러가기</v-btn>
+      </div>
     </div>
   </div>
   <div
@@ -193,9 +199,20 @@ const detail = (item) => {
   object-fit: cover;
 }
 
+
+.mockup {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* 이미지를 블록 레벨 요소로 설정 */
+  margin: 0 auto;
+  /* 가운데 정렬 (선택 사항) */
+}
+
 .recommend b {
   background-color: rgba(0, 179, 255, 0.264);
-  padding: 4px;
+  padding: 3px 6px;
   border-radius: 20px;
   color: rgba(0, 68, 128, 0.826);
 }

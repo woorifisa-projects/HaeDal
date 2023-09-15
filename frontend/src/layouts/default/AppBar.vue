@@ -8,7 +8,8 @@
           width="30000px"
           object-fit="cover"
         ></v-btn> -->
-        <a href="https://haedal.store/home"><img src='@/assets/img/HaeDalLogo.png' class=" logo"></a>
+        <a href="https://haedal.store/home" aria-label="해달 홈"><img src='@/assets/img/HaeDalLogo.png' class=" logo"
+            alt="해달 로고"></a>
         <v-btn class="nav-link" v-for="link in links" :key="link" :text="link" variant="text"
           :to="`/${link.toLowerCase()}`"></v-btn>
         <!-- 해당링크 소문자로 바꿔서 라우터로 이동시켜준다 -->
@@ -34,7 +35,7 @@
             <p>Logout</p>
           </div>
           <div v-else>
-            <a href="https://haedal.store/login"></a>
+            <a href="https://haedal.store/login" aria-label="해달 로그인"></a>
             <p>Login</p>
           </div>
         </v-btn>
@@ -146,6 +147,7 @@ setInterval(() => {
 <style>
 .logo {
   width: 120px;
+  height: 41px;
   margin: 2rem;
 }
 

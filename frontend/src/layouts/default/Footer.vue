@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer v-if="!hideFooter">
     <v-footer flat color="rgba(0, 162, 255, 0.354)" class="text-center d-flex flex-column" style="padding-bottom: 10px;">
       <v-btn :icon="icon" variant="text" href="https://github.com/woorifisa-projects/HaeDal.git">
       </v-btn>
@@ -31,6 +31,7 @@
 import { ref } from 'vue';
 const icon = 'mdi-github';
 
+import { useRoute } from 'vue-router';
 
 </script>
 <style>
