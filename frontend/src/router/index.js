@@ -110,6 +110,16 @@ const routes = [
         component: () => import('@/views/Portfoliodibs.vue')
       },
       {
+        path: '/chartportfolio',
+        name: 'chartportfolio',
+        component: () => import('@/views/ChartPortfolio.vue')
+      },
+      {
+        path: '/test',
+        name: 'test',
+        component: () => import('@/views/Test'),
+      },
+      {
         path: '/leave',
         name: 'leave',
         component: () => import('@/views/UserLeave'),

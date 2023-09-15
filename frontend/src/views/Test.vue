@@ -3,17 +3,19 @@
   <div class="cards-container">
     <div class="card-wrapper">
       <v-card class="mx-auto">
-        <v-img
-          class="align-end text-black"
-          height="200"
-          src="@/assets/img/profile.png"
-          cover
+        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)"
+          >{{ username }}님 의 계좌현황입니다.</v-card-title
         >
-          <v-card-title
-            style="font-weight: bolder; color: rgba(0, 179, 255, 0.826)"
-            >{{ username }}님 의 계좌</v-card-title
-          >
-        </v-img>
+        <div>
+          <Doughnut
+            v-if="chartData.data"
+            :data="chartData.data"
+            :options="chartData.options"
+            width="200"
+            height="250"
+          />
+        </div>
+
         <div style="width: 100%; text-align: left">
           <v-card-text>
             <div>계좌번호 : {{ accountNumber }}</div>
@@ -41,40 +43,24 @@
               >
             </div>
           </v-card-text>
-
-          <v-card-text>
-            <div>이용 목적 : {{ servicePurpose }}</div>
-          </v-card-text>
         </div>
-
-        <v-card-actions class="d-flex justify-center align-center">
-          <v-btn
-            style="
-              background-color: rgba(0, 179, 255, 0.062);
-              border-radius: 10px;
-              margin: 0rem 0rem 0.5rem 0.5rem;
-            "
-            color="blue"
-            href="https://haedal.store/profile/edit"
-          >
-            계좌정보 수정하기
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </div>
+
     <div class="card-wrapper">
       <v-card class="mx-auto">
-        <v-img
-          class="align-end text-black"
-          height="200"
-          src="@/assets/img/profile.png"
-          cover
+        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)"
+          >{{ username }}님 의 투자현황입니다.</v-card-title
         >
-          <v-card-title
-            style="font-weight: bolder; color: rgba(0, 179, 255, 0.826)"
-            >{{ username }}님 의 계좌</v-card-title
-          >
-        </v-img>
+        <div>
+          <Bar
+            v-if="chartDataForInvest.data"
+            :data="chartDataForInvest.data"
+            :options="chartDataForInvest.options"
+            width="50"
+            height="250"
+          />
+        </div>
         <div style="width: 100%; text-align: left">
           <v-card-text>
             <div>투자 금액 : {{ totalinvestment }}원</div>
@@ -99,10 +85,6 @@
               >
             </div>
           </v-card-text>
-
-          <v-card-text>
-            <div>이용 목적 : {{ servicePurpose }}</div>
-          </v-card-text>
         </div>
         <v-card-actions class="d-flex justify-center align-center">
           <v-btn
@@ -120,102 +102,32 @@
       </v-card>
     </div>
   </div>
-
-  <div>
-    <v-layout class="overflow-visible" style="height: 56px; box-shadow: none">
-      <v-bottom-navigation v-model="value" color="teal" grow>
-        <v-btn @click="redirectToPortfolio"> 자산별 가입 상품 </v-btn>
-
-        <v-btn @click="redirectToPortfoliodibs"> 찜해둔 상품 </v-btn>
-
-        <v-btn @click="redirectToPortfolioDays"> 가입 일자 순 </v-btn>
-      </v-bottom-navigation>
-    </v-layout>
-  </div>
-
-  <div style="margin-bottom: 200px">
-    <div
-      id="products"
-      v-bind:class="item.productName"
-      v-for="(item, index) in listData"
-      :key="index"
-    >
-      <!-- <p
-                style="background-color: rgba(0, 179, 255, 0.362); width: 80px; font-weight: bolder; border-radius: 10px; color:rgb(0, 75, 121);; text-align: center;">
-                TOP {{ index + 1 }} </p> -->
-
-      <v-card class="mx-auto" max-width="70%" min-width="300px">
-        <v-card-item @click="subscribeProduct(item)" style="padding: 30px">
-          <div>
-            <div
-              class="text-h5 mb-3"
-              style="font-weight: bolder; text-align: left"
-            >
-              {{ item.productName }}
-            </div>
-            <div class="text-overline mb-3" style="text-align: left">
-              <span>
-                <v-chip class="mr-1" color="green" text-color="white">
-                  {{ item.period }}개월
-                </v-chip>
-                <v-chip class="ma-1" color="secondary" text-color="white">
-                  {{ item.servicePurpose }}
-                </v-chip>
-                <v-chip class="ma-1" color="primary" text-color="white">
-                  {{ item.userAgeGroup }}
-                </v-chip>
-                <div class="info">
-                  <div class="small-info">
-                    <b>상품 기간 :</b> {{ item.period }}개월, <b>금리 :</b>
-                    {{ item.interestRate }}%,
-
-                    <b>초기 금액 :</b> {{ item.startMoney }}원
-                    <br />
-                    <b>종료 일자 :</b> {{ item.endSubscribeDate }}
-                  </div>
-                  <div class="big-info">
-                    <div
-                      class="text-h5 mb-3"
-                      style="font-weight: bolder; text-align: right"
-                    >
-                      만난지 {{ item.progressdate }}일째!
-                    </div>
-                    <div
-                      class="text-h5 mb-3"
-                      style="font-weight: bolder; text-align: right"
-                    >
-                      {{ item.presentMoney + item.cleanplusMoney }}원
-                      <div
-                        class="text-overline mb-3 text-grey-darken-1"
-                        style="font-weight: bolder; text-align: right"
-                      >
-                        +{{ item.cleanplusMoney }}원
-                        <b class="text-red-lighten-1"
-                          >+{{ item.plusPercentage }}%</b
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </span>
-            </div>
-            <div class="text-caption">{{ item.longInfo }}</div>
-          </div>
-        </v-card-item>
-      </v-card>
-    </div>
-  </div>
 </template>
 
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import router from "../router";
 import NavigationBar from "@/components/ProfileNavigationBar.vue";
 import { useAuthStore } from "@/store/app";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import { getApi } from "@/api/modules";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "vue-chartjs";
+import { Bar } from "vue-chartjs";
+import { Title, BarElement, CategoryScale, LinearScale } from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const authStore = useAuthStore();
 const username = ref(0);
@@ -225,10 +137,13 @@ const totalPresentAsset = ref(0); //계좌 현재 총 자산액(적금액 모두
 const accountNumber = ref(0);
 const cleanplusMoney = ref(0);
 let servicepurposechange = "";
+let count = 0;
 
 let totalinvestment = ref(0);
 let totalinvestgain = ref(0);
 
+const chartData = ref({});
+const chartDataForInvest = ref({});
 // const router = useRouter();
 
 const redirectToPortfolioDays = () => {
@@ -249,6 +164,11 @@ console.log("새로고췸");
 const storedToken = localStorage.getItem("accessToken");
 console.log("저장된 토큰값 " + authStore.accessToken);
 
+const labelData = ref(["잔액"]); //잔액라벨 초기값 추가
+const moneyData = ref([]); // 잔고
+const labelDataForInvest = ref([]); //잔액라벨 초기값 추가
+const moneyDataForInvest = ref([]); // 잔고
+
 if (storedToken) {
   console.log("요청전송");
   axios
@@ -259,31 +179,17 @@ if (storedToken) {
       },
     })
     .then((response) => {
-      switch (response.data.servicePurpose) {
-        case "MOKDON":
-          servicepurposechange = "목돈 마련";
-          break;
-        case "FORCAR":
-          servicepurposechange = "자동차 구매";
-          break;
-        case "FORHOUSE":
-          servicepurposechange = "주택 구매";
-          break;
-        case "OTHERS":
-          servicepurposechange = "기타";
-          break;
-      }
-
       console.log(response.data);
       username.value = response.data.name;
       accountNumber.value = response.data.accountNumber;
-      asset.value = response.data.asset; // 잔고 남은 금액
+      moneyData.value[0] = response.data.asset; // 잔고에 차트추가
+      console.log(moneyData.value);
+      asset.value = response.data.asset;
       servicePurpose.value = servicepurposechange;
       totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
     });
 }
 
-// Axios 인스턴스 생성
 axios({
   method: "get",
   url: "https://backend.haedal.store/subscribe/portfolio",
@@ -293,9 +199,11 @@ axios({
 })
   .then((res) => {
     let tempArr = [...res.data];
+
     tempArr.forEach((item) => {
       console.log(item);
       listData.value.push(item);
+
       // chips 표시 내용 변환
       switch (item.servicePurpose) {
         case "MOKDON":
@@ -385,143 +293,137 @@ axios({
       }
       totalinvestment.value += item.startMoney; // 투자금액
       totalinvestgain.value += item.cleanplusMoney;
+
+      labelData.value.push(item.productName);
+      moneyData.value.push(item.presentMoney + item.cleanplusMoney);
+      labelDataForInvest.value.push(item.productName);
+      moneyDataForInvest.value.push(item.presentMoney + item.cleanplusMoney);
     });
+
+    chartData.value = {
+      data: {
+        labels: labelData.value,
+        datasets: [
+          {
+            backgroundColor: [
+              "rgba(255,26,104,0.2)",
+              "rgba(54,162,235,0.2)",
+              "rgba(255,206,86,0.2)",
+              "rgba(75,192,192,0.2)",
+              "rgba(127,26,104,0.2)",
+              "rgba(100,162,235,0.2)",
+              "rgba(232,206,86,0.2)",
+              "rgba(65,192,192,0.2)",
+              "rgba(187,26,104,0.2)",
+              "rgba(10,162,235,0.2)",
+              "rgba(120,206,86,0.2)",
+              "rgba(55,192,192,0.2)",
+            ],
+            borderColor: [
+              "rgba(255,26,104,0.2)",
+              "rgba(54,162,235,0.2)",
+              "rgba(255,206,86,0.2)",
+              "rgba(75,192,192,0.2)",
+              "rgba(127,26,104,0.2)",
+              "rgba(100,162,235,0.2)",
+              "rgba(232,206,86,0.2)",
+              "rgba(65,192,192,0.2)",
+              "rgba(187,26,104,0.2)",
+              "rgba(10,162,235,0.2)",
+              "rgba(120,206,86,0.2)",
+              "rgba(55,192,192,0.2)",
+            ],
+            data: moneyData.value,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            align: "start",
+            // 범례 스타일링
+            labels: {
+              usePointStyle: true, // 범례 도형 모양과 관련된 속성으로, false일 경우엔 기본 직사각형 도형으로 표시됩니다.
+              padding: 15, // 범례 간 가로 간격을 조정할 수 있습니다. 범례의 상하 padding을 지정하는 기능은 따로 지원되지 않아요. ㅠㅠ
+              font: {
+                // 범례의 폰트 스타일도 지정할 수 있습니다.
+                family: "'Noto Sans KR', 'serif'",
+                lineHeight: 1,
+              },
+            },
+          },
+        },
+      },
+    };
+
+    chartDataForInvest.value = {
+      data: {
+        labels: labelDataForInvest.value,
+        datasets: [
+          {
+            label: "투자금액",
+            // backgroundColor: getRandomColors(30),
+            backgroundColor: [
+              "rgba(255,26,104,0.2)",
+              "rgba(54,162,235,0.2)",
+              "rgba(255,206,86,0.2)",
+              "rgba(75,192,192,0.2)",
+            ],
+            borderColor: [
+              "rgba(255,26,104,0.5)",
+              "rgba(54,162,235,0.5)",
+              "rgba(255,206,86,0.5)",
+              "rgba(75,192,192,0.5)",
+            ],
+            borderWidth: 1, // [막대 테두리 굵기 설정]
+            data: moneyDataForInvest.value,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+
+            // 범례 스타일링
+            labels: {
+              usePointStyle: false, // 범례 도형 모양과 관련된 속성으로, false일 경우엔 기본 직사각형 도형으로 표시됩니다.
+              padding: 10, // 범례 간 가로 간격을 조정할 수 있습니다. 범례의 상하 padding을 지정하는 기능은 따로 지원되지 않아요. ㅠㅠ
+              font: {
+                // 범례의 폰트 스타일도 지정할 수 있습니다.
+                family: "'Noto Sans KR', 'serif'",
+                lineHeight: 1,
+              },
+            },
+          },
+        },
+      },
+    };
   })
   // POST 요청 실패 시 로직
   .catch((error) => {
     console.error(error);
   });
 
-const subscribeProduct = (item) => {
-  const productId = item.productId;
-  const productName = item.productName;
-  console.log(productName);
-  console.log(item.deposit);
-  if (item.deposit == true) {
-    router.push({
-      name: "subscribeDforShow",
-      params: {
-        id: productId,
-      },
-    });
-  } else if (item.deposit == false) {
-    router.push({
-      name: "subscribeIforShow",
-      params: {
-        id: productId,
-      },
-    });
+const getRandomColor = () => {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
+  return color;
+};
+
+const getRandomColors = (length) => {
+  const colors = [];
+  for (let i = 0; i < length; i++) {
+    colors.push(getRandomColor());
+  }
+  return colors;
 };
 </script>
-
-<style lang="scss" scoped>
-.info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-}
-
-.big-info {
-  width: 30%;
-  text-align: right;
-}
-
-.small-info {
-  margin-top: 3rem;
-  width: 70%;
-  text-align: left;
-}
-
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
-  width: 60rem;
-}
-
-.card-wrapper {
-  flex-basis: calc(50% - 0.5rem);
-  margin: none;
-  box-sizing: border-box;
-  /* 마진을 포함한 너비 설정 */
-  max-width: 360px;
-}
-
-.overflow-visible {
-  margin-bottom: 4rem;
-}
-
-.mx-auto {
-  padding: 1rem;
-  margin: 1rem 0rem 4rem 0rem;
-  margin-right: 0px;
-  box-shadow: 0px 4px 10px 0 rgba(51, 96, 133, 0.252),
-    12px -12px 16px rgba(255, 255, 255, 0.25);
-  text-align: center;
-  justify-content: center;
-}
-
-.mx-auto button {
-  margin: auto;
-}
-
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(3, minmax(100px, auto));
-  grid-gap: 20px;
-  margin: 10px 20rem 10rem 20rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.button-style {
-  width: 10rem;
-  border-radius: 10px;
-  box-shadow: none;
-  background: rgba(0, 179, 255, 0.826);
-  color: white;
-  margin-top: 14px;
-  font-weight: bolder;
-  font-size: 18px;
-}
-
-#products:hover {
-  transition: transform 0.5s ease;
-  transform: scale(1.03);
-  cursor: pointer;
-}
-
-.v-bottom-navigation {
-  background: none;
-  color: rgb(0, 149, 255);
-  box-shadow: none;
-}
-
-.v-bottom-navigation button {
-  background: rgba(255, 255, 255, 0.264);
-  box-shadow: -4px 4px 10px 0 rgba(51, 96, 133, 0.252),
-    12px -12px 16px rgba(255, 255, 255, 0.25);
-  margin-left: 16px;
-  border-radius: 10px;
-  height: 2px;
-}
-
-.v-bottom-navigation .v-bottom-navigation__content > .v-btn {
-  font-size: inherit;
-  font-weight: bolder;
-  height: 3rem;
-  max-width: 168px;
-  min-width: 80px;
-  text-transform: none;
-  transition: inherit;
-  width: 118px;
-  border-radius: 24px;
-}
-
-* {
-  font-family: "Noto Sans KR", sans-serif !important;
-}
-</style>
