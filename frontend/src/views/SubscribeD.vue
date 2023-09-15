@@ -72,8 +72,8 @@
                         style="text-align: center; margin:auto; margin-top:1px; display: flex;align-items: center; justify-content: center;">
                         <div class="favorite"
                             style=" cursor:pointer; display: flex; align-items: center; justify-content: center;">
-                            <img v-if="isDibs === true" src='@/assets/img/favorite.png'>
-                            <img v-else src='@/assets/img/favorite_border.png'>
+                            <img v-if="isDibs === true" src='@/assets/img/favorite.png' alt="찜 완료">
+                            <img v-else src='@/assets/img/favorite_border.png' alt="찜 미완료">
                         </div>
                     </div>
                 </v-btn>

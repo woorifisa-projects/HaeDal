@@ -2,7 +2,7 @@
     <div style="margin-top:130px">
         <v-card class="success-card">
             <div class=" success">
-                <img src='@/assets/img/success.jpg'>
+                <img src='@/assets/img/success.jpg' alt="구독 성공">
             </div>
             <h2>신청이 완료되었습니다!</h2>
             <p style="margin-bottom: 18px;font-size: 13px;">해달과 함께 해와 달이 뜨고 지 듯 꾸준히 저축해 보아요!</p>
