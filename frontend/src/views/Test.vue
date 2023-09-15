@@ -3,18 +3,11 @@
   <div class="cards-container">
     <div class="card-wrapper">
       <v-card class="mx-auto">
-        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)"
-          >{{ username }}님 의 계좌현황입니다.</v-card-title
-        >
+        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)">{{ username }}님 의 계좌현황입니다.</v-card-title>
         <div>
-          <Doughnut
-            v-if="chartData.data"
-            :data="chartData.data"
-            :options="chartData.options"
-            width="200"
-            height="250"
-          />
+          <Doughnut v-if="chartData.data" :data="chartData.data" :options="chartData.options" width="200" height="250" />
         </div>
+
 
         <div style="width: 100%; text-align: left">
           <v-card-text>
@@ -39,8 +32,7 @@
                   parseFloat(
                     ((totalPresentAsset - asset) / asset) * 100
                   ).toFixed(2)
-                }}%</b
-              >
+                }}%</b>
             </div>
           </v-card-text>
         </div>
@@ -49,17 +41,10 @@
 
     <div class="card-wrapper">
       <v-card class="mx-auto">
-        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)"
-          >{{ username }}님 의 투자현황입니다.</v-card-title
-        >
+        <v-card-title style="font-weight: bolder; color: rgba(0, 0, 0, 0.826)">{{ username }}님 의 투자현황입니다.</v-card-title>
         <div>
-          <Bar
-            v-if="chartDataForInvest.data"
-            :data="chartDataForInvest.data"
-            :options="chartDataForInvest.options"
-            width="50"
-            height="250"
-          />
+          <Bar v-if="chartDataForInvest.data" :data="chartDataForInvest.data" :options="chartDataForInvest.options"
+            width="50" height="250" />
         </div>
         <div style="width: 100%; text-align: left">
           <v-card-text>
@@ -81,21 +66,16 @@
                   parseFloat((totalinvestgain / totalinvestment) * 100).toFixed(
                     2
                   )
-                }}%</b
-              >
+                }}%</b>
             </div>
           </v-card-text>
         </div>
         <v-card-actions class="d-flex justify-center align-center">
-          <v-btn
-            style="
+          <v-btn style="
               background-color: rgba(0, 179, 255, 0.062);
               border-radius: 10px;
               margin: 0rem 0rem 0.5rem 0.5rem;
-            "
-            color="blue"
-            href="https://haedal.store/profile/edit"
-          >
+            " color="blue" href="https://haedal.store/profile/edit">
             계좌정보 수정하기
           </v-btn>
         </v-card-actions>
