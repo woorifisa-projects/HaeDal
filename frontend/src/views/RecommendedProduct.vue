@@ -49,8 +49,8 @@
                 </v-card-item>
                 <div class="d-flex justify-end align-center">
                     <span class="favorite" @click="dibs(item)" style="cursor:pointer;margin-right: 10px;">
-                        <img v-if="item.isDibs === true" src='@/assets/img/favorite.png'>
-                        <img v-else src='@/assets/img/favorite_border.png'>
+                        <img v-if="item.isDibs === true" src='@/assets/img/favorite.png' alt="찜 완료">
+                        <img v-else src='@/assets/img/favorite_border.png' alt="찜 미완료">
                     </span>
                     <v-card-actions style="margin-left: 1rem;">
                         <v-btn class=" button-style" @click=subscribeProduct(item)>

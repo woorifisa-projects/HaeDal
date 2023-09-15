@@ -4,7 +4,7 @@
     <div style="margin:100px">
       <v-card class="success-card">
         <div class=" success">
-          <img src='@/assets/img/leave.jpg'>
+          <img src='@/assets/img/leave.jpg' alt="고객 탈퇴">
         </div>
         <h2>회원탈퇴 하시려구요?</h2>
         <p style="margin-bottom: 18px;font-size: 13px;">해달과 계속해서 저축해요...</p>
