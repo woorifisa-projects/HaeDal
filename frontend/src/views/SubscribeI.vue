@@ -1,4 +1,5 @@
 <template>
+
   <div
     style="
       background: linear-gradient(
@@ -62,6 +63,7 @@
                   {{ listData.period }} 개월
                 </span>
               </div>
+
             </div>
             <br />
           </span>
