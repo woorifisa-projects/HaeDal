@@ -181,8 +181,8 @@ const submit = handleSubmit(values => {
 
   const dataToSend = { ...values, userAgeGroup: ageEnum, servicePurpose: purposeEnum };
 
-  console.log(dataToSend);
-  console.log(authStore.accessToken + "여기 토큰값이다");
+  // console.log(dataToSend);
+  // console.log(authStore.accessToken + "여기 토큰값이다");
   axios.patch("https://backend.haedal.store/profile/edit/save", dataToSend, {
     headers: {
       Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
@@ -190,10 +190,10 @@ const submit = handleSubmit(values => {
   })
     .then(response => {
       // POST 요청 성공 시 로직
-      console.log(response.data);
+      // console.log(response.data);
       username.value = values.username;
       dialog.openDialog();
-      console.log("모달창띄웟다");
+      // console.log("모달창띄웟다");
 
     })
     // POST 요청 실패 시 로직
@@ -205,13 +205,13 @@ const submit = handleSubmit(values => {
 
 
 onMounted(() => {
-  console.log("새로고췸");
-  console.log("헤더전역관리토큰입니다" + authStore.accessToken);
+  // console.log("새로고췸");
+  // console.log("헤더전역관리토큰입니다" + authStore.accessToken);
   // Local Storage에서 토큰을 가져와서 store에 저장
   const storedToken = localStorage.getItem('accessToken');
   if (storedToken) {
     authStore.loginSuccess(storedToken);
-    console.log(localStorage.getItem('accessToken'));
+    // console.log(localStorage.getItem('accessToken'));
     // 페이지 로딩 시 사용자 정보 요청 로직 추가
   }
   if (storedToken) {
@@ -254,7 +254,7 @@ onMounted(() => {
             break;
         }
 
-        console.log(response.data);
+        // console.log(response.data);
         name.value.value = response.data.name
         phoneNumber.value.value = response.data.phoneNumber
         userAgeGroup.value.value = useragegroupchange

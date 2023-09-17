@@ -134,13 +134,13 @@ const redirectToPortfoliodibs = () => {
 // 서버에서 받아오는 정보
 const listData = ref([]);
 
-console.log("새로고췸");
+// console.log("새로고췸");
 // Local Storage에서 토큰을 가져와서 store에 저장
 const storedToken = localStorage.getItem("accessToken");
-console.log("저장된 토큰값 " + authStore.accessToken);
+// console.log("저장된 토큰값 " + authStore.accessToken);
 
 if (storedToken) {
-  console.log("요청전송");
+  // console.log("요청전송");
   axios
     .get("https://backend.haedal.store/profile/edit", {
       headers: {
@@ -164,7 +164,7 @@ if (storedToken) {
           break;
       }
 
-      console.log(response.data);
+      // console.log(response.data);
       username.value = response.data.name;
       accountNumber.value = response.data.accountNumber;
       asset.value = response.data.asset; // 잔고 남은 금액
@@ -184,7 +184,7 @@ axios({
   .then((res) => {
     let tempArr = [...res.data];
     tempArr.forEach((item) => {
-      console.log(item);
+      // console.log(item);
       listData.value.push(item);
       // chips 표시 내용 변환
       switch (item.servicePurpose) {
@@ -232,7 +232,7 @@ axios({
         timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
 
       const minusfirtsdatefinishdate = daysDifference;
-      console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
+      // console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
       const money = item.startMoney; //시작금액
       let n = item.period;
 
@@ -240,7 +240,7 @@ axios({
       //예금일때
       if (item.deposit == true) {
         totalAmount = parseFloat(money + (money * item.interestRate) / 100);
-        console.log(totalAmount + "예금" + money);
+        // console.log(totalAmount + "예금" + money);
 
         const plusMoney =
           ((totalAmount - money) / minusfirtsdatefinishdate) *
@@ -253,7 +253,7 @@ axios({
         const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
         item.totalMoney = totalMoney;
         totalPresentAsset.value += item.cleanplusMoney;
-        console.log(item.cleanplusMoney);
+        // console.log(item.cleanplusMoney);
       } else {
         // 적금일때
         totalAmount = money; // 초기 예금액
@@ -270,8 +270,8 @@ axios({
         const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
         item.totalMoney = totalMoney;
         totalPresentAsset.value += item.cleanplusMoney;
-        console.log(item.cleanplusMoney);
-        console.log(totalAmount + " 적금 " + money);
+        // console.log(item.cleanplusMoney);
+        // console.log(totalAmount + " 적금 " + money);
       }
       totalinvestment.value += item.startMoney; // 투자금액
       totalinvestgain.value += item.cleanplusMoney;
@@ -285,8 +285,8 @@ axios({
 const subscribeProduct = (item) => {
   const productId = item.productId;
   const productName = item.productName;
-  console.log(productName);
-  console.log(item.deposit);
+  // console.log(productName);
+  // console.log(item.deposit);
   if (item.deposit == true) {
     router.push({
       name: "subscribeDforShow",

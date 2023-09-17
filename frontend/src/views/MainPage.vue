@@ -102,9 +102,9 @@ function fetchData() {
     tempArr.forEach((item) => {
       listData.value.push(item)
     })
-    console.log(listData)
+    // console.log(listData)
     recommend.value = listData.value[Math.floor(Math.random() * listData.value.length)]
-    console.log(recommend.value)
+    // console.log(recommend.value)
 
     // 데이터를 Local Storage에 저장
     localStorage.setItem('data', JSON.stringify(recommend.value))
@@ -118,7 +118,7 @@ onMounted(() => {
 
     // Local Storage에 데이터가 있는 경우, 저장된 데이터를 사용
     recommend.value = JSON.parse(storedData)
-    console.log(recommend.value)
+    // console.log(recommend.value)
   } else {
 
     // Local Storage에 데이터가 없는 경우, 데이터를 가져와서 저장
@@ -138,8 +138,8 @@ onMounted(() => {
 const detail = (item) => {
   const productId = item.productId;
   const productName = item.productName
-  console.log(productName);
-  console.log(item.deposit);
+  // console.log(productName);
+  // console.log(item.deposit);
   if (item.deposit == true) {
     router.push(
       {

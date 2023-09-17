@@ -45,13 +45,13 @@ let servicepurposechange = '';
 
 onMounted(() => {
 
-  console.log("새로고췸");
+  // console.log("새로고췸");
   // Local Storage에서 토큰을 가져와서 store에 저장
   const storedToken = localStorage.getItem('accessToken');
-  console.log("저장된 토큰값 " + authStore.accessToken);
+  // console.log("저장된 토큰값 " + authStore.accessToken);
 
   if (storedToken) {
-    console.log("요청전송");
+    // console.log("요청전송");
     axios.get("https://backend.haedal.store/profile", {
       headers: {
         //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
@@ -92,7 +92,7 @@ onMounted(() => {
             break;
         }
 
-        console.log(response.data);
+        // console.log(response.data);
         username.value = response.data.name;
         phonenumber.value = response.data.phoneNumber;
         userAgeGroup.value = useragegroupchange;

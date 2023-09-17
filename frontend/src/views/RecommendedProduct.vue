@@ -94,7 +94,7 @@ watchEffect(() => {
         }).then((res) => {
             let tempArr = [...res.data]
             tempArr.forEach((item) => {
-                console.log(item)
+                // console.log(item)
                 listData.value.push(item)
             })
 
@@ -106,13 +106,13 @@ watchEffect(() => {
                     }
                 }).then((res) => {
                     item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-                    console.log(item.isDibs);
+                    // console.log(item.isDibs);
                 }).catch((error) => {
                     // 로그인 되어 있지 않을 시 무조건 false
                     item.isDibs = false;
                 });
             });
-            console.log(listData);
+            // console.log(listData);
         })
     }
     else {
@@ -163,7 +163,7 @@ const ageGroup = () => {
     }).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
-            console.log(item)
+            // console.log(item)
             listData.value.push(item)
         })
 
@@ -174,13 +174,13 @@ const ageGroup = () => {
                 }
             }).then((res) => {
                 item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-                console.log(item.isDibs);
+                // console.log(item.isDibs);
             }).catch((error) => {
                 // 로그인 되어 있지 않을 시 무조건 false
                 item.isDibs = false;
             });
         });
-        console.log(listData);
+        // console.log(listData);
     })
 }
 
@@ -194,7 +194,7 @@ const purpose = () => {
     }).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
-            console.log(item)
+            // console.log(item)
             listData.value.push(item)
         })
 
@@ -205,13 +205,13 @@ const purpose = () => {
                 }
             }).then((res) => {
                 item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-                console.log(item.isDibs);
+                // console.log(item.isDibs);
             }).catch((error) => {
                 // 로그인 되어 있지 않을 시 무조건 false
                 item.isDibs = false;
             });
         });
-        console.log(listData);
+        // console.log(listData);
     })
 }
 
@@ -225,7 +225,7 @@ const asset = () => {
     }).then((res) => {
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
-            console.log(item)
+            // console.log(item)
             listData.value.push(item)
         })
 
@@ -236,13 +236,13 @@ const asset = () => {
                 }
             }).then((res) => {
                 item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-                console.log(item.isDibs);
+                // console.log(item.isDibs);
             }).catch((error) => {
                 // 로그인 되어 있지 않을 시 무조건 false
                 item.isDibs = false;
             });
         });
-        console.log(listData)
+        // console.log(listData)
     })
 }
 
@@ -251,8 +251,8 @@ const asset = () => {
 const subscribeProduct = (item) => {
     const productId = item.productId;
     const productName = item.productName
-    console.log(productName);
-    console.log(item.deposit);
+    // console.log(productName);
+    // console.log(item.deposit);
     if (item.deposit == true) {
         router.push(
             {

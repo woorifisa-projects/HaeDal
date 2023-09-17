@@ -60,7 +60,7 @@ const submit = () => {
   })
     .then(response => {
       dialog.openDialog();
-      console.log(response.data);
+      // console.log(response.data);
 
     })
     // POST 요청 실패 시 로직

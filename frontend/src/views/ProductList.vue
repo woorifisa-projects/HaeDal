@@ -19,7 +19,7 @@
           class="searchProduct"
           placeholder="원하시는 상품명을 검색해 주세요"
         />
-        <v-btn class="searchButton" :loading="loading" @click="searchForm"
+        <v-btn class="searchButton" @click="searchForm"
           >검색
         </v-btn>
       </form>
@@ -226,7 +226,7 @@ const dibs = (item) => {
 //검색 기능
 const searchForm = () => {
   loading.value = true;
-  //   setTimeout(() => (loading.value = false), 50);
+  setTimeout(() => (loading.value = false), 50);
 
   //기존 데이터 제거
   listData.value.splice(0, listData.value.length);
@@ -236,7 +236,7 @@ const searchForm = () => {
     return;
   }
 
-  console.log("로그인한 검색기록 로그 저장 요청 보냄");
+  // console.log("로그인한 검색기록 로그 저장 요청 보냄");
   //   console.log(authStore.accessToken);
   showNoDataMessage.value = false;
 
@@ -252,7 +252,6 @@ const searchForm = () => {
         },
       })
       .then((res) => {
-        loading.value = false;
 
         let tempArr = [...res.data];
         tempArr.forEach((item) => {
@@ -279,7 +278,7 @@ const searchForm = () => {
             })
             .then((res) => {
               item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-              console.log(item.isDibs);
+              // console.log(item.isDibs);
             })
             .catch((error) => {
               // 로그인 되어 있지 않을 시 무조건 false
@@ -320,7 +319,7 @@ const searchForm = () => {
           })
           .then((res) => {
             item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-            console.log(item.isDibs);
+            // console.log(item.isDibs);
           })
           .catch((error) => {
             // 로그인 되어 있지 않을 시 무조건 false
@@ -340,8 +339,8 @@ const searchForm = () => {
 const subscribeProduct = (item) => {
   const productId = item.productId;
   const productName = item.productName;
-  console.log(productName);
-  console.log(item.deposit);
+  // console.log(productName);
+  // console.log(item.deposit);
   if (item.deposit == true) {
     router.push({
       name: "subscribeD",
@@ -366,7 +365,7 @@ const viewAll = () => {
   axiosInstance.get("/products").then((res) => {
     let tempArr = [...res.data];
     tempArr.forEach((item) => {
-      console.log(item);
+      // console.log(item);
       switch (item.tag) {
         case "THEMA":
           item.tag = "테마";
@@ -390,7 +389,7 @@ const viewAll = () => {
           })
           .then((res) => {
             item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-            console.log(item.isDibs);
+            // console.log(item.isDibs);
           })
           .catch((error) => {
             // 로그인 되어 있지 않을 시 무조건 false
@@ -398,7 +397,7 @@ const viewAll = () => {
           });
       });
     }
-    console.log(listData);
+    // console.log(listData);
   });
 };
 // 금융 상품 조회 기능
@@ -408,7 +407,7 @@ const financial = () => {
   axiosInstance.get(`products/filter/FINANCE`).then((res) => {
     let tempArr = [...res.data];
     tempArr.forEach((item) => {
-      console.log(item);
+      // console.log(item);
       switch (item.tag) {
         case "THEMA":
           item.tag = "테마";
@@ -431,7 +430,7 @@ const financial = () => {
           })
           .then((res) => {
             item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-            console.log(item.isDibs);
+            // console.log(item.isDibs);
           })
           .catch((error) => {
             // 로그인 되어 있지 않을 시 무조건 false
@@ -439,7 +438,7 @@ const financial = () => {
           });
       });
     }
-    console.log(listData);
+    // console.log(listData);
   });
 };
 // 테마 상품 조회 기능
@@ -449,7 +448,7 @@ const tema = () => {
   axiosInstance.get(`products/filter/THEMA`).then((res) => {
     let tempArr = [...res.data];
     tempArr.forEach((item) => {
-      console.log(item);
+      // console.log(item);
       switch (item.tag) {
         case "THEMA":
           item.tag = "테마";
@@ -472,7 +471,7 @@ const tema = () => {
           })
           .then((res) => {
             item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-            console.log(item.isDibs);
+            // console.log(item.isDibs);
           })
           .catch((error) => {
             // 로그인 되어 있지 않을 시 무조건 false
@@ -480,7 +479,7 @@ const tema = () => {
           });
       });
     }
-    console.log(listData);
+    // console.log(listData);
   });
 };
 </script>
