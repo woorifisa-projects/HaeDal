@@ -133,9 +133,9 @@ const routes = [
         component: () => import("@/views/Portfoliodibs.vue"),
       },
       {
-        path: "/test",
-        name: "test",
-        component: () => import("@/views/Test"),
+        path: "/chartportfolio",
+        name: "chartportfolio",
+        component: () => import("@/views/ChartPortfolio"),
       },
     ]
   }

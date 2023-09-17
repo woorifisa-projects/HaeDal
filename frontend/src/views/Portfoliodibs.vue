@@ -80,13 +80,13 @@ const redirectToPortfoliodibs = () => {
     router.push('/portfoliodibs');
 };
 
-console.log("새로고췸");
+// console.log("새로고췸");
 // Local Storage에서 토큰을 가져와서 store에 저장
 const storedToken = localStorage.getItem('accessToken');
-console.log("저장된 토큰값 " + authStore.accessToken);
+// console.log("저장된 토큰값 " + authStore.accessToken);
 
 if (storedToken) {
-    console.log("요청전송");
+    // console.log("요청전송");
     axios.get("https://backend.haedal.store/profile/edit", {
         headers: {
             //   Authorization: `Bearer ${authStore.accessToken}`, // 토큰 포함
@@ -109,7 +109,7 @@ if (storedToken) {
                     break;
             }
 
-            console.log(response.data);
+            // console.log(response.data);
             username.value = response.data.name;
             accountNumber.value = response.data.accountNumber;
             asset.value = response.data.asset; // 잔고 남은 금액
@@ -131,10 +131,10 @@ watchEffect(() => {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
     }).then((res) => {
-        console.log("정상동작")
+        // console.log("정상동작")
         let tempArr = [...res.data]
         tempArr.forEach((item) => {
-            console.log(item)
+            // console.log(item)
             listData.value.push(item)
         })
 
@@ -146,13 +146,13 @@ watchEffect(() => {
                 }
             }).then((res) => {
                 item.isDibs = res.data; // 상품 객체에 찜 여부 추가
-                console.log(item.isDibs);
+                // console.log(item.isDibs);
             }).catch((error) => {
                 // 로그인 되어 있지 않을 시 무조건 false
                 item.isDibs = false;
             });
         });
-        console.log(listData);
+        // console.log(listData);
     }).catch((error) => {
         // router.push('/error');
     })
@@ -161,7 +161,7 @@ watchEffect(() => {
 // 찜하기 버튼 누를 시
 const dibs = (item) => {
     if (!item.isDibs) {
-        console.log("찜!");
+        // console.log("찜!");
         axios({
             method: "post",
             url: `https://backend.haedal.store/dibs/${item.productId}/add`,
@@ -174,7 +174,7 @@ const dibs = (item) => {
             })
             .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
     } else {
-        console.log("찜 취소");
+        // console.log("찜 취소");
         axios({
             method: "delete",
             url: `https://backend.haedal.store/dibs/${item.productId}/delete`,
@@ -194,8 +194,8 @@ const dibs = (item) => {
 const subscribeProduct = (item) => {
     const productId = item.productId;
     const productName = item.productName
-    console.log(productName);
-    console.log(item.deposit);
+    // console.log(productName);
+    // console.log(item.deposit);
     if (item.deposit == true) {
         router.push(
             {
@@ -232,7 +232,7 @@ axios({
 
     let tempArr = [...res.data]
     tempArr.forEach((item) => {
-        console.log(item)
+        // console.log(item)
         // listData.value.push(item)
 
         const subscribeDate = new Date(item.subscribeDate);
@@ -243,7 +243,7 @@ axios({
         const daysDifference = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
 
         const minusfirtsdatefinishdate = daysDifference;
-        console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
+        // console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
         const money = item.startMoney; //시작금액
         let n = item.period;
 
@@ -251,7 +251,7 @@ axios({
         //예금일때
         if (item.deposit == true) {
             totalAmount = parseFloat(money + (money * (item.interestRate) / 100));
-            console.log(totalAmount + "예금" + money);
+            // console.log(totalAmount + "예금" + money);
 
             const plusMoney = ((totalAmount - money) / minusfirtsdatefinishdate) * (item.progressdate); //현재 수익
             item.cleanplusMoney = parseInt(plusMoney); //현재 수익 변수 값 초기화
@@ -261,7 +261,7 @@ axios({
             const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
             item.totalMoney = totalMoney;
             totalPresentAsset.value += item.cleanplusMoney;
-            console.log(item.cleanplusMoney);
+            // console.log(item.cleanplusMoney);
         }
         else { // 적금일때
             totalAmount = money; // 초기 예금액
@@ -278,8 +278,8 @@ axios({
             const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
             item.totalMoney = totalMoney;
             totalPresentAsset.value += item.cleanplusMoney;
-            console.log(item.cleanplusMoney);
-            console.log(totalAmount + " 적금 " + money);
+            // console.log(item.cleanplusMoney);
+            // console.log(totalAmount + " 적금 " + money);
         }
     })
 })

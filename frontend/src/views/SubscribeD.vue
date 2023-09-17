@@ -282,7 +282,7 @@ const currentPath = `/subscribe/${productId}`;
 
 watchEffect(() => {
   axiosInstance.get(`${currentPath}`).then((res) => {
-    console.log(res.data);
+    // console.log(res.data);
     listData.value = res.data;
   });
 
@@ -296,7 +296,7 @@ watchEffect(() => {
       })
       .then((res) => {
         isDibs.value = res.data; // 서버에서 전달된 찜 여부
-        console.log(isDibs.value);
+        // console.log(isDibs.value);
       })
       .catch((error) => {
         // 로그인 되어 있지 않을 시 무조건 false
@@ -304,13 +304,13 @@ watchEffect(() => {
       });
   }
 });
-console.log(listData);
+// console.log(listData);
 
 // 찜하기 버튼 누를 시
 const dibs = (productId) => {
   if (isDibs.value === false) {
-    console.log("찜!");
-    console.log(productId);
+    // console.log("찜!");
+    // console.log(productId);
     axios({
       method: "post",
       url: `https://backend.haedal.store/dibs/${productId}/add`,
@@ -323,8 +323,8 @@ const dibs = (productId) => {
       })
       .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
   } else if (isDibs.value === true) {
-    console.log("찜 취소");
-    console.log(productId);
+    // console.log("찜 취소");
+    // console.log(productId);
     axios({
       method: "delete",
       url: `https://backend.haedal.store/dibs/${productId}/delete`,
@@ -364,7 +364,7 @@ const openModal = () => {
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       listData.value = res.data;
     })
     .catch((error) => {
@@ -379,7 +379,7 @@ const closeModal = () => {
 const submitForm = () => {
   // 중복 submit요청 방지
   loading.value = true;
-  console.log("요청보내는중2초");
+  // console.log("요청보내는중2초");
   setTimeout(() => (loading.value = false), 2000);
 
   const url = `https://backend.haedal.store/subscribe/${productId}/final`;
@@ -393,7 +393,7 @@ const submitForm = () => {
       },
     })
     .then((response) => {
-      console.log("신청 성공", response);
+      // console.log("신청 성공", response);
       router.push("/success");
     })
     .catch((error) => {

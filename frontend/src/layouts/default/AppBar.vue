@@ -69,20 +69,20 @@ const submit = () => {
     router.push('/home'); // 예시: 로그인 후 헤더 페이지로 이동
   }
   else {
-    console.log(localStorage.getItem('accessToken'));
-    console.log("로그인 페이지로 이동합니다.");
+    // console.log(localStorage.getItem('accessToken'));
+    // console.log("로그인 페이지로 이동합니다.");
     router.push('/login');
   }
 }
 
 onMounted(async () => {
-  console.log("새로고췸");
-  console.log("헤더전역관리토큰입니다" + authStore.accessToken);
+  // console.log("새로고췸");
+  // console.log("헤더전역관리토큰입니다" + authStore.accessToken);
   // Local Storage에서 토큰을 가져와서 store에 저장
   const storedToken = localStorage.getItem('accessToken');
   if (storedToken) {
     authStore.loginSuccess(storedToken);
-    console.log(localStorage.getItem('accessToken'));
+    // console.log(localStorage.getItem('accessToken'));
     // 페이지 로딩 시 사용자 정보 요청 로직 추가
   }
   if (storedToken) {
@@ -90,7 +90,6 @@ onMounted(async () => {
     try {
       authStore.setUserName(localStorage.getItem('userName'))
       // 전역으로 authStore에 저장해서 username 으로 접근하여 사용
-      console.log("오이오이" + authStore.username);
       username.value = authStore.username;
     } catch (error) {
       console.error("사용자 정보 조회 중 오류 발생 : ", error);
@@ -127,7 +126,7 @@ setInterval(() => {
 
     if (currentTimestamp > expirationTimestamp) {
       // 토큰이 이미 만료됨
-      console.log("토큰이 이미 만료되었습니다.");
+      // console.log("토큰이 이미 만료되었습니다.");
       alert("접속시간이 종료되어 강제 로그아웃되었습니다.")
       console.log("로그아웃되었습니다.");
       authStore.logout();

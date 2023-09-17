@@ -132,12 +132,12 @@ watchEffect(() => {
             Authorization: `Bearer ${authStore.accessToken}`
         }
     }).then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         listData.value = res.data
     })
 })
 
-console.log(listData);
+// console.log(listData);
 
 const goportfolio = () => {
     router.push('/portfolio');
@@ -162,7 +162,7 @@ const submitForm = () => {
             showModal.value = false;
             showfinalModal.value = true;
             result.value = res.data;
-            console.log(res);
+            // console.log(res);
 
         }).catch((error) => {
             router.push('/error');

@@ -273,7 +273,7 @@ const isDibs = ref(false);
 
 watchEffect(() => {
   axiosInstance.get(`${currentPath}`).then((res) => {
-    console.log(res.data);
+    // console.log(res.data);
     listData.value = res.data;
   });
   // 찜되어있는지 확인
@@ -286,7 +286,7 @@ watchEffect(() => {
       })
       .then((res) => {
         isDibs.value = res.data; // 서버에서 전달된 찜 여부
-        console.log(isDibs.value);
+        // console.log(isDibs.value);
       })
       .catch((error) => {
         // 로그인 되어 있지 않을 시 무조건 false
@@ -298,7 +298,7 @@ watchEffect(() => {
 //찜하기 버튼 누를 시
 const dibs = (productId) => {
   if (isDibs.value === false) {
-    console.log("찜!");
+    // console.log("찜!");
     console.log(productId);
     axios({
       method: "post",
@@ -312,7 +312,7 @@ const dibs = (productId) => {
       })
       .catch((error) => alert("로그인 후 이용 가능한 서비스 입니다"));
   } else if (isDibs.value === true) {
-    console.log("찜 취소");
+    // console.log("찜 취소");
     axios({
       method: "delete",
       url: `https://backend.haedal.store/dibs/${productId}/delete`,
@@ -336,7 +336,7 @@ const openModal = () => {
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       listData.value = res.data;
     })
     .catch((error) => {
@@ -348,7 +348,7 @@ const closeModal = () => {
   showModal.value = false;
 };
 
-console.log(listData);
+// console.log(listData);
 
 const formData = {
   authenticationNumber: "",
@@ -368,7 +368,7 @@ const calculate = () => {
 
     calculatedAmount.value = parseFloat(totalAmount).toFixed(2);
   } else {
-    console.log("오류");
+    // console.log("오류");
   }
 };
 
@@ -383,8 +383,8 @@ const submitForm = () => {
       },
     })
     .then((response) => {
-      console.log(authStore.accessToken);
-      console.log("신청 성공", response);
+      // console.log(authStore.accessToken);
+      // console.log("신청 성공", response);
       router.push("/success");
     })
     .catch((error) => {

@@ -133,10 +133,10 @@ const redirectToPortfoliodibs = () => {
 // 서버에서 받아오는 정보
 const listData = ref([]);
 
-console.log("새로고췸");
+// console.log("새로고췸");
 // Local Storage에서 토큰을 가져와서 store에 저장
 const storedToken = localStorage.getItem("accessToken");
-console.log("저장된 토큰값 " + authStore.accessToken);
+// console.log("저장된 토큰값 " + authStore.accessToken);
 
 const labelData = ref(["잔액"]); //잔액라벨 초기값 추가
 const moneyData = ref([]); // 잔고
@@ -144,7 +144,7 @@ const labelDataForInvest = ref([]); //잔액라벨 초기값 추가
 const moneyDataForInvest = ref([]); // 잔고
 
 if (storedToken) {
-  console.log("요청전송");
+  // console.log("요청전송");
   axios
     .get("https://backend.haedal.store/profile/edit", {
       headers: {
@@ -153,11 +153,11 @@ if (storedToken) {
       },
     })
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       username.value = response.data.name;
       accountNumber.value = response.data.accountNumber;
       moneyData.value[0] = response.data.asset; // 잔고에 차트추가
-      console.log(moneyData.value);
+      // console.log(moneyData.value);
       asset.value = response.data.asset;
       servicePurpose.value = servicepurposechange;
       totalPresentAsset.value = response.data.asset; // 현재남은 잔고를 초기값으로 설정
@@ -175,7 +175,7 @@ axios({
     let tempArr = [...res.data];
 
     tempArr.forEach((item) => {
-      console.log(item);
+      // console.log(item);
       listData.value.push(item);
 
       // chips 표시 내용 변환
@@ -224,7 +224,7 @@ axios({
         timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
 
       const minusfirtsdatefinishdate = daysDifference;
-      console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
+      // console.log(minusfirtsdatefinishdate); // 예금 만기일 - 시작일
       const money = item.startMoney; //시작금액
       let n = item.period;
 
@@ -232,7 +232,7 @@ axios({
       //예금일때
       if (item.deposit == true) {
         totalAmount = parseFloat(money + (money * item.interestRate) / 100);
-        console.log(totalAmount + "예금" + money);
+        // console.log(totalAmount + "예금" + money);
 
         const plusMoney =
           ((totalAmount - money) / minusfirtsdatefinishdate) *
@@ -245,7 +245,7 @@ axios({
         const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
         item.totalMoney = totalMoney;
         totalPresentAsset.value += item.cleanplusMoney;
-        console.log(item.cleanplusMoney);
+        // console.log(item.cleanplusMoney);
       } else {
         // 적금일때
         totalAmount = money; // 초기 예금액
@@ -262,8 +262,8 @@ axios({
         const totalMoney = item.presentMoney + item.cleanplusMoney; //현재 총 잔고 더하기
         item.totalMoney = totalMoney;
         totalPresentAsset.value += item.cleanplusMoney;
-        console.log(item.cleanplusMoney);
-        console.log(totalAmount + " 적금 " + money);
+        // console.log(item.cleanplusMoney);
+        // console.log(totalAmount + " 적금 " + money);
       }
       totalinvestment.value += item.startMoney; // 투자금액
       totalinvestgain.value += item.cleanplusMoney;
@@ -281,31 +281,31 @@ axios({
           {
             backgroundColor: [
               "rgba(255,26,104,0.2)",
+              "rgba(255,153,000,0.4)",
               "rgba(54,162,235,0.2)",
-              "rgba(255,206,86,0.2)",
+              "rgba(255,206,86,0.3)",
               "rgba(75,192,192,0.2)",
-              "rgba(127,26,104,0.2)",
-              "rgba(100,162,235,0.2)",
-              "rgba(232,206,86,0.2)",
-              "rgba(65,192,192,0.2)",
-              "rgba(187,26,104,0.2)",
-              "rgba(10,162,235,0.2)",
-              "rgba(120,206,86,0.2)",
-              "rgba(55,192,192,0.2)",
+              "rgba(000,051,051,0.3)",
+              
+              "rgba(051,000,102,0.2)",
+              "rgba(000,000,000,0.5)",
+
+              
+              
             ],
             borderColor: [
               "rgba(255,26,104,0.2)",
+              "rgba(255,153,000,0.4)",
               "rgba(54,162,235,0.2)",
-              "rgba(255,206,86,0.2)",
+              "rgba(255,206,86,0.3)",
               "rgba(75,192,192,0.2)",
-              "rgba(127,26,104,0.2)",
-              "rgba(100,162,235,0.2)",
-              "rgba(232,206,86,0.2)",
-              "rgba(65,192,192,0.2)",
-              "rgba(187,26,104,0.2)",
-              "rgba(10,162,235,0.2)",
-              "rgba(120,206,86,0.2)",
-              "rgba(55,192,192,0.2)",
+              "rgba(000,051,051,0.2)",
+              
+              "rgba(051,000,102,0.2)",
+              "rgba(000,000,000,0.5)",
+
+             
+              
             ],
             data: moneyData.value,
           },
@@ -341,16 +341,26 @@ axios({
             label: "현재금액",
             // backgroundColor: getRandomColors(30),
             backgroundColor: [
-              "rgba(255,26,104,0.2)",
+            "rgba(255,26,104,0.2)",
+              "rgba(255,153,000,0.4)",
               "rgba(54,162,235,0.2)",
-              "rgba(255,206,86,0.2)",
+              "rgba(255,206,86,0.3)",
               "rgba(75,192,192,0.2)",
+              "rgba(000,051,051,0.3)",
+              
+              "rgba(051,000,102,0.2)",
+              "rgba(000,000,000,0.5)",
             ],
             borderColor: [
-              "rgba(255,26,104,0.5)",
+            "rgba(255,26,104,0.5)",
+              "rgba(255,153,000,0.7)",
               "rgba(54,162,235,0.5)",
               "rgba(255,206,86,0.5)",
               "rgba(75,192,192,0.5)",
+              "rgba(000,051,051,0.5)",
+              
+              "rgba(051,000,102,0.5)",
+              "rgba(000,000,000,0.5)",
             ],
             borderWidth: 1, // [막대 테두리 굵기 설정]
             data: moneyDataForInvest.value,

@@ -19,7 +19,7 @@
       <v-list-item
         prepend-icon="mdi mdi-chart-areaspline"
         title="포트폴리오"
-        href="/test"
+        href="/chartportfolio"
       ></v-list-item>
       <v-list-item
         prepend-icon="mdi mdi-view-list"

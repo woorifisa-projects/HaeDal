@@ -257,15 +257,15 @@ const authNumber = useField('authNumber')
 
 const checkId = () => {
   const idcheck = id.value.value;
-  console.log(idcheck);
+  // console.log(idcheck);
   axios.get(`https://backend.haedal.store/user/idcheck?id=${idcheck}`)
     .then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       dialogId.openDialog();
     })
 
     .catch(error => {
-      console.log("아이디이미있단");
+      // console.log("아이디이미있단");
       //  console.error(error);
       const serverErrorMessage = '아이디가 이미 존재합니다.'; // 서버 오류 메시지 설정
       dialogalreadyId.openDialog();
@@ -285,13 +285,13 @@ const submit = handleSubmit(values => {
 
     const dataToSend = { ...values, userAgeGroup: ageEnum, servicePurpose: purposeEnum };
 
-    console.log(dataToSend);
+    // console.log(dataToSend);
     axios.post("https://backend.haedal.store/user/register", dataToSend)
       .then(response => {
         // POST 요청 성공 시 로직
-        console.log(response.data);
+        // console.log(response.data);
         dialog.openDialog();
-        console.log("모달창띄웟다");
+        // console.log("모달창띄웟다");
 
       })
       // POST 요청 실패 시 로직
