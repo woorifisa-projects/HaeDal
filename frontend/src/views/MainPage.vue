@@ -7,14 +7,15 @@
     interval="3000"
     height="60vh"
   >
-    <!-- <v-carousel-item> <img src="@/assets/img/banner-1.png" alt="해달 홍보 배너"> -->
-    <v-carousel-item> <img src="@/assets/img/banner-1.png" /> </v-carousel-item>
-
-    <!-- <v-carousel-item><img src="@/assets/img/banner-2.png" alt="해달 상품 홍보 배너"></v-carousel-item> -->
-    <v-carousel-item><img src="@/assets/img/banner-2.png" /></v-carousel-item>
-
-    <!-- <v-carousel-item><img src="@/assets/img/banner-3.png" alt="해달 포트폴리오 홍보 배너"></v-carousel-item> -->
-    <v-carousel-item><img src="@/assets/img/banner-3.png" /></v-carousel-item>
+    <v-carousel-item>
+      <img src="@/assets/img/banner-1.png" alt="해달 홍보 배너"
+    /></v-carousel-item>
+    <v-carousel-item
+      ><img src="@/assets/img/banner-2.png" alt="해달 상품 홍보 배너"
+    /></v-carousel-item>
+    <v-carousel-item
+      ><img src="@/assets/img/banner-3.png" alt="해달 포트폴리오 홍보 배너"
+    /></v-carousel-item>
   </v-carousel>
   <div style="text-align: center">
     <!-- <v-divider :thickness="3" color="info" style="width:30%;     border-style: double;
