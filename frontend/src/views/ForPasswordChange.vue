@@ -21,7 +21,7 @@
       </v-card-text>
       <div class="button-container">
         <v-btn class="btn" type="submit"> 비밀번호 변경 </v-btn>
-        <v-btn class="btn" @click="goBack" > 취소 </v-btn>
+        <v-btn class="btn" @click="goBack"> 취소 </v-btn>
       </div>
     </div>
     <v-dialog v-model="dialog.isOpen.value" width="auto">
@@ -43,7 +43,7 @@ import axios from "axios";
 import { ref } from "vue";
 import router from "@/router";
 import { useAuthStore } from "@/store/app";
-import { useRouter } from 'vue-router'; // useRouter 함수
+import { useRouter } from "vue-router"; // useRouter 함수
 
 const authStore = useAuthStore();
 const password = ref();
@@ -51,7 +51,7 @@ const password = ref();
 const goBack = () => {
   // 이전 페이지로 이동
   router.go(-1);
-}
+};
 
 const dialog = {
   isOpen: ref(false),
@@ -80,11 +80,11 @@ const submit = () => {
   })
     .then((response) => {
       dialog.openDialog();
-      console.log(response.data);
+      // console.log(response.data);
     })
     // POST 요청 실패 시 로직
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
 };
 </script>
