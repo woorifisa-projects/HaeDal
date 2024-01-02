@@ -13,6 +13,9 @@
 <br>
 </div>
 <div align="center">
+<br><br>
+
+## 🛠️ Tech Stack
 <div style="height=80px"> 
 <img src="https://img.shields.io/badge/Mysql-4479A1?style=for-the-badge&logo=Mysql&logoColor=white"> 
 <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white"> 
@@ -23,8 +26,7 @@
 <img src="https://img.shields.io/badge/amazonrds-527FFF?style=flat-square&logo=amazonrds&logoColor=white"/>
 <img src="https://img.shields.io/badge/amazonec2-FF9900?style=flat-square&logo=amazonec2&logoColor=white"/>
 </div>
-<br>
-<br>
+<br><br><br>
 
 ## 🙌 Members
 |<img src="https://avatars.githubusercontent.com/u/131724311?v=4" width=150px>|<img src="https://avatars.githubusercontent.com/u/126961013?v=4" width=150px>|<img src="https://avatars.githubusercontent.com/u/119517146?v=4" width=150px>|
