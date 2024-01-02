@@ -54,7 +54,7 @@
 <img src="https://github.com/Cloudyee/HaeDal/assets/126961013/7e12d2f6-4aa7-4c5a-a48d-a2b219eb86af" width="900px" >
 <img src="https://github.com/Cloudyee/HaeDal/assets/126961013/e7589eda-58fb-47c2-8f9e-db149c76b5d0" width="900px" >
 <br>
-✔️ 계좌 인증번호, 잔액, 기존 구독 여부에 대한 예외처리
+✔️ 로그인/회원가입 여부, 계좌 인증번호, 잔액, 기존 구독 여부에 대한 예외처리
 <br><br><br>
 
 ## 마이페이지
