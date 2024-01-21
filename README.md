@@ -6,7 +6,7 @@
 해와 달이 뜨고 지듯, 꾸준히 저축해보세요! 해달이 도와드리겠습니다.
 <br><br>
 
-### 🔗 [해달 바로가기](https://haedal.store)
+<!--### 🔗 [해달 바로가기](https://haedal.store) -->
 <br>
 
 ![image](https://github.com/woorifisa-projects/HaeDal/assets/131724311/a833f5f1-7ad9-44b6-8916-53f0e9ccf1c2)
@@ -39,6 +39,13 @@
 <br>
 
 # 🔍 Functions
+
+
+
+
+https://github.com/Cloudyee/HaeDal/assets/126961013/1ba0432b-987d-4e83-856d-830301961b0f
+
+
 
 ## 메인페이지
 <img src="https://github.com/Cloudyee/HaeDal/assets/126961013/40963b8a-29f7-48a6-8539-6783fc7fbbba" width="900px" >
